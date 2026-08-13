@@ -1,0 +1,244 @@
+:root {
+  --sidebar-bg: #ffffff; /* Sidebar background color */
+  --text-color: #000000; /* Text color */
+  --hover-bg: #333; /* Background on hover */
+  --arrow-color: #aaa; /* Arrow color */
+  --accent-color: #ff007f; /* Button accent color */
+  --submenu-bg: #f5f5f5; /* Submenu background color */
+  --submenu-text-color: #333; /* Submenu text color */
+}
+
+.menu-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+  align-items: center;
+  transition: all 0.3s ease;
+  height: 50px;
+  width: 70%;
+  a {
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding: 10px;
+    font-size: 0.84rem;
+    text-decoration: none;
+    color: #9a8c8c;
+    font-weight: 550;
+    &:hover {
+      border-bottom: 3px solid rgb(255, 0, 0);
+    }
+  }
+}
+.navbar {
+  width: 100%;
+  height: 50px;
+  background-color: var(--sidebar-bg);
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.139);
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+.menu-toggle {
+  background: none;
+  color: var(--text-color);
+  border: none;
+  display: flex;
+  height: 40px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 700;
+  width: fit-content;
+  padding-left: 8px; /* Adds space between the left edge and the icon */
+  padding-right: 8px; /* Adds space between the text and the button edge */
+
+  &:hover {
+    border-bottom: 3px solid red;
+  }
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  height: fit-content;
+  background-color: var(--sidebar-bg);
+  color: var(--text-color);
+  position: fixed;
+  top: 0;
+  left: -280px; /* Initially off-screen */
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  transition: left 300ms ease-in-out; /* Smooth transition */
+  z-index: 1000; /* Ensure it appears above all other content */
+}
+
+.sidebar.open {
+  left: 0; /* When sidebar is open, align to the left */
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.close-btn {
+  background: none;
+  color: var(--text-color);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.renew-btn {
+  background: none;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.menu {
+  flex: 1;
+}
+
+.menu > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu > ul > li {
+  position: relative;
+  margin: 8px 0;
+}
+
+.menu > ul > li > a {
+  display: block;
+
+  padding: 12px 16px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 200ms ease-in-out;
+}
+
+.menu > ul > li > a:hover {
+  text-decoration: underline;
+}
+
+.arrow {
+  float: right;
+  color: var(--arrow-color);
+  font-size: 18px;
+  margin-left: 8px;
+}
+
+/* Submenu with arrow styling */
+.menu > ul > li > ul {
+  display: none;
+  position: absolute;
+  left: 100%; /* Position to the right of the parent item */
+  top: 0;
+  background-color: var(--submenu-bg);
+  color: var(--submenu-text-color);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 250px;
+  z-index: 10; /* Ensure it appears above other content */
+}
+
+/* Triangle arrow pointing to parent */
+.menu > ul > li > ul::before {
+  content: "";
+  position: absolute;
+  top: 12px; /* Adjust as needed */
+  left: -10px; /* Adjust to align with parent */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 8px 8px 0; /* Arrow dimensions */
+  border-color: transparent var(--submenu-bg) transparent transparent; /* Arrow color */
+}
+
+/* Hover to show submenu */
+.menu > ul > li:hover > ul {
+  display: block;
+}
+
+.menu > ul > li > ul > li > a {
+  font-weight: normal;
+  font-size: 14px;
+  padding: 12px 16px;
+  color: var(--submenu-text-color);
+  text-decoration: none;
+  transition: background 200ms ease-in-out;
+}
+
+.menu > ul > li > ul > li > a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .menu-toggle {
+      align-self: center;
+    }
+    .menu-row {
+      display: none;
+    }
+  }
+  .sidebar {
+    width: 100%; /* Full width on mobile */
+    left: -100%; /* Completely off-screen initially */
+  }
+
+  .sidebar.open {
+    left: 0; /* Slide in from the left */
+  }
+
+  .menu > ul > li > ul {
+    left: 0; /* Submenu stays within the sidebar */
+    position: relative;
+    top: auto;
+    margin-top: 8px;
+    width: 100%;
+    box-shadow: none; /* Remove shadow for flat appearance */
+    border-radius: 0;
+  }
+
+  .menu > ul > li > ul::before {
+    display: none; /* Hide arrow pointer on mobile */
+  }
+
+  .menu-toggle {
+    width: 100%;
+    text-align: center;
+  }
+}

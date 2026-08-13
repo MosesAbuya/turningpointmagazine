@@ -1,0 +1,126 @@
+.subscribe-section {
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  width: 85%;
+  margin: 10px;
+  padding: 10px;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 100px;
+
+  #item-1 {
+    border-radius: 10px;
+    border-top: 5px solid #d44b4b;
+    border-left: 5px solid #d44b4b;
+    border-right: 5px solid #d44b4b;
+    margin-bottom: 40px;
+  }
+  #item-2 {
+    border-radius: 10px;
+    border-bottom: 40px solid #d44b4b;
+    border-left: 5px solid #d44b4b;
+    border-right: 5px solid #d44b4b;
+  }
+  .subscribe-section-item {
+    display: flex;
+    flex-direction: column;
+    .subscribe-title {
+      h2 {
+        font-family: "florania";
+        font-size: 3rem;
+        color: black;
+        text-align: center;
+      }
+    }
+    .subscribe-row {
+      display: flex;
+      flex-direction: row;
+      .subscribe-img {
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+      .subscribe-text {
+        background-color: #d44b4b;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        height: 300px;
+        margin-right: -120px;
+        width: 180%;
+        z-index: 1;
+        transition: all 0.3s ease;
+        p {
+          color: rgb(255, 255, 255);
+          text-align: center;
+          margin: 10px;
+          padding: 10px;
+        }
+        &:hover {
+          transform: translateX(20px);
+        }
+      }
+    }
+
+    a {
+      z-index: 10;
+      border: 3px solid white;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 450px;
+      align-self: flex-end;
+      background-color: #1e1c1c;
+      border-radius: 5px;
+      height: 70px;
+      margin-right: -120px;
+      text-align: center;
+      margin-top: -130px;
+      transition: all 0.3s ease;
+      &:hover {
+        transform: translateX(20px);
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .subscribe-section {
+    margin-left: 0;
+    width: 100%;
+    .subscribe-section-item {
+      margin-top: 50px;
+      .subscribe-title {
+        width: 100%;
+      }
+      .subscribe-row {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .subscribe-img {
+        }
+        .subscribe-text {
+          margin-top: 20px;
+          width: 100%;
+          margin-right: 0;
+          border: 3px solid white;
+          &:hover {
+            transform: none;
+          }
+        }
+      }
+      a {
+        margin-top: 10px;
+        width: 100%;
+        margin-right: 0;
+        border: 3px solid white;
+        &:hover {
+          transform: none;
+        }
+      }
+    }
+  }
+}

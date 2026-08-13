@@ -1,0 +1,78 @@
+/* .et-hero-tabs {
+  background-image: url(../assets/counter3.jpg);
+  background-size: cover;
+  background-position: center center;
+  transition: all 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+#b-h1 {
+  font-size: 5rem;
+  font-weight: 600;
+  font-family: florania;
+  color: red;
+}
+
+#b-h1,
+.b-h3 {
+  text-align: center;
+}
+
+.b-h3 {
+  font-size: 1.5rem;
+}
+.nav-full {
+  width: 100%;
+}
+.top-bar-full {
+  width: 100%;
+}
+#nn-navbar {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+#top-bar-full {
+  width: 100%;
+}
+#nav-full {
+  width: 100%;
+}
+#nn-navbar-s {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+#nn-navbar-s.sticky {
+  position: sticky;
+  opacity: 1;
+  top: 0;
+}
+#nn-navbar-s.mobile {
+  opacity: 1;
+}
+@media (max-width: 768px) {
+  .et-hero-tabs {
+    display: none;
+    height: fit-content;
+    .tab-1 {
+      display: none;
+    }
+    .scroll-down-icon {
+      display: none;
+    }
+  }
+  #nn-navbar-s {
+    opacity: 1;
+  }
+} */

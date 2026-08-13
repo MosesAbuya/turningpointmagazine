@@ -1,0 +1,7 @@
+#latest {
+  background-image: url(assets/h1.webp);
+  background-size: cover;
+  background-position: 50%;
+  height: fit-content;
+  padding-top: 0;
+}

@@ -1,0 +1,117 @@
+.ads-container-x {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding: 10px;
+  .ads-left-x {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.239);
+    margin: 10px;
+    h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      width: 100%;
+      color: red;
+      font-family: "florania";
+      text-align: center;
+      padding-left: 10px;
+      line-height: 1;
+      padding: 20px;
+    }
+    img {
+      max-width: 50%;
+      height: auto;
+      padding: 10px;
+    }
+    p {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #333;
+      text-align: center;
+      padding: 10px;
+    }
+  }
+  .ad-col {
+    background-color: #ff0000;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    height: fit-content;
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: rgb(255, 255, 255);
+      text-align: center;
+    }
+    .ad-item {
+      background-color: #fff;
+      box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.239);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      .ad-image {
+        width: 100%;
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+      .ad-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 5px;
+        h3 {
+          font-size: 20px;
+          font-weight: bold;
+          color: #000000;
+          padding: 5px;
+        }
+        p {
+          font-size: small;
+          color: #413d3d;
+          padding: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .ads-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .ads-left {
+      width: 100%;
+      h1 {
+        font-size: 20px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+    .ad-col {
+      width: 100%;
+      margin-top: 80px;
+    }
+  }
+}

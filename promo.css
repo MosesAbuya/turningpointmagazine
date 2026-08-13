@@ -1,0 +1,119 @@
+.bv-111 {
+  margin-top: -170px;
+  margin-bottom: 0;
+  z-index: 1;
+  transform: scaleX(-1);
+}
+@media (max-width: 1024px) {
+  .bv-111 {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+}
+/* Main section styling */
+#promo-advertise {
+  height: auto;
+  border: transparent;
+  background-color: #d44b4b;
+}
+
+.promo-background {
+  margin-bottom: 0;
+  z-index: 1;
+}
+
+/* Layout for items inside the section */
+.promo-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%; /* Ensure items fit within the section */
+  align-items: center;
+  justify-content: center;
+}
+
+.promo-section {
+  z-index: 1;
+}
+.promo-background {
+  margin-bottom: -10px;
+}
+/* Individual promo item styling */
+.promo-item {
+  background-color: #ffffff52;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px;
+  padding: 25px;
+  width: 45%; /* Adjust width to allow side-by-side items */
+  border-color: transparent;
+   clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    20px 100%,
+    0 calc(100%)
+  ); 
+}
+
+/* Ensure images within promo items take up 80% of width */
+.promo-image img {
+  width: 100%;
+  height: auto;
+}
+.promo-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: bold;
+   
+ 
+  a {
+    color: white;
+  }
+}
+
+/* Media query for smaller screens (tablets, mobile) */
+@media screen and (max-width: 768px) {
+  .promo-section .promo-link {
+    color: #ffffff; /* Ensures the links are visible */
+  }
+
+  #promo-advertise {
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 8px;
+    padding-top: 30px; /* Add padding for spacing on mobile */
+  }
+
+  .promo-background {
+    display: none;
+  }
+
+  .promo-items {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+    padding: 10px;
+    width: 100%;
+    a {
+      color: white;
+    }
+  }
+
+  /* Ensure each promo item takes full width on small screens */
+  .promo-item {
+    width: 100%; /* Full width on mobile */
+    margin-bottom: 20px;
+    align-items: center;
+  }
+}

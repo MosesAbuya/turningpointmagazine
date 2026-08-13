@@ -1,0 +1,122 @@
+.card {
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: 0 2px 4px black;
+}
+.no-print {
+  border-bottom: 1px solid black;
+  margin-bottom: 30px;
+  padding: 10px;
+}
+.card-title {
+  font-size: 2rem;
+  color: red;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: black;
+  font-weight: 600;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+#btn-wide {
+  width: 50%;
+}
+.edition-card img {
+  object-fit: cover;
+  border-radius: 4px;
+  height: auto;
+  width: 100%;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.underline {
+  font-size: 3rem;
+  font-weight: 700;
+  color: red;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+.sep {
+  width: 100%;
+  height: 2px;
+  border: 2px solid black;
+  margin-bottom: 50px;
+}
+.h4 {
+  font-size: 24px;
+  font-weight: 700;
+  color: Red;
+  margin: 20px;
+}
+form {
+  margin-top: 50px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+
+  .form-group {
+    margin: 20px;
+
+    label {
+      display: block;
+      font-size: 15px;
+      color: grey;
+    }
+
+    input {
+      width: 100%;
+    }
+  }
+
+  #adsSection {
+    margin-top: 100px;
+
+    .ad-container {
+      margin-bottom: 20px;
+
+      h4 {
+        font-size: 24px;
+        font-weight: 700;
+        color: Red;
+        margin: 20px;
+      }
+
+      .form-group {
+        margin: 20px;
+
+        label {
+          font-size: 15px;
+          color: grey;
+        }
+
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  #i-btn {
+    margin-top: 50px;
+  }
+
+  button {
+    margin-left: 20px;
+    padding: 5px;
+    align-self: center;
+    font-size: small;
+  }
+}

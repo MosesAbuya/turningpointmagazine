@@ -1,0 +1,130 @@
+RewriteEngine On
+
+# Remove .php extension from URL
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^/]+)$ $1.php [L]
+
+# Enable compression for better speed (gzip and Brotli)
+
+AddType text/css .css
+
+<IfModule mod_deflate.c>
+    # Compress text, HTML, JavaScript, CSS, XML, and fonts
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/css application/javascript application/x-javascript text/javascript application/font-woff2 application/font-woff application/font-ttf font/opentype image/svg+xml
+</IfModule>
+
+# Enable Brotli compression for modern browsers
+
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml application/xml application/xhtml+xml text/css application/javascript application/x-javascript text/javascript application/font-woff2 application/font-woff application/font-ttf font/opentype image/svg+xml
+</IfModule>
+
+# Cache images, JS, CSS, and font files for 1 year (adjust for your needs)
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Cache images (PNG, JPG, WebP)
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Cache fonts for 1 year
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+
+    # Cache CSS and JS files for 1 year
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/x-javascript "access plus 1 year"
+
+</IfModule>
+
+# Cache-Control Headers for better performance
+
+<IfModule mod_headers.c>
+    # Cache static assets (images, CSS, JS, and fonts) for 1 year
+    <FilesMatch "\.(ico|jpg|jpeg|png|gif|webp|svg|woff|woff2|ttf|otf|css|js)$">
+        Header set Cache-Control "public, max-age=3, immutable"
+    </FilesMatch>
+
+    # Add cache control for HTML files with a 5-minute cache max
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=300"
+    </FilesMatch>
+
+</IfModule>
+
+# Enable Cross-Origin Resource Sharing (CORS) for Fonts (woff, woff2, ttf, otf)
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(woff|woff2|ttf|otf)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# Preload Web Fonts and Critical CSS/JS (for faster first load)
+
+<IfModule mod_headers.c>
+    Header set Link "<https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400&display=swap>; rel=preload; as=style"
+    Header set Link "<https://unpkg.com/smooth-scroll@16.1.3/dist/smooth-scroll.min.js>; rel=preload; as=script"
+    Header set Link "<assets/fonts/florania.otf>; rel=preload; as=font; type=font/otf; crossorigin"
+    Header set Link "<assets/css/style.css>; rel=preload; as=style"
+</IfModule>
+
+# Optimize Cache for the 'uploads' folder
+
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_URI} ^/assets/uploads/
+    RewriteRule ^.*$ - [L]
+</IfModule>
+
+# Redirect all HTTP traffic to HTTPS
+
+<!--
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://www.turningpointmagazine.africa%{REQUEST_URI} [L,R=301]
+</IfModule> -->
+
+# Prevent directory listing for security
+
+Options -Indexes
+
+# Enable file download of images (For images inside assets/uploads)
+
+<FilesMatch "\.(webp|png)$">
+Header set Content-Disposition "attachment"
+</FilesMatch>
+
+# Security headers to improve the site's security
+
+<IfModule mod_headers.c>
+    # Prevent MIME types security risks
+    Header set X-Content-Type-Options "nosniff"
+
+    # Disable XSS attacks
+    Header set X-XSS-Protection "1; mode=block"
+
+    # Disable clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+
+    # Enable Strict-Transport-Security to force HTTPS for all future requests
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # Prevent browser from caching anything with sensitive data
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+
+</IfModule>
+
+# Handle 404 Error Pages
+
+ErrorDocument 404 /404.html

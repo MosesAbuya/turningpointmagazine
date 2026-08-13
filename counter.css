@@ -1,0 +1,82 @@
+.et-slidess {
+  background: linear-gradient(to right, #fff, #f8f8f8);
+  padding: 50px 20px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 100px;
+}
+
+.counter-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.counter {
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.counter::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: red;
+  border-radius: 10px 10px 0 0;
+}
+
+.c-out {
+  color: red;
+}
+
+.count {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.p-1 {
+  font-size: 1.2rem;
+  color: #777;
+}
+
+/* Style the third counter differently */
+.counter.c-a {
+  background-color: red;
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 0, 0, 0.2);
+}
+
+.counter.c-a .c-out,
+.counter.c-a .count,
+.counter.c-a .p-1 {
+  color: white;
+}
+
+.counter.c-a::before {
+  background-color: white;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .counter {
+    width: 30%;
+    margin-bottom: 0;
+  }
+}

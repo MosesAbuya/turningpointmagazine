@@ -1,0 +1,62 @@
+.btn {
+    position: relative;
+    padding: 0.8rem 1.5rem;
+    margin-top: 0.4rem;
+    background: #111;
+    /* Dark sci-fi background */
+    border: 2px solid #ff3131;
+    /* Neon red border */
+    color: #fff;
+    font-family: var(--serif-main);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+   border-radius: 10px;
+    
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+}
+
+.btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.btn:hover {
+    background: #ff3131;
+    /* Bright red hover effect */
+    color: #000;
+    border-color: #fff;
+    box-shadow: 0px 0px 20px rgba(255, 49, 49, 1);
+}
+
+.btn:active {
+    transform: scale(0.95);
+    box-shadow: 0px 0px 25px rgba(255, 49, 49, 0.9);
+}
+
+/* Additional styling for button text */
+.btn-text {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.btn-feed {
+    width: fit-content;
+}

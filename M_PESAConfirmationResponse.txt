@@ -1,0 +1,1734 @@
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"5fe8-4261-87f6-6d7d41adc6c3894121","CheckoutRequestID":"ws_CO_15022025095958616768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 5fe8-4261-87f6-6d7d41adc6c3894121
+    [CheckoutRequestID] => ws_CO_15022025095958616768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_15022025095958616768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"b54f-471d-93d9-f7f3bf3f7c0e2692342","CheckoutRequestID":"ws_CO_15022025100053048768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => b54f-471d-93d9-f7f3bf3f7c0e2692342
+    [CheckoutRequestID] => ws_CO_15022025100053048768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_15022025100053048768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"b54f-471d-93d9-f7f3bf3f7c0e2692356","CheckoutRequestID":"ws_CO_15022025100126631768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1.00},{"Name":"MpesaReceiptNumber","Value":"TBF34EVY55"},{"Name":"TransactionDate","Value":20250215100138},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => b54f-471d-93d9-f7f3bf3f7c0e2692356
+    [CheckoutRequestID] => ws_CO_15022025100126631768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TBF34EVY55
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250215100138
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_15022025100126631768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"c62b-4e23-a479-5f74de8082a11237106","CheckoutRequestID":"ws_CO_15022025113022175768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => c62b-4e23-a479-5f74de8082a11237106
+    [CheckoutRequestID] => ws_CO_15022025113022175768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_15022025113022175768579526
+Raw Response: 
+Invalid Response Structure: 
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"6543-425e-a177-2e84b1462ecd1241665","CheckoutRequestID":"ws_CO_15022025151106951768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1.00},{"Name":"MpesaReceiptNumber","Value":"TBF95RZKTX"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250215151005},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Payment updated for Transaction ID: ws_CO_15022025151106951768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"bbcd-4a89-bd1a-6ecdc639893b2696302","CheckoutRequestID":"ws_CO_15022025151720050768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Payment failed for Transaction ID: ws_CO_15022025151720050768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"bbcd-4a89-bd1a-6ecdc639893b2696981","CheckoutRequestID":"ws_CO_15022025155121657768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1.00},{"Name":"MpesaReceiptNumber","Value":"TBF65YMVA4"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250215155015},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Payment updated for Transaction ID: ws_CO_15022025155121657768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"5fe8-4261-87f6-6d7d41adc6c3903076","CheckoutRequestID":"ws_CO_15022025170036436768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 5fe8-4261-87f6-6d7d41adc6c3903076
+    [CheckoutRequestID] => ws_CO_15022025170036436768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_15022025170036436768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"b54f-471d-93d9-f7f3bf3f7c0e2701253","CheckoutRequestID":"ws_CO_15022025170109406768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1.00},{"Name":"MpesaReceiptNumber","Value":"TBF56ALDZF"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250215170119},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => b54f-471d-93d9-f7f3bf3f7c0e2701253
+    [CheckoutRequestID] => ws_CO_15022025170109406768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TBF56ALDZF
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250215170119
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_15022025170109406768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"6543-425e-a177-2e84b1462ecd1245410","CheckoutRequestID":"ws_CO_15022025174035538768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1.00},{"Name":"MpesaReceiptNumber","Value":"TBF56HSWH5"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250215174046},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 6543-425e-a177-2e84b1462ecd1245410
+    [CheckoutRequestID] => ws_CO_15022025174035538768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TBF56HSWH5
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250215174046
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_15022025174035538768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"6543-425e-a177-2e84b1462ecd1245486","CheckoutRequestID":"ws_CO_15022025174333806768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 6543-425e-a177-2e84b1462ecd1245486
+    [CheckoutRequestID] => ws_CO_15022025174333806768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_15022025174333806768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"5fe8-4261-87f6-6d7d41adc6c3905195","CheckoutRequestID":"ws_CO_15022025184347125768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 5fe8-4261-87f6-6d7d41adc6c3905195
+    [CheckoutRequestID] => ws_CO_15022025184347125768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_15022025184347125768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"6543-425e-a177-2e84b1462ecd1247701","CheckoutRequestID":"ws_CO_15022025191515313768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 6543-425e-a177-2e84b1462ecd1247701
+    [CheckoutRequestID] => ws_CO_15022025191515313768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_15022025191515313768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"bbcd-4a89-bd1a-6ecdc639893b2722285","CheckoutRequestID":"ws_CO_16022025112817540768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1.00},{"Name":"MpesaReceiptNumber","Value":"TBG19BUXL7"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250216112831},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => bbcd-4a89-bd1a-6ecdc639893b2722285
+    [CheckoutRequestID] => ws_CO_16022025112817540768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TBG19BUXL7
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250216112831
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16022025112817540768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"c62b-4e23-a479-5f74de8082a11345258","CheckoutRequestID":"ws_CO_18022025161018537768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => c62b-4e23-a479-5f74de8082a11345258
+    [CheckoutRequestID] => ws_CO_18022025161018537768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_18022025161018537768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"5fe8-4261-87f6-6d7d41adc6c3991973","CheckoutRequestID":"ws_CO_18022025163419829768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 5fe8-4261-87f6-6d7d41adc6c3991973
+    [CheckoutRequestID] => ws_CO_18022025163419829768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_18022025163419829768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"6543-425e-a177-2e84b1462ecd1819616","CheckoutRequestID":"ws_CO_06032025190352298768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 6543-425e-a177-2e84b1462ecd1819616
+    [CheckoutRequestID] => ws_CO_06032025190352298768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_06032025190352298768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"bbcd-4a89-bd1a-6ecdc639893b3242628","CheckoutRequestID":"ws_CO_10032025122634888768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => bbcd-4a89-bd1a-6ecdc639893b3242628
+    [CheckoutRequestID] => ws_CO_10032025122634888768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_10032025122634888768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"6543-425e-a177-2e84b1462ecd2319150","CheckoutRequestID":"ws_CO_22032025132905785768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 6543-425e-a177-2e84b1462ecd2319150
+    [CheckoutRequestID] => ws_CO_22032025132905785768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_22032025132905785768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"4fd1-46da-bbc0-5b03f987788c7193193","CheckoutRequestID":"ws_CO_23032025124003575768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 4fd1-46da-bbc0-5b03f987788c7193193
+    [CheckoutRequestID] => ws_CO_23032025124003575768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025124003575768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"f0b7-410a-bdf6-a93f3f87e2b231952143","CheckoutRequestID":"ws_CO_23032025124329972768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => f0b7-410a-bdf6-a93f3f87e2b231952143
+    [CheckoutRequestID] => ws_CO_23032025124329972768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025124329972768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"af7a-4921-9308-e8268a1dbebe4127734","CheckoutRequestID":"ws_CO_23032025131225311768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => af7a-4921-9308-e8268a1dbebe4127734
+    [CheckoutRequestID] => ws_CO_23032025131225311768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025131225311768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"05ed-4f00-a5aa-fe9ee43155e317253198","CheckoutRequestID":"ws_CO_23032025134258722768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 05ed-4f00-a5aa-fe9ee43155e317253198
+    [CheckoutRequestID] => ws_CO_23032025134258722768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025134258722768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"0e95-417e-88a1-34a7f65aed3b32011134","CheckoutRequestID":"ws_CO_23032025134519538768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 0e95-417e-88a1-34a7f65aed3b32011134
+    [CheckoutRequestID] => ws_CO_23032025134519538768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025134519538768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"0e95-417e-88a1-34a7f65aed3b32011545","CheckoutRequestID":"ws_CO_23032025134540174768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 0e95-417e-88a1-34a7f65aed3b32011545
+    [CheckoutRequestID] => ws_CO_23032025134540174768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025134540174768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"4c2a-4bbc-83a7-8d8cdb328ec34544013","CheckoutRequestID":"ws_CO_23032025143454093768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 4c2a-4bbc-83a7-8d8cdb328ec34544013
+    [CheckoutRequestID] => ws_CO_23032025143454093768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025143454093768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"0e95-417e-88a1-34a7f65aed3b32092459","CheckoutRequestID":"ws_CO_23032025144450086768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 0e95-417e-88a1-34a7f65aed3b32092459
+    [CheckoutRequestID] => ws_CO_23032025144450086768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025144450086768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"2a08-4dd1-969d-daf7fcaa96736604230","CheckoutRequestID":"ws_CO_23032025144512517768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 2a08-4dd1-969d-daf7fcaa96736604230
+    [CheckoutRequestID] => ws_CO_23032025144512517768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025144512517768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"0831-42c3-b374-3654788f3f9d31627777","CheckoutRequestID":"ws_CO_23032025151805849768579526","ResultCode":2028,"ResultDesc":"The request is not permitted according to product assignment."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 0831-42c3-b374-3654788f3f9d31627777
+    [CheckoutRequestID] => ws_CO_23032025151805849768579526
+    [ResultCode] => 2028
+    [ResultDesc] => The request is not permitted according to product assignment.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025151805849768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"4fd1-46da-bbc0-5b03f987788c7287166","CheckoutRequestID":"ws_CO_23032025152026217768579526","ResultCode":1037,"ResultDesc":"DS timeout user cannot be reached"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 4fd1-46da-bbc0-5b03f987788c7287166
+    [CheckoutRequestID] => ws_CO_23032025152026217768579526
+    [ResultCode] => 1037
+    [ResultDesc] => DS timeout user cannot be reached
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025152026217768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"359f-486d-9ec1-7d722b75b3f1625062","CheckoutRequestID":"ws_CO_23032025152130008768579526","ResultCode":2028,"ResultDesc":"The request is not permitted according to product assignment."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 359f-486d-9ec1-7d722b75b3f1625062
+    [CheckoutRequestID] => ws_CO_23032025152130008768579526
+    [ResultCode] => 2028
+    [ResultDesc] => The request is not permitted according to product assignment.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025152130008768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"359f-486d-9ec1-7d722b75b3f1626279","CheckoutRequestID":"ws_CO_23032025152326690768579526","ResultCode":2028,"ResultDesc":"The request is not permitted according to product assignment."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 359f-486d-9ec1-7d722b75b3f1626279
+    [CheckoutRequestID] => ws_CO_23032025152326690768579526
+    [ResultCode] => 2028
+    [ResultDesc] => The request is not permitted according to product assignment.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025152326690768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"fb44-4d20-8534-5458fa8600d615691748","CheckoutRequestID":"ws_CO_23032025164115020768579526","ResultCode":2028,"ResultDesc":"The request is not permitted according to product assignment."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => fb44-4d20-8534-5458fa8600d615691748
+    [CheckoutRequestID] => ws_CO_23032025164115020768579526
+    [ResultCode] => 2028
+    [ResultDesc] => The request is not permitted according to product assignment.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025164115020768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"fb44-4d20-8534-5458fa8600d615692914","CheckoutRequestID":"ws_CO_23032025164206709768579526","ResultCode":2028,"ResultDesc":"The request is not permitted according to product assignment."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => fb44-4d20-8534-5458fa8600d615692914
+    [CheckoutRequestID] => ws_CO_23032025164206709768579526
+    [ResultCode] => 2028
+    [ResultDesc] => The request is not permitted according to product assignment.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_23032025164206709768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"f0b7-410a-bdf6-a93f3f87e2b274878929","CheckoutRequestID":"ws_CO_14042025132627737768579526","ResultCode":2028,"ResultDesc":"The request is not permitted according to product assignment."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => f0b7-410a-bdf6-a93f3f87e2b274878929
+    [CheckoutRequestID] => ws_CO_14042025132627737768579526
+    [ResultCode] => 2028
+    [ResultDesc] => The request is not permitted according to product assignment.
+)
+
+Exception during Failed Payment DB Update: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '/ Adjusted to use checkout_request_id if needed' at line 3
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"aa78-4be3-b614-f9bd5cc308ea6649","CheckoutRequestID":"ws_CO_14042025132726882768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => aa78-4be3-b614-f9bd5cc308ea6649
+    [CheckoutRequestID] => ws_CO_14042025132726882768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_14042025132726882768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"1c25-4cc1-ac63-92d6bbf96a10177","CheckoutRequestID":"ws_CO_14042025133458745768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 1c25-4cc1-ac63-92d6bbf96a10177
+    [CheckoutRequestID] => ws_CO_14042025133458745768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_14042025133458745768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"fb44-4d20-8534-5458fa8600d658325888","CheckoutRequestID":"ws_CO_14042025133756059768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":5},{"Name":"MpesaReceiptNumber","Value":"TDE2PC5THY"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250414133804},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => fb44-4d20-8534-5458fa8600d658325888
+    [CheckoutRequestID] => ws_CO_14042025133756059768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 5
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDE2PC5THY
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250414133804
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_14042025133756059768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"8929-4831-b00c-f3e4f4869ac336413","CheckoutRequestID":"ws_CO_14042025133926631768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 8929-4831-b00c-f3e4f4869ac336413
+    [CheckoutRequestID] => ws_CO_14042025133926631768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_14042025133926631768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"3cbd-4ff9-8b0e-5ee69aa3f5ea2260","CheckoutRequestID":"ws_CO_14042025134831124768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 3cbd-4ff9-8b0e-5ee69aa3f5ea2260
+    [CheckoutRequestID] => ws_CO_14042025134831124768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_14042025134831124768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"3cbd-4ff9-8b0e-5ee69aa3f5ea2812","CheckoutRequestID":"ws_CO_14042025134932586768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 3cbd-4ff9-8b0e-5ee69aa3f5ea2812
+    [CheckoutRequestID] => ws_CO_14042025134932586768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_14042025134932586768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"1c25-4cc1-ac63-92d6bbf96a107727","CheckoutRequestID":"ws_CO_14042025135114173768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 1c25-4cc1-ac63-92d6bbf96a107727
+    [CheckoutRequestID] => ws_CO_14042025135114173768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_14042025135114173768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"2a08-4dd1-969d-daf7fcaa967349438065","CheckoutRequestID":"ws_CO_14042025135200174768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 2a08-4dd1-969d-daf7fcaa967349438065
+    [CheckoutRequestID] => ws_CO_14042025135200174768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_14042025135200174768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"fb44-4d20-8534-5458fa8600d658378692","CheckoutRequestID":"ws_CO_14042025140222337768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => fb44-4d20-8534-5458fa8600d658378692
+    [CheckoutRequestID] => ws_CO_14042025140222337768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_14042025140222337768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"3562-46aa-b9f5-cc5751b6f8ac227105","CheckoutRequestID":"ws_CO_16042025102434482768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 3562-46aa-b9f5-cc5751b6f8ac227105
+    [CheckoutRequestID] => ws_CO_16042025102434482768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_16042025102434482768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"fb44-4d20-8534-5458fa8600d663085311","CheckoutRequestID":"ws_CO_16042025102522596768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":5},{"Name":"MpesaReceiptNumber","Value":"TDG3XWW1X7"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416102531},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => fb44-4d20-8534-5458fa8600d663085311
+    [CheckoutRequestID] => ws_CO_16042025102522596768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 5
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG3XWW1X7
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416102531
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025102522596768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"9199-4c4e-920c-25460b227e26265516","CheckoutRequestID":"ws_CO_16042025110151888768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG9Y2CG8H"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416110200},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 9199-4c4e-920c-25460b227e26265516
+    [CheckoutRequestID] => ws_CO_16042025110151888768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG9Y2CG8H
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416110200
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025110151888768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"90df-4351-b2e1-c47bd869856d274002","CheckoutRequestID":"ws_CO_16042025111254247768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG0Y3Z5QW"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416111305},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 90df-4351-b2e1-c47bd869856d274002
+    [CheckoutRequestID] => ws_CO_16042025111254247768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG0Y3Z5QW
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416111305
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+COMPLETED invoice: INV-1744790450Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"90df-4351-b2e1-c47bd869856d286894","CheckoutRequestID":"ws_CO_16042025112611190768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 90df-4351-b2e1-c47bd869856d286894
+    [CheckoutRequestID] => ws_CO_16042025112611190768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"f0b7-410a-bdf6-a93f3f87e2b279817592","CheckoutRequestID":"ws_CO_16042025112624748768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG2Y5ZLSO"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416112633},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => f0b7-410a-bdf6-a93f3f87e2b279817592
+    [CheckoutRequestID] => ws_CO_16042025112624748768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG2Y5ZLSO
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416112633
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+COMPLETED invoice: INV-1744791290Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"d4b8-496f-8801-295f5e19302c77896179","CheckoutRequestID":"ws_CO_16042025113651238768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => d4b8-496f-8801-295f5e19302c77896179
+    [CheckoutRequestID] => ws_CO_16042025113651238768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"2a08-4dd1-969d-daf7fcaa967354348295","CheckoutRequestID":"ws_CO_16042025113705789768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG1Y7KP4B"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416113713},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 2a08-4dd1-969d-daf7fcaa967354348295
+    [CheckoutRequestID] => ws_CO_16042025113705789768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG1Y7KP4B
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416113713
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+COMPLETED invoice: INV-1744791931Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"4ede-4c21-b3c1-10c7e88ada5c40020764","CheckoutRequestID":"ws_CO_16042025115530087768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 4ede-4c21-b3c1-10c7e88ada5c40020764
+    [CheckoutRequestID] => ws_CO_16042025115530087768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"a8ec-4da3-ad83-154fe8a5d6f225692305","CheckoutRequestID":"ws_CO_16042025115544739768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG3YAB8UZ"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416115551},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => a8ec-4da3-ad83-154fe8a5d6f225692305
+    [CheckoutRequestID] => ws_CO_16042025115544739768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG3YAB8UZ
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416115551
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+COMPLETED invoice: INV-1744793049Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"a8ec-4da3-ad83-154fe8a5d6f225720135","CheckoutRequestID":"ws_CO_16042025120654096768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => a8ec-4da3-ad83-154fe8a5d6f225720135
+    [CheckoutRequestID] => ws_CO_16042025120654096768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"e1c6-498e-b6c4-be3ec1672d88331917","CheckoutRequestID":"ws_CO_16042025121255188768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => e1c6-498e-b6c4-be3ec1672d88331917
+    [CheckoutRequestID] => ws_CO_16042025121255188768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"0831-42c3-b374-3654788f3f9d79409218","CheckoutRequestID":"ws_CO_16042025121309153768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG9YCUYWR"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416121318},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 0831-42c3-b374-3654788f3f9d79409218
+    [CheckoutRequestID] => ws_CO_16042025121309153768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG9YCUYWR
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416121318
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+COMPLETED invoice: INV-1744793733Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"d4b8-496f-8801-295f5e19302c78013290","CheckoutRequestID":"ws_CO_16042025122319129768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG2YECWHI"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416122327},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => d4b8-496f-8801-295f5e19302c78013290
+    [CheckoutRequestID] => ws_CO_16042025122319129768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG2YECWHI
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416122327
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+COMPLETED invoice: INV-1744793733Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"90df-4351-b2e1-c47bd869856d361606","CheckoutRequestID":"ws_CO_16042025124149105768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 90df-4351-b2e1-c47bd869856d361606
+    [CheckoutRequestID] => ws_CO_16042025124149105768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_16042025124149105768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"2a08-4dd1-969d-daf7fcaa967354512625","CheckoutRequestID":"ws_CO_16042025124157598768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG0YH6MII"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416124204},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 2a08-4dd1-969d-daf7fcaa967354512625
+    [CheckoutRequestID] => ws_CO_16042025124157598768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG0YH6MII
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416124204
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025124157598768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"12d5-463e-80d4-bbeea0dbace3102805","CheckoutRequestID":"ws_CO_16042025125151280768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 12d5-463e-80d4-bbeea0dbace3102805
+    [CheckoutRequestID] => ws_CO_16042025125151280768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_16042025125151280768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"e1c6-498e-b6c4-be3ec1672d88370088","CheckoutRequestID":"ws_CO_16042025125206683768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG9YIQUPV"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416125212},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => e1c6-498e-b6c4-be3ec1672d88370088
+    [CheckoutRequestID] => ws_CO_16042025125206683768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG9YIQUPV
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416125212
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025125206683768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"d4b8-496f-8801-295f5e19302c78096965","CheckoutRequestID":"ws_CO_16042025125608791768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => d4b8-496f-8801-295f5e19302c78096965
+    [CheckoutRequestID] => ws_CO_16042025125608791768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_16042025125608791768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"90df-4351-b2e1-c47bd869856d376260","CheckoutRequestID":"ws_CO_16042025125623106768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG9YJEV2T"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416125632},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 90df-4351-b2e1-c47bd869856d376260
+    [CheckoutRequestID] => ws_CO_16042025125623106768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG9YJEV2T
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416125632
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025125623106768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"d4b8-496f-8801-295f5e19302c78114362","CheckoutRequestID":"ws_CO_16042025130249925768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => d4b8-496f-8801-295f5e19302c78114362
+    [CheckoutRequestID] => ws_CO_16042025130249925768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_16042025130249925768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"e1c6-498e-b6c4-be3ec1672d88381196","CheckoutRequestID":"ws_CO_16042025130300660768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG9YKFDB1"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416130307},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => e1c6-498e-b6c4-be3ec1672d88381196
+    [CheckoutRequestID] => ws_CO_16042025130300660768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG9YKFDB1
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416130307
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025130300660768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"a8ec-4da3-ad83-154fe8a5d6f226083979","CheckoutRequestID":"ws_CO_16042025142820550768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => a8ec-4da3-ad83-154fe8a5d6f226083979
+    [CheckoutRequestID] => ws_CO_16042025142820550768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_16042025142820550768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"fb44-4d20-8534-5458fa8600d663722864","CheckoutRequestID":"ws_CO_16042025143410494768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG7YYZY7N"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416143418},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => fb44-4d20-8534-5458fa8600d663722864
+    [CheckoutRequestID] => ws_CO_16042025143410494768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG7YYZY7N
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416143418
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025143410494768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"0831-42c3-b374-3654788f3f9d79789771","CheckoutRequestID":"ws_CO_16042025144023846768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDG5YZYIYZ"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416144030},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 0831-42c3-b374-3654788f3f9d79789771
+    [CheckoutRequestID] => ws_CO_16042025144023846768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG5YZYIYZ
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416144030
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025144023846768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"0831-42c3-b374-3654788f3f9d79859368","CheckoutRequestID":"ws_CO_16042025150721120768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":5},{"Name":"MpesaReceiptNumber","Value":"TDG3Z440CN"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416150739},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 0831-42c3-b374-3654788f3f9d79859368
+    [CheckoutRequestID] => ws_CO_16042025150721120768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 5
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG3Z440CN
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416150739
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025150721120768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"3562-46aa-b9f5-cc5751b6f8ac512752","CheckoutRequestID":"ws_CO_16042025151152937713533932","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":5},{"Name":"MpesaReceiptNumber","Value":"TDG2Z4SXQQ"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250416151213},{"Name":"PhoneNumber","Value":254713533932}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 3562-46aa-b9f5-cc5751b6f8ac512752
+    [CheckoutRequestID] => ws_CO_16042025151152937713533932
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 5
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDG2Z4SXQQ
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250416151213
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254713533932
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_16042025151152937713533932
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"ebb1-43b6-8ce2-90b293ac2304696085","CheckoutRequestID":"ws_CO_16042025175930863768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => ebb1-43b6-8ce2-90b293ac2304696085
+    [CheckoutRequestID] => ws_CO_16042025175930863768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_16042025175930863768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"0c73-4c8a-b52f-ac3ee8c96e0d1942141","CheckoutRequestID":"ws_CO_22042025161359961768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 0c73-4c8a-b52f-ac3ee8c96e0d1942141
+    [CheckoutRequestID] => ws_CO_22042025161359961768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_22042025161359961768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"25fd-4400-93ab-1f07fba868fe566057","CheckoutRequestID":"ws_CO_26042025160048625768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 25fd-4400-93ab-1f07fba868fe566057
+    [CheckoutRequestID] => ws_CO_26042025160048625768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_26042025160048625768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"921c-4fd5-852a-385e8bc05ccd1902177","CheckoutRequestID":"ws_CO_26042025214222586768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDQ9CUTLWF"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250426214232},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 921c-4fd5-852a-385e8bc05ccd1902177
+    [CheckoutRequestID] => ws_CO_26042025214222586768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDQ9CUTLWF
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250426214232
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_26042025214222586768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"94b4-4122-aa0c-9e45751d47376444312","CheckoutRequestID":"ws_CO_26042025220034416768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDQ9CXHTVH"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250426220044},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 94b4-4122-aa0c-9e45751d47376444312
+    [CheckoutRequestID] => ws_CO_26042025220034416768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDQ9CXHTVH
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250426220044
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_26042025220034416768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"fb52-4f0e-aaad-8e0ec4caa9131506812","CheckoutRequestID":"ws_CO_26042025222800293768579526","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1},{"Name":"MpesaReceiptNumber","Value":"TDQ2D0UIMY"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20250426222808},{"Name":"PhoneNumber","Value":254768579526}]}}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => fb52-4f0e-aaad-8e0ec4caa9131506812
+    [CheckoutRequestID] => ws_CO_26042025222800293768579526
+    [ResultCode] => 0
+    [ResultDesc] => The service request is processed successfully.
+    [CallbackMetadata] => Array
+        (
+            [Item] => Array
+                (
+                    [0] => Array
+                        (
+                            [Name] => Amount
+                            [Value] => 1
+                        )
+
+                    [1] => Array
+                        (
+                            [Name] => MpesaReceiptNumber
+                            [Value] => TDQ2D0UIMY
+                        )
+
+                    [2] => Array
+                        (
+                            [Name] => Balance
+                        )
+
+                    [3] => Array
+                        (
+                            [Name] => TransactionDate
+                            [Value] => 20250426222808
+                        )
+
+                    [4] => Array
+                        (
+                            [Name] => PhoneNumber
+                            [Value] => 254768579526
+                        )
+
+                )
+
+        )
+
+)
+
+Payment updated successfully for Transaction ID: ws_CO_26042025222800293768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"2664-4ddd-8c6b-6bc2fad2c85a6140209","CheckoutRequestID":"ws_CO_28042025175130797718055457","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 2664-4ddd-8c6b-6bc2fad2c85a6140209
+    [CheckoutRequestID] => ws_CO_28042025175130797718055457
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_28042025175130797718055457
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"ccda-4df3-b96b-c632b35f58093281132","CheckoutRequestID":"ws_CO_08062025180033435768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => ccda-4df3-b96b-c632b35f58093281132
+    [CheckoutRequestID] => ws_CO_08062025180033435768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_08062025180033435768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"772d-46a8-bb47-81eb1f9eb5024942941","CheckoutRequestID":"ws_CO_08062025181526776768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 772d-46a8-bb47-81eb1f9eb5024942941
+    [CheckoutRequestID] => ws_CO_08062025181526776768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_08062025181526776768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"01dd-4c9c-9ef0-2bd77d87b435660949","CheckoutRequestID":"ws_CO_08062025181720671768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 01dd-4c9c-9ef0-2bd77d87b435660949
+    [CheckoutRequestID] => ws_CO_08062025181720671768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_08062025181720671768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"941a-4b23-9830-a9a6942158191704175","CheckoutRequestID":"ws_CO_08062025182048420768579526","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 941a-4b23-9830-a9a6942158191704175
+    [CheckoutRequestID] => ws_CO_08062025182048420768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request cancelled by user
+)
+
+Payment marked as failed for Transaction ID: ws_CO_08062025182048420768579526
+Raw Response: 
+Invalid Response Structure: 
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"69e3-4f22-a9c2-3ce786dac8d05756057","CheckoutRequestID":"ws_CO_11102025145410820768579526","ResultCode":1037,"ResultDesc":"No response from user."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 69e3-4f22-a9c2-3ce786dac8d05756057
+    [CheckoutRequestID] => ws_CO_11102025145410820768579526
+    [ResultCode] => 1037
+    [ResultDesc] => No response from user.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_11102025145410820768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"f872-401b-8a4b-e45d898ab2c41777332","CheckoutRequestID":"ws_CO_11102025150454716768579526","ResultCode":1032,"ResultDesc":"Request Cancelled by user."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => f872-401b-8a4b-e45d898ab2c41777332
+    [CheckoutRequestID] => ws_CO_11102025150454716768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request Cancelled by user.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_11102025150454716768579526
+Raw Response: 
+Invalid Response Structure: 
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"f815-48a7-a8c8-415436e4bde61612801","CheckoutRequestID":"ws_CO_26012026144427924768579526","ResultCode":1037,"ResultDesc":"DS timeout user cannot be reached."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => f815-48a7-a8c8-415436e4bde61612801
+    [CheckoutRequestID] => ws_CO_26012026144427924768579526
+    [ResultCode] => 1037
+    [ResultDesc] => DS timeout user cannot be reached.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_26012026144427924768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"e867-41f1-86e9-74362be8de4f8940492","CheckoutRequestID":"ws_CO_26012026144451588768579526","ResultCode":1037,"ResultDesc":"DS timeout user cannot be reached."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => e867-41f1-86e9-74362be8de4f8940492
+    [CheckoutRequestID] => ws_CO_26012026144451588768579526
+    [ResultCode] => 1037
+    [ResultDesc] => DS timeout user cannot be reached.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_26012026144451588768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"efb1-4ef2-abe7-6b40324008611792013","CheckoutRequestID":"ws_CO_26012026144521633768579526","ResultCode":1032,"ResultDesc":"Request Cancelled by user."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => efb1-4ef2-abe7-6b40324008611792013
+    [CheckoutRequestID] => ws_CO_26012026144521633768579526
+    [ResultCode] => 1032
+    [ResultDesc] => Request Cancelled by user.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_26012026144521633768579526
+Raw Response: {"Body":{"stkCallback":{"MerchantRequestID":"9388-420e-81ae-22bc1470da70286547","CheckoutRequestID":"ws_CO_26012026202817718718055457","ResultCode":1032,"ResultDesc":"Request Cancelled by user."}}}
+Decoded Response: Array
+(
+    [MerchantRequestID] => 9388-420e-81ae-22bc1470da70286547
+    [CheckoutRequestID] => ws_CO_26012026202817718718055457
+    [ResultCode] => 1032
+    [ResultDesc] => Request Cancelled by user.
+)
+
+Payment marked as failed for Transaction ID: ws_CO_26012026202817718718055457

@@ -1,0 +1,12 @@
+Timestamp: 2025-03-22 18:59:49
+{
+    "requestId": "d006-4f8a-968d-632933b424e682813936",
+    "errorCode": "404.001.03",
+    "errorMessage": "Invalid Access Token"
+}[INFO] Fetching Access Token...
+Timestamp: 2025-03-22 19:03:32
+{
+    "requestId": "f3e7-4925-9ada-ad737ee2556f16730374",
+    "errorCode": "404.001.03",
+    "errorMessage": "Invalid Access Token"
+}

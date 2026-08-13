@@ -1,0 +1,274 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 199" class="promo-background bv-111">
+    <path fill="#d44b4b" fill-opacity="1" d="M0,192L1440,64L1440,320L0,320Z"></path>
+</svg>
+
+<section class="promo-section" id="promo-advertise">
+    <div class="promo-items">
+        <div class="promo-item">
+            <div class="promo-image">
+                <img class="img-f" src="assets/c1.webp" class="image-full" alt="">
+            </div>
+            <div class="promo-text">
+                <h1>Advertise</h1>
+                <p>Reach your target audience with our magazine. Our publication offers a unique opportunity to
+                    showcase your brand and connect with potential customers. Contact us today to learn more
+                    about our advertising options.</p>
+                <p class="promo-reach">Reach out</p>
+                <button class="btn">
+                            <span class="btn-text"><a class="promo-link" href="story.php">Advertise</a></span>
+                            <span class="btn-shine"></span>
+                        </button>
+            </div>
+        </div>
+        <div class="promo-item">
+            <div class="promo-image">
+                <img class="img-f" src="assets/c2.webp" class="image-full" alt="">
+            </div>
+            <div class="promo-text">
+                <h1>Contribute</h1>
+                <p>Join our community and share your unique experiences! Contribute your photos, stories, and
+                    insights to be featured in our magazine. We'll give you the credit you deserve and showcase
+                    your work to a global audience.</p>
+                <p class="promo-reach">Reach out</p>
+                <button class="btn">
+                            <span class="btn-text"><a class="promo-link" href="story.php">Share your story
+                                    now</a></span>
+                            <span class="btn-shine"></span>
+                        </button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="et-slide" id="patners">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="sv1">
+        <path fill="#d44b4b" fill-opacity="1" d="M0,128L480,320L960,192L1440,64L1440,320L960,320L480,320L0,320Z"></path>
+    </svg>
+    <h1>Partners</h1>
+    <div class="p-logos">
+        <div class="p-logo"><a href="https://topwellnessafrica.co.ke/" target="_blank"><img class="p-img"
+                            src="assets/l1.png" alt=""></a></div>
+        <div class="p-logo"><a href="https://malshemedia.com" target="_blank"><img class="p-img"
+                            src="assets/l2.png" alt=""></a>
+        </div>
+        <div class="p-logo"><img class="p-img" src="assets/l3.png" alt=""></div>
+        <div class="p-logo"><a href="https://impactalentconsulting.com/" target="_blank"><img class="p-img"
+                            src="assets/l4.png" alt=""></a></div>
+        <div class="p-logo"><img class="p-img" src="assets/l5.png" alt=""></div>
+        <div class="p-logo"><a href="https://www.kimisitusacco.or.ke/" target="_blank"><img class="p-img"
+                            src="assets/l6.png" alt=""></a></div>
+        <div class="p-logo"><a href="https://jitoleegoodfriendsfoundation.org/" target="_blank"><img
+                            class="p-img" src="assets/l7.png" alt=""></a></div>
+        <div class="p-logo"><img class="p-img p-img-s" src="assets/l8.png" alt=""></div>
+        <div class="p-logo"><a href="https://www.kimisitusacco.or.ke/" target="_blank"><img class="p-img"
+                            src="assets/l6b.png" alt=""></a></div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 318" class="sv2">
+        <path fill="#d44b4b" fill-opacity=" 1" d="M0,128L480,320L960,192L1440,64L1440,320L960,320L480,320L0,320Z">
+        </path>
+    </svg>
+</section>
+
+<div class="next-head-text">
+        <h1>Cart</h1>
+        <h2 id="b-crumb-h2"><a  href="index.php">Home </a>/<a href="shop.php"> Shop </a>/ Cart</h2>
+    </div>
+<div class="container-fluid">
+    <div class="row px-5">
+        <div class="col-md-7">
+            <div class="shopping-cart">
+
+                <?php
+
+                    $total = 0;
+                    if (isset($_SESSION['cart'])){
+                        $pids = array_keys($_SESSION['cart']);
+
+                        $result = $db->getData($pids);
+                        while ($row = $result->fetch_assoc()){
+                            cartItems($row);
+                            $total += (floatval($row['current_price']) * intval($_SESSION['cart'][$row['id']]));
+                        }
+                    }else{
+                        echo "<h5>Cart is Empty</h5>";
+                    }
+
+                ?>
+
+            </div>
+        </div>
+        <div class="col-md-4 offset-md-1 border rounded mt-5 bg-white h-25">
+
+            <div class="pt-4">
+                <h5>Total</h5>
+                <hr>
+                <div class="row price-details">
+                    <div class="col-md-6">
+                        <?php
+                            if (isset($_SESSION['cart'])){
+                                $count  = count($_SESSION['cart']);
+                                echo "<h6>Price ($count items)</h6>";
+                            }else{
+                                echo "<h6>Price (0 items)</h6>";
+                            }
+                        ?>
+                        <h6>Delivery Charges</h6>
+                        <hr>
+                        <h6>Amount Payable</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Kes<?php echo number_format($total, 2); ?></h6>
+                        <h6 class="text-success">FREE</h6>
+                        <hr>
+                        <h6>Kes<?php
+                            echo number_format($total, 2);
+                            ?></h6>
+                    </div>
+                </div>
+            </div>
+            <!-- Button to Show/Hide Form -->
+<div class="text-center my-4">
+    <button id="toggleFormBtn" class="btn btn-danger" style="">
+        Checkout
+    </button>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="f-area" style="display:flex; align-items: center; justify-content: center; background-color: #FFFFF; width: 100%; ">
+
+
+<!-- Booking Form (Initially Hidden) -->
+<div class="w-50 mx-auto p-3 form-c form" id="form-c" 
+     style="align-self: center; align-items: center; justify-content: center; transition: all .3s ease; width: fit-content; padding: 50px; display: none;">
+  
+    <form id="bookingForm" class="fom" method="POST" style="transition: all .3s ease;">
+        <h2 class="form-title">Fill in your payment details</h2>
+
+        <div class="method">
+            <div class="method-item" id="mpesaOption" data-method="MPESA">Mpesa</div>
+            <div class="method-item" id="bankOption" data-method="BANK">Bank</div>
+        </div>
+
+        <!-- User Information Fields -->
+        <div class="form-item">
+            <input type="text" class="input" placeholder="First Name" name="first_name" required>
+        </div>
+        <div class="form-item">
+            <input type="text" class="input" placeholder="Last Name" name="last_name" required>
+        </div>
+        <div class="form-item">
+            <input type="email" class="input" placeholder="Email" name="email" required>
+        </div>
+        <div class="form-item" style="display: flex; flex-direction: column; align-items: left; justify-content: center;">
+        <label>Your Mpesa Number</label>
+            <input type="text" class="input" placeholder="Contact" value="254" name="contact" required>
+        </div>
+       
+
+        <!-- Hidden Fields -->
+        <input type="hidden" id="amount" name="amount" value="">
+        <input type="hidden" id="currency" name="currency" value="KES">
+        <input type="hidden" id="payment_method" name="payment_method" value="">
+        <input type="hidden" id="invoice_id" name="invoice_id" value="<?php echo uniqid('INV-'); ?>">
+
+        <!-- Bank Details Section (Initially Hidden) -->
+        <div id="bankDetailsSection" style="display: none;">
+            <h3>Bank Details</h3>
+            <div class="form-item">
+                <input type="text" class="input" placeholder="Bank Name" name="bank_name">
+            </div>
+            <div class="form-item">
+                <input type="text" class="input" placeholder="Account Number" name="account_number">
+            </div>
+            <div class="form-item">
+                <input type="text" class="input" placeholder="CVV" name="cvv">
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-item dttn">
+            <button type="button" id="proceedToPay" class="btn btn-danger">
+                <span class="btn-text">Proceed To Pay</span>
+            </button>
+        </div>
+
+        <!-- Response Section -->
+        <div id="subscribe-response"></div>
+    </form>
+</div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Mobile Menu Toggle
+    const menuIcon = document.getElementById("menu-icon");
+    const navLinks = document.getElementById("nav-links");
+
+    menuIcon.addEventListener("click", function () {
+        navLinks.classList.toggle("nav-active");
+    });
+
+    // Account Dropdown
+    const accountBtn = document.getElementById("accountBtn");
+    const accountDropdown = document.getElementById("accountDropdown");
+
+    accountBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        accountDropdown.style.display = accountDropdown.style.display === "block" ? "none" : "block";
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!accountBtn.contains(event.target) && !accountDropdown.contains(event.target)) {
+            accountDropdown.style.display = "none";
+        }
+    });
+});
+
+</script>
+<!-- JavaScript to Control Form Visibility -->
+<script>
+    document.getElementById("toggleFormBtn").addEventListener("click", function() {
+        var form = document.getElementById("form-c");
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block";
+            this.textContent = "Hide Booking Form";
+        } else {
+            form.style.display = "none";
+            this.textContent = "Show Booking Form";
+        }
+    });
+</script>
+
+<script>
+// JavaScript to handle payment method selection
+document.addEventListener('DOMContentLoaded', function () {
+    const mpesaOption = document.getElementById('mpesaOption');
+    const bankOption = document.getElementById('bankOption');
+    const paymentMethodField = document.getElementById('payment_method');
+    const bankDetailsSection = document.getElementById('bankDetailsSection');
+
+    // Default selection: Mpesa
+    paymentMethodField.value = 'MPESA';
+    mpesaOption.classList.add('active'); // Add active styling to Mpesa
+
+    // Add click event listeners for payment method options
+    mpesaOption.addEventListener('click', function () {
+        paymentMethodField.value = 'MPESA';
+        mpesaOption.classList.add('active');
+        bankOption.classList.remove('active');
+        bankDetailsSection.style.display = 'none';
+    });
+
+    bankOption.addEventListener('click', function () {
+        paymentMethodField.value = 'BANK';
+        bankOption.classList.add('active');
+        mpesaOption.classList.remove('active');
+        bankDetailsSection.style.display = 'block';
+    });
+});
+</script>

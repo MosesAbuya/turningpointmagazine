@@ -1,0 +1,64 @@
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php8_module>
+   php_flag display_errors Off
+   php_value max_execution_time 90
+   php_value max_input_time 90
+   php_value max_input_vars 1000
+   php_value memory_limit 180M
+   php_value post_max_size 120M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value upload_max_filesize 9000M
+   php_flag zlib.output_compression Off
+</IfModule>
+<IfModule lsapi_module>
+   php_flag display_errors Off
+   php_value max_execution_time 90
+   php_value max_input_time 90
+   php_value max_input_vars 1000
+   php_value memory_limit 180M
+   php_value post_max_size 120M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value upload_max_filesize 9000M
+   php_flag zlib.output_compression Off
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /turningpoint/
+
+# Redirect non-www to www and HTTP to HTTPS
+RewriteCond %{HTTP_HOST} ^turningpointmagazine\.africa [NC,OR]
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} ^(?:www\.)?turningpointmagazine\.africa [NC]
+RewriteRule ^(.*)$ https://www.turningpointmagazine.africa/$1 [L,R=301,NE]
+
+# Force redirect direct .php access to extensionless (External redirect)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^.]+)\.php[\ ?]
+RewriteRule ^([^.]+)\.php$ $1 [R=301,L]
+
+# Rewrite sitemap.xml to sitemap.php
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# SEO Friendly Routes
+RewriteRule ^blog/([^/]+)/?$ single-blog.php?slug=$1 [L,QSA]
+RewriteRule ^article/([^/]+)/?$ issue.php?slug=$1 [L,QSA]
+RewriteRule ^category/([^/]+)/?$ cat.php?slug=$1 [L,QSA]
+RewriteRule ^edition/([^/]+)/?$ issue-1.php?slug=$1 [L,QSA]
+
+# Remove .php extension for static pages (Internal rewrite)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+</IfModule>

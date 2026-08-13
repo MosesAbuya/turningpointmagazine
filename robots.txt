@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /shop/
+
+Sitemap: https://www.turningpointmagazine.africa/sitemap.xml

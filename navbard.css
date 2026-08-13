@@ -1,0 +1,333 @@
+Top Bar .n-top-bar {
+  background-color: #000;
+  color: #fff;
+  padding: 8px 16px;
+}
+
+.n-top-bar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.n-social-icons a {
+  margin-left: 8px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.n-social-icons a:hover {
+  color: #ffcc00;
+}
+
+/* Navbar */
+.n-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: #f7f7f7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.n-navbar-logo h1 {
+  margin: 0;
+  font-family: "florania";
+  color: #ff0000;
+  font-size: 2.5rem;
+  letter-spacing: 0.1px;
+  font-weight: 600;
+}
+
+.n-navbar-logo span {
+  font-size: 12px;
+  color: #555;
+}
+
+.n-navbar-menu {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.n-navbar-menu li {
+  position: relative;
+}
+
+.n-navbar-menu a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  padding: 8px 12px;
+}
+
+.n-navbar-menu a:hover {
+  border-bottom: 3px solid #ff0000;
+}
+
+/* Dropdown Menu */
+.n-dropdown {
+  a {
+    span {
+      color: #ff0000;
+    }
+  }
+}
+.n-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #ff0000;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  z-index: 10000;
+}
+
+.n-dropdown-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.n-dropdown:hover .n-dropdown-menu {
+  display: block;
+}
+
+/* Search Module */
+.n-search-module {
+  position: relative;
+  width: auto;
+}
+
+.n-search-input {
+  width: 100%;
+  padding: 8px 40px 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+}
+
+.n-search-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #000;
+}
+
+.n-search-button:hover {
+  color: #ff0000;
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .n-navbar-logo h1 {
+    font-size: 18px;
+  }
+}
+/* Mobile view: max-width 768px */
+@media (max-width: 768px) {
+  .n-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+  }
+
+  .n-navbar-logo {
+    flex: 1;
+  }
+
+  .n-navbar-logo h1 {
+    font-size: 18px;
+  }
+
+  .n-navbar-menu {
+    z-index: 100000;
+    display: none; /* Hide the menu by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .n-navbar-menu.active {
+    display: flex; /* Show the menu when active */
+  }
+
+  .n-navbar-menu li {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .n-navbar-menu li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .n-navbar-menu .n-dropdown {
+    position: relative;
+  }
+
+  .n-navbar-menu .n-dropdown-menu {
+    display: none;
+    flex-direction: column;
+    position: static;
+    background: none;
+    box-shadow: none;
+  }
+
+  .n-navbar-menu .n-dropdown:hover .n-dropdown-menu {
+    display: flex;
+  }
+
+  .n-search-module {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .n-search-input {
+    max-width: 100px; /* Reduce input size for mobile */
+  }
+
+  /* Hamburger menu icon */
+  .n-hamburger {
+    display: block;
+    cursor: pointer;
+    flex: 1;
+    text-align: right;
+  }
+
+  .n-hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: #333;
+  }
+
+  /* Desktop-specific elements to hide on mobile */
+  @media (min-width: 769px) {
+    .n-hamburger {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #nn-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+  }
+
+  #nn-navbar-logo {
+    flex: 1;
+  }
+
+  #nn-logo {
+    font-size: 18px;
+  }
+
+  #nn-menu {
+    z-index: 100000;
+    display: none; /* Hide the menu by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #nn-menu.active {
+    display: flex; /* Show the menu when active */
+  }
+
+  #nn-menu li {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  #nn-menu li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+  }
+
+  #nn-dropdown {
+    position: relative;
+  }
+
+  #nn-dropdown-menu {
+    display: none;
+    flex-direction: column;
+    position: static;
+    background: none;
+    box-shadow: none;
+  }
+
+  #nn-dropdown:hover #nn-dropdown-menu {
+    display: flex;
+  }
+
+  #nn-search-module {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  #nn-search-input {
+    max-width: 100px; /* Reduce input size for mobile */
+  }
+
+  /* Hamburger menu icon */
+  #nn-hamburger {
+    display: block;
+    cursor: pointer;
+    flex: 1;
+    text-align: right;
+  }
+
+  #nn-hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: #333;
+  }
+
+  /* Desktop-specific elements to hide on mobile */
+  @media (min-width: 769px) {
+    #nn-hamburger {
+      display: none;
+    }
+  }
+}
+/* Style for the active nav item */
+.n-navbar-menu li a.active {
+  border-bottom: 3px solid red;
+  color: #333; /* Optional: Adjust the text color when active */
+}

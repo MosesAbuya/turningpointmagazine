@@ -1,0 +1,867 @@
+/* ---------------------------------- */
+/* 1. Global & Fonts
+/* ---------------------------------- */
+@font-face {
+  font-family: florania;
+  src: url(assets/fonts/florania.otf) format("opentype");
+}
+
+:root {
+  --brand-red: #ff0000;
+  --brand-red-dark: #cc0000;
+  --brand-black: #1a1a1a;
+  --brand-teal: #008080;
+  --brand-pink: #e6007e;
+  --bg-light: #f8f9fa;
+  --bg-white: #ffffff;
+  --text-dark: #333;
+  --text-light: #666;
+  --text-on-dark: #f0f0f0;
+  --border-color-light: #eee;
+  --border-color-dark: #444;
+  --nav-red-right: #cc0000;
+}
+
+body {
+  padding-top: 148px;
+}
+
+/* --- Base Animations --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------- */
+/* 2. Main Nav (Top Black/Red Layer)
+/* ---------------------------------- */
+.tp-main-nav {
+  background: var(--brand-black);
+  color: var(--text-on-dark);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 10px;
+  z-index: 1009; /* High z-index */
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+/* --- Scrolled Background Element --- */
+.tp-main-nav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: transparent;
+  clip-path: none;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.4s ease, background-color 0.4s ease;
+}
+
+/* --- Scrolled State --- */
+.tp-main-nav.is-scrolled {
+  /* This will be the RIGHT side color (Red) */
+  background-color: var(--nav-red-right);
+  border-bottom-color: transparent;
+}
+.tp-main-nav.is-scrolled::before {
+  /* This creates the LEFT side (Black) with the slant */
+  background: var(--brand-black);
+  /* UPDATED: Slant moved left */
+  clip-path: polygon(
+    0% 0%,
+    /* top left */ 20% 0%,
+    /* top start of slant */ 25% 100%,
+    /* bottom end of slant */ 0% 100% /* bottom left */
+  );
+  opacity: 1;
+}
+
+.tp-main-nav-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  min-height: 73px;
+  position: relative;
+  z-index: 2;
+}
+
+.tp-nav-logo {
+  flex: 0 0 auto;
+  min-width: 150px;
+  padding-right: 20px;
+}
+.tp-logo-text {
+  font-family: "florania", sans-serif;
+  color: var(--brand-red);
+  font-size: 2.2rem;
+  margin: 0;
+  text-decoration: none;
+  transition: color 0.4s ease;
+}
+/* Logo text is RED on scroll (on black bg) */
+.tp-main-nav.is-scrolled .tp-logo-text {
+  color: var(--brand-red);
+}
+.tp-nav-logo a {
+  text-decoration: none;
+}
+
+/* --- Main Menu Links (on Black/Red) --- */
+.tp-nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  justify-content: center; /* Align menu to the center */
+}
+.tp-nav-menu li {
+  position: relative;
+}
+.tp-nav-menu li a {
+  display: block;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: var(--text-on-dark);
+  font-weight: 700;
+  font-size: 1rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/*
+ * DESKTOP FIX: Changed '.tp-nav-menu li a' to '.tp-nav-menu > li > a'
+ * This now *only* targets the top-level links, not the dropdown links.
+ */
+.tp-main-nav.is-scrolled .tp-nav-menu > li > a {
+  color: var(--bg-white);
+}
+.tp-nav-menu li a:hover,
+.tp-nav-menu li a.tp-active-link {
+  color: var(--bg-white);
+}
+.tp-arrow-span {
+  color: var(--brand-red);
+  font-size: 0.8em;
+  margin-left: 4px;
+  transition: color 0.3s ease;
+}
+.tp-main-nav.is-scrolled .tp-arrow-span {
+  color: var(--bg-white);
+}
+.tp-nav-menu li a::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--brand-red);
+  transition: width 0.3s ease-out;
+}
+.tp-main-nav.is-scrolled .tp-nav-menu > li > a::after {
+  background: var(--bg-white); /* White underline */
+}
+.tp-nav-menu li a:hover::after,
+.tp-nav-menu li a.tp-active-link::after {
+  width: 50%;
+}
+
+/* --- Dropdown Menu --- */
+.tp-dropdown .tp-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--bg-white);
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  min-width: 220px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  border-top: 3px solid var(--brand-red);
+  animation: fadeIn 0.3s ease;
+  z-index: 1002; /* UPDATED: Highest z-index */
+}
+.tp-dropdown:hover .tp-dropdown-menu {
+  display: block;
+}
+.tp-dropdown-menu li {
+  width: 100%;
+  color: var(--text-dark);
+}
+.tp-dropdown-menu li a {
+  padding: 12px 20px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+.tp-dropdown-menu li a::after {
+  display: none;
+}
+.tp-dropdown-menu li a:hover {
+  background: var(--bg-light);
+  color: var(--brand-red);
+}
+
+/* --- Search Module (Desktop) --- */
+.tp-search-desktop-wrapper {
+  flex: 0 0 auto; /* Don't shrink */
+  max-width: 300px;
+  margin-left: 20px;
+}
+.tp-search-module {
+  position: relative;
+  width: auto;
+}
+.tp-search-input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border: 1px solid var(--border-color-dark);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  background: #333;
+  color: var(--text-on-dark);
+  transition: all 0.3s ease;
+}
+.tp-search-input::placeholder {
+  color: #999;
+}
+.tp-search-input:focus {
+  background: var(--bg-white);
+  border-color: var(--brand-red);
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
+  outline: none;
+  color: var(--text-dark);
+}
+.tp-search-button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--brand-red);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.tp-search-button:hover {
+  background: var(--brand-red-dark);
+}
+
+/* --- Search Dropdown --- */
+.tp-search-results-dropdown {
+  border-radius: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: #fff;
+  position: absolute;
+  width: 100%;
+  top: 110%;
+  z-index: 1002; /* High z-index */
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.tp-search-item {
+  padding: 12px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color-light);
+}
+.tp-search-item:last-child {
+  border-bottom: none;
+}
+.tp-search-item:hover {
+  background-color: var(--bg-light);
+}
+.tp-search-cat-result {
+  font-weight: 700;
+  color: var(--brand-red);
+}
+.tp-search-art-result {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+/* ---------------------------------- */
+/* 4. Sub Nav (White Floating Layer)
+/* ---------------------------------- */
+.tp-sub-nav {
+  background-color: transparent;
+  border: 1px solid transparent;
+  position: sticky;
+  /* (73px main height + 10px top margin) + 5px gap */
+  top: 88px;
+  z-index: 1000; /* Below main nav */
+  width: 90%;
+  max-width: 900px;
+  margin: 5px auto 10px auto;
+  border-radius: 12px;
+  box-shadow: none;
+  transition: all 0.4s ease-in-out;
+}
+.tp-sub-nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 55px;
+  transition: all 0.4s ease-in-out;
+}
+
+.breadcrumb-container {
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  z-index: 10001;
+}
+
+/* --- Module Links (Playful Theme) --- */
+.tp-menu-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  transition: opacity 0.3s ease;
+}
+.tp-menu-row a {
+  padding: 15px 20px;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--brand-teal);
+  font-weight: 700;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.tp-menu-row a:hover {
+  color: var(--brand-red);
+}
+.tp-menu-row a::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 0;
+  height: 4px;
+  background: var(--brand-pink);
+  transition: width 0.3s ease-out;
+}
+.tp-menu-row a:hover::after {
+  width: 60%;
+}
+
+/* --- "Categories" Toggle Button --- */
+.tp-menu-toggle {
+  display: block;
+  background: none;
+  color: var(--text-dark);
+  border: none;
+  padding: 12px 16px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+.tp-menu-toggle:hover {
+  color: var(--brand-red);
+  background: var(--bg-light);
+}
+.tp-sub-nav:not(.is-scrolled) .tp-menu-toggle {
+  color: var(--text-on-dark);
+}
+.tp-sub-nav:not(.is-scrolled) .tp-menu-row a {
+  color: var(--text-on-dark);
+}
+.tp-sub-nav:not(.is-scrolled) .tp-menu-toggle:hover {
+  color: var(--brand-red);
+  background: rgba(255, 255, 255, 0.1);
+}
+.tp-sub-nav:not(.is-scrolled) .tp-menu-row a:hover {
+  color: var(--bg-white);
+}
+
+/* --- Protruding Toggle Button --- */
+.tp-sub-nav-toggle {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  background: var(--bg-white);
+  border: 1px solid #eee;
+  border-top: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 12px 12px;
+  width: 100px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+.tp-sub-nav-toggle i {
+  color: var(--brand-red);
+  transition: transform 0.3s ease;
+}
+.tp-sub-nav-toggle.is-expanded i {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------- */
+/* 5. Desktop-Only Scroll/Expand Logic
+/* ---------------------------------- */
+@media (min-width: 993px) {
+  .tp-sub-nav.is-scrolled {
+    background-color: var(--bg-white);
+    border-color: #eee;
+    margin-top: 10px;
+    /* (73px main + 10px main-top + 10px gap) */
+    top: 93px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12), 0 5px 15px rgba(0, 0, 0, 0.06);
+    transform: translateY(-80%);
+    overflow: visible;
+  }
+
+  .tp-sub-nav.is-scrolled .tp-menu-row,
+  .tp-sub-nav.is-scrolled .tp-menu-toggle {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tp-sub-nav.is-scrolled .tp-sub-nav-toggle {
+    display: block;
+  }
+
+  .tp-sub-nav.is-scrolled.is-expanded {
+    transform: translateY(0);
+  }
+  .tp-sub-nav.is-scrolled.is-expanded .tp-menu-row,
+  .tp-sub-nav.is-scrolled.is-expanded .tp-menu-toggle {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ---------------------------------- */
+/* 6. Sidebar (Categories Flyout)
+/* ---------------------------------- */
+.tp-sidebar {
+  width: 300px;
+  height: 100vh;
+  background-color: var(--bg-white);
+  color: var(--text-dark);
+  position: fixed;
+  top: 0;
+  left: -300px;
+  display: flex;
+  flex-direction: column;
+  transition: left 300ms ease-in-out;
+  z-index: 2000;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+.tp-sidebar.tp-open {
+  left: 0;
+}
+.tp-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--border-color-light);
+}
+.tp-sidebar-title {
+  font-family: "florania", sans-serif;
+  color: var(--brand-red);
+  font-size: 1.8rem;
+  margin: 0;
+}
+.tp-close-btn {
+  background: none;
+  color: var(--text-light);
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.tp-close-btn:hover {
+  color: var(--brand-red);
+  transform: rotate(90deg);
+}
+.tp-sidebar-menu {
+  flex: 1;
+}
+.tp-sidebar-menu > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tp-sidebar-menu > ul > li {
+  position: relative;
+  border-bottom: 1px solid var(--border-color-light);
+}
+.tp-sidebar-menu > ul > li > a {
+  display: block;
+  padding: 15px 20px;
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+.tp-sidebar-menu > ul > li > a:hover {
+  background: var(--bg-light);
+  color: var(--brand-red);
+  padding-left: 25px;
+}
+.tp-sidebar-arrow {
+  float: right;
+  color: var(--text-light);
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+.tp-sidebar-menu > ul > li:hover > a > .tp-sidebar-arrow {
+  transform: rotate(90deg);
+  color: var(--brand-red);
+}
+.tp-sidebar-menu > ul > li > ul {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: var(--bg-light);
+}
+.tp-sidebar-menu > ul > li:hover > ul {
+  display: block;
+}
+.tp-sidebar-menu > ul > li > ul::before {
+  display: none;
+}
+.tp-sidebar-menu > ul > li > ul > li {
+  border-top: 1px dotted #ddd;
+}
+.tp-sidebar-menu > ul > li > ul > li > a {
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 20px 12px 35px;
+  color: var(--text-light);
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease;
+}
+.tp-sidebar-menu > ul > li > ul > li > a:hover {
+  color: var(--brand-red);
+  background: var(--bg-white);
+}
+
+/* ---------------------------------- */
+/* 7. Mobile Hamburger & Search
+/* ---------------------------------- */
+.tp-hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+.tp-hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-on-dark);
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+.tp-main-nav.is-scrolled .tp-hamburger span {
+  background-color: var(--bg-white);
+}
+.tp-hamburger.tp-active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.tp-hamburger.tp-active span:nth-child(2) {
+  opacity: 0;
+}
+.tp-hamburger.tp-active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.tp-search-mobile-wrapper {
+  display: none;
+}
+.tp-search-desktop-wrapper {
+  display: block;
+}
+
+/* ---------------------------------- */
+/* 8. Responsive Breakpoints
+/* ---------------------------------- */
+
+/* --- Tablet (<= 992px) --- */
+@media screen and (max-width: 992px) {
+  body {
+    padding-top: 0;
+  }
+  .tp-main-nav {
+    width: 100%;
+    top: 0;
+    margin: 0;
+    border-radius: 0;
+    clip-path: none !important;
+    background-image: none !important;
+  }
+  .tp-main-nav.is-scrolled {
+    background: var(--brand-black);
+  }
+  .tp-main-nav.is-scrolled .tp-logo-text {
+    color: var(--brand-red);
+  } /* Red logo on black */
+
+  /*
+   * MOBILE FIX 1: Added '>' to only target top-level links
+   */
+  .tp-main-nav.is-scrolled .tp-nav-menu > li > a {
+    color: var(--text-on-dark);
+  }
+  .tp-main-nav.is-scrolled .tp-arrow-span {
+    color: var(--brand-red);
+  }
+  /*
+   * MOBILE FIX 2: Added '>' to only target top-level link underlines
+   */
+  .tp-main-nav.is-scrolled .tp-nav-menu > li > a::after {
+    background: var(--brand-red);
+  }
+  .tp-main-nav::before {
+    display: none; /* Disable pseudo-element on mobile */
+  }
+
+  .tp-nav-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: var(--brand-black);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+    border-radius: 0 0 8px 8px;
+  }
+  .tp-nav-menu.tp-active {
+    display: flex;
+  }
+  .tp-nav-menu li {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid var(--border-color-dark);
+  }
+  .tp-nav-menu li a::after {
+    bottom: 10px;
+  }
+  .tp-dropdown-menu {
+    position: relative;
+    width: 100%;
+    box-shadow: none;
+    border-top: none;
+    border-radius: 0;
+    background: #333;
+    color: var(--brand-black); /* MOBILE FIX 3: Corrected parent color */
+  }
+  .tp-dropdown-menu li a {
+    color: var(--brand-black); /* MOBILE FIX 4: Corrected link color */
+  }
+  .tp-dropdown-menu li a:hover {
+    background: #444;
+    color: var(--bg-white);
+  }
+
+  .tp-hamburger {
+    display: block;
+    order: 3;
+  }
+  .tp-main-nav .tp-hamburger span {
+    background-color: var(--text-on-dark);
+  }
+
+  .tp-search-desktop-wrapper {
+    display: none;
+  }
+  .tp-search-mobile-wrapper {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border-top: 1px solid var(--border-color-dark);
+  }
+  .tp-search-mobile-wrapper .tp-search-input {
+    background: #444;
+  }
+
+  .tp-nav-logo {
+    order: 1;
+  }
+
+  .tp-sub-nav {
+    width: 100%;
+    top: 73px;
+    margin: 0;
+    border-radius: 0;
+  }
+  .tp-sub-nav.is-scrolled {
+    width: 100%;
+    margin-top: 0;
+    top: 73px;
+    border-radius: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+  }
+  .tp-sub-nav:not(.is-scrolled) .tp-menu-toggle {
+    color: var(--text-dark);
+  }
+  .tp-sub-nav:not(.is-scrolled) .tp-menu-row a {
+    color: var(--brand-teal);
+  }
+  .tp-sub-nav-toggle {
+    display: none !important;
+  }
+}
+
+/* --- Mobile (<= 768px) --- */
+/* --- Mobile (<= 768px) --- */
+@media screen and (max-width: 768px) {
+  .tp-sub-nav {
+    top: 0;
+    position: relative;
+  }
+
+  /* UPDATED: Now space-between and relative */
+  .tp-sub-nav-content {
+    justify-content: space-between;
+    position: relative; /* For dropdown positioning */
+  }
+
+  /* UPDATED: Style .tp-menu-row as a dropdown */
+  .tp-menu-row {
+    display: none; /* Still hidden by default */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--bg-white);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 8px 8px;
+    min-width: 200px;
+    z-index: 1001; /* Above sub-nav content */
+    border-top: 2px solid var(--brand-red);
+    flex-direction: column; /* Stack links vertically */
+    align-items: stretch; /* Make links full-width */
+    padding: 5px 0;
+  }
+
+  /* NEW: Show dropdown when active */
+  .tp-menu-row.tp-active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* NEW: Style links inside the dropdown */
+  .tp-menu-row a {
+    padding: 12px 20px;
+    color: var(--text-dark); /* Ensure text color is dark on white bg */
+    font-weight: 600;
+  }
+  .tp-menu-row a:hover {
+    color: var(--brand-red);
+    background: var(--bg-light);
+  }
+  .tp-menu-row a::after {
+    display: none; /* Remove playful underline in dropdown */
+  }
+
+  /* UPDATED: Make .tp-menu-toggle auto-width */
+  .tp-menu-toggle {
+    display: block;
+    width: auto; /* No longer 100% */
+    margin-right: 0;
+  }
+
+  /* NEW: Make new toggle visible */
+  .tp-mobile-links-toggle {
+    display: block;
+  }
+
+  .tp-sidebar {
+    width: 100%;
+    left: -100%;
+  }
+
+  .breadcrumb-container {
+    display: none;
+  }
+
+  .tp-main-nav {
+    background-color: var(--brand-black);
+  }
+}
+/* --- New Mobile Links Toggle --- */
+.tp-mobile-links-toggle {
+  display: block; /* Hidden by default */
+  background: none;
+  color: transparent;
+  border: none;
+  padding: 12px 16px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+.tp-mobile-links-toggle:hover {
+  color: var(--brand-red);
+  background: var(--bg-light);
+}
+.tp-mobile-links-toggle.tp-active {
+  color: var(--brand-red);
+  background: var(--bg-light);
+}
+
+/* Style when not scrolled (matches .tp-menu-toggle) */
+.tp-sub-nav:not(.is-scrolled) .tp-mobile-links-toggle {
+  color: var(--brand-red);
+}
+.tp-sub-nav:not(.is-scrolled) .tp-mobile-links-toggle:hover {
+  color: var(--brand-red);
+  background: rgba(255, 255, 255, 0.1);
+}
+.tp-sub-nav:not(.is-scrolled) .tp-mobile-links-toggle.tp-active {
+  color: var(--brand-red);
+  background: rgba(255, 255, 255, 0.1);
+}
