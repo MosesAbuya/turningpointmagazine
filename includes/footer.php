@@ -253,20 +253,34 @@ function googleTranslateElementInit() {
 
 <script type="text/javascript">
 function setLanguage(langCode) {
-  if (langCode === 'en') { 
-    // Fallback: reload with no cookie to reset to default
-    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
-    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + location.hostname;
+    var domain = location.hostname;
+    var rootDomain = domain.replace(/^www\./, '');
+    
+    // Try to cover all possible domains where Google Translate might have dropped a cookie
+    var domains = [
+        '', 
+        '.' + domain, 
+        '.' + rootDomain, 
+        domain, 
+        rootDomain
+    ];
+    
+    if (langCode === 'en') { 
+      // Fallback: clear cookies to reset to default English
+      domains.forEach(function(d) {
+          var domainStr = d ? '; domain=' + d : '';
+          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + domainStr;
+      });
+    } else {
+      // Set the cookie for the selected language
+      domains.forEach(function(d) {
+          var domainStr = d ? '; domain=' + d : '';
+          document.cookie = 'googtrans=/en/' + langCode + '; path=/' + domainStr;
+      });
+    }
+    
+    // Reload the page to apply the translation
     location.reload();
-    return;
-  }
-  
-  // Set the cookie for the selected language
-  document.cookie = 'googtrans=/en/' + langCode + '; path=/';
-  document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=.' + location.hostname;
-  
-  // Reload the page to apply the translation
-  location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
