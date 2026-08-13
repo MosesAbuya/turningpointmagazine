@@ -35,7 +35,6 @@
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /turningpoint/
 
 # Redirect non-www to www and HTTP to HTTPS
 RewriteCond %{HTTP_HOST} ^turningpointmagazine\.africa [NC,OR]
@@ -43,9 +42,9 @@ RewriteCond %{HTTPS} off
 RewriteCond %{HTTP_HOST} ^(?:www\.)?turningpointmagazine\.africa [NC]
 RewriteRule ^(.*)$ https://www.turningpointmagazine.africa/$1 [L,R=301,NE]
 
-# Force redirect direct .php access to extensionless (External redirect)
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^.]+)\.php[\ ?]
-RewriteRule ^([^.]+)\.php$ $1 [R=301,L]
+# Force redirect direct .php access to extensionless (External redirect - Directory Agnostic)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?]
+RewriteRule ^ /%1 [R=301,L]
 
 # Rewrite sitemap.xml to sitemap.php
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
