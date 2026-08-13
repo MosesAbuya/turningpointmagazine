@@ -44,7 +44,7 @@ include_once('connection2.php');
 
             <li class="tp-search-mobile-wrapper">
                 <div style="display: flex; align-items: center; justify-content: center; gap: 15px; padding: 10px;">
-                <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='black';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: black; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; transition: all 0.3s ease;">
+                <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; transition: all 0.3s ease;">
                     <option value="en">🇬🇧 EN</option>
                     <option value="fr">🇫🇷 FR</option>
                     <option value="de">🇩🇪 DE</option>
@@ -62,7 +62,7 @@ include_once('connection2.php');
         </ul>
         
         <div class="tp-search-desktop-wrapper" style="display: flex; align-items: center; max-width: 400px; margin-left: 30px;">
-            <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='black';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: black; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; margin-right: 15px; transition: all 0.3s ease;">
+            <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; margin-right: 15px; transition: all 0.3s ease;">
                 <option value="en">🇬🇧 EN</option>
                 <option value="fr">🇫🇷 FR</option>
                 <option value="de">🇩🇪 DE</option>

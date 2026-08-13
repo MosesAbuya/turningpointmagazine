@@ -429,7 +429,7 @@
     </ul>
 
     <div style="display: flex; align-items: center; margin-left: auto;">
-        <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='black';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: black; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; margin-right: 15px; transition: all 0.3s ease;">
+        <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; margin-right: 15px; transition: all 0.3s ease;">
             <option value="en">🇬🇧 EN</option>
             <option value="fr">🇫🇷 FR</option>
             <option value="de">🇩🇪 DE</option>
