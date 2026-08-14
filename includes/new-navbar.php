@@ -103,9 +103,21 @@ include_once('connection2.php');
     .tp-mobile-translation-wrapper {
         display: block !important;
         order: 2;
+        margin-right: 10px !important;
     }
     .tp-hamburger {
         margin-left: 0 !important;
+    }
+    .tp-main-nav-content {
+        flex-wrap: nowrap !important;
+        padding: 0 10px !important;
+    }
+    .tp-nav-logo {
+        padding-right: 10px !important;
+        min-width: auto !important;
+    }
+    .tp-logo-text {
+        font-size: 1.6rem !important;
     }
 }
 </style>
