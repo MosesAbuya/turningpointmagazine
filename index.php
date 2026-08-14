@@ -1443,6 +1443,146 @@ try {
             </div>
         </section>
 
+<?php
+// Fetch articles for First and Second editions
+$target_edition_ids = [];
+$first_edition_id = null;
+$second_edition_id = null;
+
+// $editions is already available from the previous block (used in the Library section)
+if (isset($editions) && is_array($editions)) {
+    foreach ($editions as $e) {
+        $slug = generate_slug($e['edition_name']);
+        if ($slug === 'first-edition' || $slug === 'second-edition') {
+            $target_edition_ids[] = $e['id'];
+            if ($slug === 'first-edition') $first_edition_id = $e['id'];
+            if ($slug === 'second-edition') $second_edition_id = $e['id'];
+        }
+    }
+} else {
+    // Fallback if $editions isn't available for some reason
+    $editionsQuery = $pdo->query("SELECT id, edition_name FROM editions");
+    $editions_list = $editionsQuery->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($editions_list as $e) {
+        $slug = generate_slug($e['edition_name']);
+        if ($slug === 'first-edition' || $slug === 'second-edition') {
+            $target_edition_ids[] = $e['id'];
+            if ($slug === 'first-edition') $first_edition_id = $e['id'];
+            if ($slug === 'second-edition') $second_edition_id = $e['id'];
+        }
+    }
+}
+
+$featured_articles = [];
+if (!empty($target_edition_ids)) {
+    $placeholders = implode(',', array_fill(0, count($target_edition_ids), '?'));
+    // Fetch top 10 articles, prioritizing top story, then randomized for every reload
+    $stmt = $pdo->prepare("SELECT a.id, a.title, a.writer, a.top_image, a.edition_id, e.edition_name 
+                           FROM articles a 
+                           JOIN editions e ON a.edition_id = e.id 
+                           WHERE a.edition_id IN ($placeholders) 
+                           ORDER BY a.is_top_story DESC, RAND() LIMIT 9");
+    $stmt->execute($target_edition_ids);
+    $featured_articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+?>
+
+<?php if (!empty($featured_articles)): ?>
+<section class="page-section fade-in-up" id="tp-featured-editions" style="background: #fdfdfd; padding: 60px 20px;">
+    <h2 class="section-title" style="text-align: center; margin-bottom: 40px; font-family: 'florania', sans-serif; color: #cc0000; font-size: 2.5rem;">From the Issues</h2>
+    
+    <div class="tp-masonry-wrapper" style="max-width: 1200px; margin: 0 auto;">
+        <div class="tp-masonry-grid" id="featured-masonry-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); grid-auto-rows: 250px; gap: 20px; transition: opacity 0.3s ease;">
+            <?php include 'includes/featured_grid.php'; ?>
+        </div>
+        
+        <div class="tp-masonry-actions" style="display: flex; justify-content: center; gap: 20px; margin-top: 40px; flex-wrap: wrap; align-items: center;">
+            <button id="btn-reload-stories" class="tp-btn-secondary" style="display: inline-block; padding: 12px 30px; background-color: transparent; color: #1a1a1a; border: 2px solid #1a1a1a; cursor: pointer; font-weight: bold; border-radius: 30px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-sync-alt" id="reload-icon" style="transition: transform 0.5s ease;"></i> Shuffle Stories
+            </button>
+            <?php if ($first_edition_id): ?>
+            <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>edition/first-edition" class="tp-btn-primary" style="display: inline-block; padding: 12px 30px; background-color: #cc0000; color: white; text-decoration: none; font-weight: bold; border-radius: 30px; transition: background-color 0.3s ease, transform 0.2s ease;">
+                Read First Edition <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            </a>
+            <?php endif; ?>
+            <?php if ($second_edition_id): ?>
+            <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>edition/second-edition" class="tp-btn-primary" style="display: inline-block; padding: 12px 30px; background-color: #1a1a1a; color: white; text-decoration: none; font-weight: bold; border-radius: 30px; transition: background-color 0.3s ease, transform 0.2s ease;">
+                Read Second Edition <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            </a>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const reloadBtn = document.getElementById('btn-reload-stories');
+    const reloadIcon = document.getElementById('reload-icon');
+    const masonryGrid = document.getElementById('featured-masonry-grid');
+    
+    if (reloadBtn) {
+        reloadBtn.addEventListener('click', function() {
+            // Add loading state
+            reloadIcon.style.transform = 'rotate(360deg)';
+            masonryGrid.style.opacity = '0.5';
+            
+            fetch('ajax_featured_articles.php')
+                .then(response => response.text())
+                .then(html => {
+                    masonryGrid.innerHTML = html;
+                    
+                    // Reset animation states
+                    setTimeout(() => {
+                        masonryGrid.style.opacity = '1';
+                        reloadIcon.style.transform = 'none';
+                    }, 100);
+                })
+                .catch(err => {
+                    console.error('Error reloading stories:', err);
+                    masonryGrid.style.opacity = '1';
+                    reloadIcon.style.transform = 'none';
+                });
+        });
+    }
+});
+</script>
+
+<style>
+    /* Hover effects for the masonry grid */
+    .tp-masonry-item:hover .tp-masonry-bg {
+        transform: scale(1.05);
+    }
+    .tp-masonry-item:hover .tp-masonry-overlay {
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+    }
+    .tp-masonry-title {
+        transition: color 0.3s ease;
+    }
+    .tp-masonry-item:hover .tp-masonry-title {
+        color: #ffcccc; /* Slight red tint on hover */
+    }
+    .tp-btn-primary:hover {
+        background-color: #990000 !important;
+        transform: translateY(-2px);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .tp-masonry-grid {
+            grid-template-columns: 1fr !important;
+            grid-auto-rows: 250px !important;
+        }
+        .tp-masonry-large {
+            grid-column: span 1 !important;
+            grid-row: span 1 !important;
+        }
+        .tp-masonry-large .tp-masonry-title {
+            font-size: 1.5rem !important;
+        }
+    }
+</style>
+<?php endif; ?>
+
         <section class="page-section fade-in-up" id="about-intro">
             <h2 class="section-title">Who We Are</h2>
             <div class="about-intro-grid">

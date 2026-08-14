@@ -160,10 +160,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- Sub-Nav Toggle Click ---
     subNavToggle.addEventListener('click', function() {
-        if (subNav.classList.contains('is-scrolled')) {
-            subNav.classList.toggle('is-expanded');
-            this.classList.toggle('is-expanded');
-        }
+        subNav.classList.toggle('is-expanded');
+        this.classList.toggle('is-expanded');
     });
 
     // --- Active Link Highlight ---
