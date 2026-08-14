@@ -253,8 +253,6 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'includes/preloader.php'; ?>
     <?php include 'includes/new-navbar.php';?>
 
-    <div class="breadcrumb-container fade-in-up"></div>
-
     <section class="tp-fun-intro fade-in-up" style="animation-delay: 0.2s;">
         <h1 class="tp-intro-main">Partner Spotlight</h1>
         <h2 class="tp-intro-sub">Highlighting Impactful Stories</h2>
@@ -314,3 +312,4 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
+

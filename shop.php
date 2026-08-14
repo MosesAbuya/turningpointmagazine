@@ -50,7 +50,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="contact.css">
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="global.css">
-    <link rel="stylesheet" href="footer.css"> <!-- Assuming style.css is minified or optimized -->
+    <link rel="stylesheet" href="tp-design-system.css"> <!-- Assuming style.css is minified or optimized -->
     <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="button.css">
     <link rel="stylesheet" href="nav-2.css">

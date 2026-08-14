@@ -83,8 +83,8 @@ function get_file_details($filename) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($post['post_title']) ?> - Turning Point Magazine</title>
 
-    <link rel="stylesheet" href="includes/new-navbar.css">
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="includes/tp-navbar.css">
+    <link rel="stylesheet" href="tp-design-system.css">
     <link rel="stylesheet" href="global.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -824,8 +824,6 @@ function get_file_details($filename) {
     <?php include 'includes/preloader.php'; ?>
     <?php include 'includes/new-navbar.php'; ?>
 
-    <div class="breadcrumb-container fade-in-up"></div>
-
     <section class="tp-fun-intro fade-in-up" style="animation-delay: 0.2s;">
         <h1 class="tp-intro-main"><?= htmlspecialchars($post['post_title']) ?></h1>
         <h2 class="tp-intro-sub">By: <?= htmlspecialchars($post['partner_name']) ?></h2>
@@ -979,3 +977,4 @@ function get_file_details($filename) {
 </body>
 
 </html>
+

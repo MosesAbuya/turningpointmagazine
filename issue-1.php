@@ -51,7 +51,7 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
         $title = $article['title'];
         $catch_phrase = $article['catch_phrase'];
         $writer = $article['writer'];
-        $top_image = "admin/" . $article['top_image']; 
+        $top_image = (defined('BASE_URL') ? BASE_URL : '/turningpoint/') . "admin/" . $article['top_image']; 
         $article_id = $article['id'];
     } else {
         $title = "No Top Story";
@@ -62,9 +62,9 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
     }
 
     // Edition images
-    $left_image = "admin/" . $edition['front_page_image']; 
-    $overlay_image = "admin/" . $edition['front_page_image']; 
-    $right_image = "admin/" . $edition['back_page_image']; 
+    $left_image = (defined('BASE_URL') ? BASE_URL : '/turningpoint/') . "admin/" . $edition['front_page_image']; 
+    $overlay_image = (defined('BASE_URL') ? BASE_URL : '/turningpoint/') . "admin/" . $edition['front_page_image']; 
+    $right_image = (defined('BASE_URL') ? BASE_URL : '/turningpoint/') . "admin/" . $edition['back_page_image']; 
     
 } else {
     echo "Edition ID not found.";
@@ -92,9 +92,9 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="includes/new-navbar.css">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>footer.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>tp-design-system.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>global.css">
 
     <style>
     @font-face {
@@ -119,7 +119,7 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
 
     /* --- 1. NAVBAR BACKGROUND --- */
     .breadcrumb-container {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('assets/breadcrumbs/bread.jpeg');
+        background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/breadcrumbs/bread.jpeg');
         background-size: cover;
         background-position: center;
         position: absolute;
@@ -621,8 +621,6 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
     <?php include 'includes/preloader.php'; ?>
     <?php include 'includes/new-navbar.php'; ?>
 
-    <div class="breadcrumb-container fade-in-up"></div>
-
     <div class="issue-container fade-in-up">
 
         <div class="top-story" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
@@ -644,7 +642,7 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
             <div class="read-btn-section">
                 <div class="read-btn-wrapper"></div>
                 <a
-                    href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>article/<?php echo generate_slug($top_story['title']); ?>">Read
+                    href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>article/<?php echo generate_slug($title); ?>">Read
                     More</a>
             </div>
         </div>
@@ -655,8 +653,7 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
 
         <?php
         // Fetch articles
-        if (isset($_GET['edition_id'])) {
-            $edition_id = $_GET['edition_id'];
+        if ($edition_id) {
             $stmtArticles = $pdo->prepare("SELECT a.id, a.title, a.catch_phrase, a.writer, a.top_image FROM articles a WHERE a.edition_id = :edition_id AND a.is_top_story != 1");
             $stmtArticles->execute(['edition_id' => $edition_id]);
             $articlesList = $stmtArticles->fetchAll(PDO::FETCH_ASSOC);
@@ -667,7 +664,7 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
             <?php if (!empty($articlesList)): ?>
             <?php foreach ($articlesList as $art): ?>
             <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>article/<?= generate_slug($art['title']); ?>" class="article-card">
-                <img loading="lazy" src="admin/<?= htmlspecialchars($art['top_image']) ?>" class="article-img"
+                <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($art['top_image']) ?>" class="article-img"
                     alt="<?= htmlspecialchars($art['title']) ?>">
                 <div class="article-content">
                     <div class="article-meta">
@@ -702,7 +699,7 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
                 <?php foreach ($adsList as $ad): ?>
                 <div class="partner-ad-card">
                     <a href="partners.php?id=<?= $ad['id'] ?>&edition_id=<?= $edition_id ?>">
-                        <img loading="lazy" src="admin/<?= htmlspecialchars($ad['ad_banner_image']) ?>" alt="Ad">
+                        <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($ad['ad_banner_image']) ?>" alt="Ad">
                         <div class="partner-ad-info">
                             <h4><?= htmlspecialchars($ad['ad_company_name']) ?></h4>
                             <p><?= htmlspecialchars($ad['catch_phrase']) ?></p>
@@ -726,7 +723,7 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
             <div class="edition-cards-wrapper">
                 <?php foreach ($editionsList as $ed): ?>
                 <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>edition/<?= generate_slug($ed['edition_name']) ?>" class="edition-item">
-                    <img loading="lazy" src="admin/<?= htmlspecialchars($ed['front_page_image']) ?>" alt="Cover">
+                    <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($ed['front_page_image']) ?>" alt="Cover">
                     <div class="edition-item-info">
                         <?= htmlspecialchars($ed['edition_name']) ?>
                     </div>
@@ -742,3 +739,4 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
 </body>
 
 </html>
+

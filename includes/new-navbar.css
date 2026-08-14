@@ -74,12 +74,12 @@ body {
 }
 
 /* --- Scrolled State --- */
-.tp-main-nav.is-scrolled {
+.tp-main-nav {
   /* This will be the RIGHT side color (Red) */
   background-color: var(--nav-red-right);
   border-bottom-color: transparent;
 }
-.tp-main-nav.is-scrolled::before {
+.tp-main-nav::before {
   /* This creates the LEFT side (Black) with the slant */
   background: var(--brand-black);
   /* UPDATED: Slant moved left */
@@ -93,14 +93,14 @@ body {
 }
 
 .tp-main-nav-content {
+  position: relative;
+  z-index: 3;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   min-height: 73px;
-  position: relative;
-  z-index: 2;
 }
 
 .tp-nav-logo {
@@ -117,7 +117,7 @@ body {
   transition: color 0.4s ease;
 }
 /* Logo text is RED on scroll (on black bg) */
-.tp-main-nav.is-scrolled .tp-logo-text {
+.tp-main-nav .tp-logo-text {
   color: var(--brand-red);
 }
 .tp-nav-logo a {
@@ -152,7 +152,7 @@ body {
  * DESKTOP FIX: Changed '.tp-nav-menu li a' to '.tp-nav-menu > li > a'
  * This now *only* targets the top-level links, not the dropdown links.
  */
-.tp-main-nav.is-scrolled .tp-nav-menu > li > a {
+.tp-main-nav .tp-nav-menu > li > a {
   color: var(--bg-white);
 }
 .tp-nav-menu li a:hover,
@@ -165,7 +165,7 @@ body {
   margin-left: 4px;
   transition: color 0.3s ease;
 }
-.tp-main-nav.is-scrolled .tp-arrow-span {
+.tp-main-nav .tp-arrow-span {
   color: var(--bg-white);
 }
 .tp-nav-menu li a::after {
@@ -179,7 +179,7 @@ body {
   background: var(--brand-red);
   transition: width 0.3s ease-out;
 }
-.tp-main-nav.is-scrolled .tp-nav-menu > li > a::after {
+.tp-main-nav .tp-nav-menu > li > a::after {
   background: var(--bg-white); /* White underline */
 }
 .tp-nav-menu li a:hover::after,
@@ -395,17 +395,17 @@ body {
   color: var(--brand-red);
   background: var(--bg-light);
 }
-.tp-sub-nav:not(.is-scrolled) .tp-menu-toggle {
+.tp-sub-nav.discarded .tp-menu-toggle {
   color: var(--text-on-dark);
 }
-.tp-sub-nav:not(.is-scrolled) .tp-menu-row a {
+.tp-sub-nav.discarded .tp-menu-row a {
   color: var(--text-on-dark);
 }
-.tp-sub-nav:not(.is-scrolled) .tp-menu-toggle:hover {
+.tp-sub-nav.discarded .tp-menu-toggle:hover {
   color: var(--brand-red);
   background: rgba(255, 255, 255, 0.1);
 }
-.tp-sub-nav:not(.is-scrolled) .tp-menu-row a:hover {
+.tp-sub-nav.discarded .tp-menu-row a:hover {
   color: var(--bg-white);
 }
 
@@ -439,7 +439,7 @@ body {
 /* 5. Desktop-Only Scroll/Expand Logic
 /* ---------------------------------- */
 @media (min-width: 993px) {
-  .tp-sub-nav.is-scrolled {
+  .tp-sub-nav {
     background-color: var(--bg-white);
     border-color: #eee;
     margin-top: 10px;
@@ -450,21 +450,22 @@ body {
     overflow: visible;
   }
 
-  .tp-sub-nav.is-scrolled .tp-menu-row,
-  .tp-sub-nav.is-scrolled .tp-menu-toggle {
-    opacity: 0;
-    pointer-events: none;
+  .tp-sub-nav .tp-menu-row,
+  .tp-sub-nav .tp-menu-toggle {
+    /* Kept visible so links are always accessible */
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  .tp-sub-nav.is-scrolled .tp-sub-nav-toggle {
+  .tp-sub-nav .tp-sub-nav-toggle {
     display: block;
   }
 
-  .tp-sub-nav.is-scrolled.is-expanded {
+  .tp-sub-nav.is-expanded {
     transform: translateY(0);
   }
-  .tp-sub-nav.is-scrolled.is-expanded .tp-menu-row,
-  .tp-sub-nav.is-scrolled.is-expanded .tp-menu-toggle {
+  .tp-sub-nav.is-expanded .tp-menu-row,
+  .tp-sub-nav.is-expanded .tp-menu-toggle {
     opacity: 1;
     pointer-events: auto;
   }
@@ -600,7 +601,7 @@ body {
   margin: 5px 0;
   transition: all 0.3s ease;
 }
-.tp-main-nav.is-scrolled .tp-hamburger span {
+.tp-main-nav .tp-hamburger span {
   background-color: var(--bg-white);
 }
 .tp-hamburger.tp-active span:nth-child(1) {
@@ -637,26 +638,26 @@ body {
     clip-path: none !important;
     background-image: none !important;
   }
-  .tp-main-nav.is-scrolled {
+  .tp-main-nav {
     background: var(--brand-black);
   }
-  .tp-main-nav.is-scrolled .tp-logo-text {
+  .tp-main-nav .tp-logo-text {
     color: var(--brand-red);
   } /* Red logo on black */
 
   /*
    * MOBILE FIX 1: Added '>' to only target top-level links
    */
-  .tp-main-nav.is-scrolled .tp-nav-menu > li > a {
+  .tp-main-nav .tp-nav-menu > li > a {
     color: var(--text-on-dark);
   }
-  .tp-main-nav.is-scrolled .tp-arrow-span {
+  .tp-main-nav .tp-arrow-span {
     color: var(--brand-red);
   }
   /*
    * MOBILE FIX 2: Added '>' to only target top-level link underlines
    */
-  .tp-main-nav.is-scrolled .tp-nav-menu > li > a::after {
+  .tp-main-nav .tp-nav-menu > li > a::after {
     background: var(--brand-red);
   }
   .tp-main-nav::before {
@@ -735,7 +736,7 @@ body {
     margin: 0;
     border-radius: 0;
   }
-  .tp-sub-nav.is-scrolled {
+  .tp-sub-nav {
     width: 100%;
     margin-top: 0;
     top: 73px;
@@ -743,11 +744,11 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transform: translateY(0);
   }
-  .tp-sub-nav:not(.is-scrolled) .tp-menu-toggle {
-    color: var(--text-dark);
+  .tp-sub-nav.discarded .tp-menu-toggle {
+    color: var(--bg-white);
   }
-  .tp-sub-nav:not(.is-scrolled) .tp-menu-row a {
-    color: var(--brand-teal);
+  .tp-sub-nav.discarded .tp-menu-row a {
+    color: var(--bg-white);
   }
   .tp-sub-nav-toggle {
     display: none !important;
@@ -854,14 +855,15 @@ body {
 }
 
 /* Style when not scrolled (matches .tp-menu-toggle) */
-.tp-sub-nav:not(.is-scrolled) .tp-mobile-links-toggle {
+.tp-sub-nav.discarded .tp-mobile-links-toggle {
   color: var(--brand-red);
 }
-.tp-sub-nav:not(.is-scrolled) .tp-mobile-links-toggle:hover {
-  color: var(--brand-red);
-  background: rgba(255, 255, 255, 0.1);
-}
-.tp-sub-nav:not(.is-scrolled) .tp-mobile-links-toggle.tp-active {
+.tp-sub-nav.discarded .tp-mobile-links-toggle:hover {
   color: var(--brand-red);
   background: rgba(255, 255, 255, 0.1);
 }
+.tp-sub-nav.discarded .tp-mobile-links-toggle.tp-active {
+  color: var(--brand-red);
+  background: rgba(255, 255, 255, 0.1);
+}
+

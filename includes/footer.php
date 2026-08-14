@@ -191,7 +191,7 @@ START: New Dark Footer Style Block
             <div class="footer-column footer-links">
                 <h3>Quick Links</h3>
                 <ul class="menu">
-                    <li class="menu__item"><a class="menu__link" href="index.php#latest">Home</a></li>
+                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>#latest">Home</a></li>
                     <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>about">About</a></li>
                     <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>contact">Contact</a></li>
                     <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>#subscribe">Subscribe</a></li>

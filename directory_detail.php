@@ -29,8 +29,8 @@ if (!$organization) {
     <link rel="icon" type="image/png" sizes="16x16" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>favicon-16x16.png">
     <link rel="manifest" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>site.webmanifest">
 
-    <link rel="stylesheet" href="includes/new-navbar.css">
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="includes/tp-navbar.css">
+    <link rel="stylesheet" href="tp-design-system.css">
     <link rel="stylesheet" href="global.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
@@ -414,9 +414,6 @@ if (!$organization) {
     <?php include 'includes/preloader.php'; ?>
     <?php include 'includes/new-navbar.php'; ?>
 
-    <div class="breadcrumb-container fade-in-up">
-    </div>
-
     <section class="tp-fun-intro fade-in-up" style="animation-delay: 0.2s;">
         <h1 class="tp-intro-main">Directory</h1>
         <h2 class="tp-intro-sub"><?= htmlspecialchars($organization['name']) ?></h2>
@@ -565,3 +562,4 @@ if (!$organization) {
 </body>
 
 </html>
+

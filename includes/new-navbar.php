@@ -5,16 +5,16 @@ include_once('connection2.php');
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 
-<link rel="stylesheet" href="new-navbar.css">
+<link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>includes/new-navbar.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 
 
 <nav class="tp-main-nav" id="tp-main-nav">
     <div class="tp-main-nav-content">
         <div class="tp-nav-logo">
-            <a href="index.php">
+            <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>">
                 <h1 class="tp-logo-text">Turning Point</h1>
             </a>
         </div>
@@ -26,7 +26,7 @@ include_once('connection2.php');
         </div>
 
         <ul class="tp-nav-menu" id="tp-main-menu">
-            <li><a href="index.php">Home</a></li>
+            <li><a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>">Home</a></li>
             <!--<li class="tp-dropdown">-->
             <!--    <a href="#">Features <span class="tp-arrow-span">▼</span></a>-->
             <!--    <ul class="tp-dropdown-menu">-->
@@ -36,11 +36,11 @@ include_once('connection2.php');
             <!--        <li><a href="index.php#promo-advertise">Advertise</a></li>-->
             <!--    </ul>-->
             <!--</li>-->
-            <li><a id="about" href="about.php">About</a></li>
-            <li><a id="contact" href="contact.php">Contact</a></li>
-            <li><a id="story" href="story.php">Contribute</a></li>
-            <li><a id="subscribe" href="index.php#subscribe">Subscribe</a></li>
-            <li><a id="shop" href="shop.php" target="_blank">Shop</a></li>
+            <li><a id="about" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>about">About</a></li>
+            <li><a id="contact" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>contact">Contact</a></li>
+            <li><a id="story" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>story">Contribute</a></li>
+            <li><a id="subscribe" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>#subscribe">Subscribe</a></li>
+            <li><a id="shop" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>shop" target="_blank">Shop</a></li>
 
             <li class="tp-search-mobile-wrapper">
                 <div style="display: flex; align-items: center; justify-content: center; gap: 15px; padding: 10px;">
@@ -85,9 +85,9 @@ include_once('connection2.php');
         <button class="tp-menu-toggle" id="tp-menu-toggle">☰ Categories</button>
 
         <div class="tp-menu-row" id="tp-mobile-links-menu">
-            <a href="directories.php">Directories</a>
-            <a href="spotlight.php">Spotlight</a>
-            <a href="awards.php">Awards</a>
+            <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>directories">Directories</a>
+            <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>spotlight">Spotlight</a>
+            <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>awards">Awards</a>
         </div>
 
         <button class="tp-mobile-links-toggle" id="tp-mobile-links-toggle">
@@ -156,23 +156,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const subNav = document.getElementById('tp-sub-nav');
     const subNavToggle = document.getElementById('tp-sub-nav-toggle');
 
-    function handleScroll() {
-        // CHECK: If this is the home page, ignore this default logic
-        // The home page will handle its own scroll logic via index.php script
-        if (document.body.classList.contains('tp-home-page')) return;
-
-        if (window.scrollY > 0) {
-            mainNav.classList.add('is-scrolled');
-            subNav.classList.add('is-scrolled');
-        } else {
-            mainNav.classList.remove('is-scrolled');
-            subNav.classList.remove('is-scrolled');
-            subNav.classList.remove('is-expanded');
-            subNavToggle.classList.remove('is-expanded');
-        }
-    }
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
+    // Removed scroll handler since navbar is permanently sticky
 
     // --- Sub-Nav Toggle Click ---
     subNavToggle.addEventListener('click', function() {

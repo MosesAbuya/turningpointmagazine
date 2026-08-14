@@ -83,9 +83,10 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
         href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="includes/new-navbar.css">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>footer.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>tp-design-system.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>tp-pages.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>global.css">
 
     <style>
     /* --- THEME FONTS & VARS --- */
@@ -129,7 +130,7 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
 
     /* --- 1. SIGNATURE HEADER --- */
     .breadcrumb-container {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/breadcrumbs/bread.jpeg');
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/breadcrumbs/bread.jpeg');
         background-size: cover;
         background-position: center;
         position: absolute;
@@ -449,8 +450,6 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'includes/preloader.php'; ?>
     <?php include 'includes/new-navbar.php'; ?>
 
-    <div class="breadcrumb-container fade-in-up"></div>
-
     <section class="tp-fun-intro fade-in-up" style="animation-delay: 0.2s;">
         <div class="tp-intro-main">Turning Point</div>
         <h2 class="tp-intro-sub"><?= htmlspecialchars($category_name) ?></h2>
@@ -482,7 +481,7 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
                 <?php if (!empty($articlesList)): ?>
                 <?php foreach ($articlesList as $art): ?>
                 <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>article/<?= generate_slug($art['title']); ?>" class="edition-card">
-                    <img loading="lazy" src="admin/<?= htmlspecialchars($art['top_image']); ?>" alt="Article">
+                    <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($art['top_image']); ?>" alt="Article">
                     <div class="edition-card-content">
                         <div class="edition-cat"><?= htmlspecialchars($art['name']); ?></div>
                         <div class="edition-title"><?= htmlspecialchars($art['title']); ?></div>
@@ -603,3 +602,4 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
+

@@ -72,9 +72,9 @@ function make_slug($string) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="includes/new-navbar.css">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>includes/new-navbar.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>footer.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>global.css">
 
     <!-- Open Graph & Twitter Cards -->
     <meta property="og:title" content="<?= htmlspecialchars($current_blog['title']) ?> - Turning Point Magazine" />
@@ -332,7 +332,6 @@ function make_slug($string) {
     <?php include 'includes/preloader.php'; ?>
     <?php include 'includes/new-navbar.php';?>
 
-    <div class="breadcrumb-container"></div>
     <section class="tp-fun-intro">
         <h2 class="tp-intro-main">Article Details</h2>
         <nav class="tp-intro-nav">
@@ -353,7 +352,7 @@ function make_slug($string) {
                 </div>
             </div>
 
-            <img loading="lazy" src="admin/<?= htmlspecialchars($current_blog['top_photo']) ?>" 
+            <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($current_blog['top_photo']) ?>" 
                  alt="<?= htmlspecialchars($current_blog['title']) ?>" 
                  class="main-image">
 
@@ -379,7 +378,7 @@ function make_slug($string) {
             ?>
             <div class="mini-gallery">
                 <?php foreach($gallery as $img): ?>
-                <img loading="lazy" src="admin/<?= htmlspecialchars($img) ?>" class="gallery-img" alt="Gallery">
+                <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($img) ?>" class="gallery-img" alt="Gallery">
                 <?php endforeach; ?>
             </div>
             <?php endif; ?>
@@ -394,7 +393,7 @@ function make_slug($string) {
                 ?>
                 <div class="side-post">
                     <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>blog/<?= $r_slug ?>">
-                        <img loading="lazy" src="admin/<?= htmlspecialchars($rb['top_photo']) ?>" alt="Thumb">
+                        <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($rb['top_photo']) ?>" alt="Thumb">
                     </a>
                     <div class="side-post-info">
                         <h5><a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>blog/<?= $r_slug ?>"><?= htmlspecialchars($rb['title']) ?></a></h5>
@@ -412,3 +411,4 @@ function make_slug($string) {
 
 </body>
 </html>
+

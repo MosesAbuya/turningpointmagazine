@@ -1,0 +1,257 @@
+/* =========================================================================
+   TURNING POINT MAGAZINE - DESIGN SYSTEM v2
+   Inspired by world-class editorial platforms.
+   ========================================================================= */
+
+/* --- 1. FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+    /* --- COLORS --- */
+    --tp-crimson: #C90000;         /* Deep, editorial red (The Atlantic style) */
+    --tp-crimson-dark: #8B0000;
+    --tp-black: #0F0F0F;           /* Off-black for text for softer contrast */
+    --tp-black-true: #000000;      /* Pure black for high impact backgrounds */
+    --tp-grey-900: #1a1a1a;
+    --tp-grey-800: #333333;
+    --tp-grey-300: #E0E0E0;
+    --tp-grey-100: #F4F4F4;
+    --tp-off-white: #FAF9F6;       /* Warm editorial paper background */
+    --tp-white: #FFFFFF;
+    
+    /* --- TYPOGRAPHY --- */
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    
+    /* Font Sizes (Fluid Typography) */
+    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+    --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1.05rem + 0.375vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+    --text-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 2.5rem);
+    --text-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.5rem);
+    --text-5xl: clamp(3rem, 2.25rem + 3.75vw, 4.5rem);
+    
+    /* --- SPACING & GRID --- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-24: 6rem;
+    
+    --container-max: 1400px;
+    --container-reading: 800px;
+    
+    /* --- BORDERS & SHADOWS --- */
+    --border-thin: 1px solid var(--tp-grey-300);
+    --border-thick: 4px solid var(--tp-black);
+    --border-accent: 2px solid var(--tp-crimson);
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    
+    /* --- TRANSITIONS --- */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-base: 0.3s ease;
+}
+
+/* =========================================================================
+   2. RESET & BASE
+   ========================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    color: var(--tp-black);
+    background-color: var(--tp-off-white); /* Warm editorial feel */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================================
+   3. TYPOGRAPHY CLASSES
+   ========================================================================= */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--tp-black);
+    margin-bottom: var(--space-4);
+}
+
+.heading-display { font-size: var(--text-5xl); letter-spacing: -0.02em; }
+.heading-1 { font-size: var(--text-4xl); }
+.heading-2 { font-size: var(--text-3xl); }
+.heading-3 { font-size: var(--text-2xl); }
+.heading-4 { font-size: var(--text-xl); }
+
+.kicker {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--tp-crimson);
+    display: block;
+    margin-bottom: var(--space-2);
+}
+
+.subheadline {
+    font-family: var(--font-sans);
+    font-size: var(--text-lg);
+    color: var(--tp-grey-800);
+    font-weight: 400;
+    line-height: 1.4;
+    margin-bottom: var(--space-4);
+}
+
+.meta-text {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--tp-grey-800);
+}
+
+p {
+    margin-bottom: var(--space-4);
+}
+
+a {
+    color: var(--tp-black);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--tp-crimson);
+}
+
+/* =========================================================================
+   4. LAYOUT & CONTAINERS
+   ========================================================================= */
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+    width: 100%;
+}
+
+.reading-container {
+    max-width: var(--container-reading);
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+    width: 100%;
+}
+
+.section-padding {
+    padding: var(--space-16) 0;
+}
+
+/* =========================================================================
+   5. COMPONENTS
+   ========================================================================= */
+
+/* Divider Lines */
+.tp-divider {
+    border: 0;
+    border-top: var(--border-thin);
+    margin: var(--space-8) 0;
+    width: 100%;
+}
+
+.tp-divider-thick {
+    border: 0;
+    border-top: var(--border-thick);
+    margin: var(--space-8) 0;
+    width: 100%;
+}
+
+.tp-divider-accent {
+    border: 0;
+    border-top: var(--border-accent);
+    margin: var(--space-8) 0;
+    width: 60px; /* Small accent line */
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--tp-crimson);
+    color: var(--tp-white);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    padding: var(--space-3) var(--space-6);
+    border-radius: 0; /* Sharp corners for editorial feel */
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+.btn-primary:hover {
+    background-color: var(--tp-crimson-dark);
+    color: var(--tp-white);
+}
+
+.btn-outline {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--tp-black);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    padding: var(--space-3) var(--space-6);
+    border: 1px solid var(--tp-black);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+.btn-outline:hover {
+    background-color: var(--tp-black);
+    color: var(--tp-white);
+}
+
+/* Images */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.tp-image-card {
+    overflow: hidden;
+    position: relative;
+}
+
+.tp-image-card img {
+    transition: transform var(--transition-base);
+}
+
+.tp-image-card:hover img {
+    transform: scale(1.05); /* Subtle zoom effect */
+}
+
+/* Data-Light Mode specific overrides */
+body.data-light-mode img:not(.keep-light) {
+    display: none !important;
+}
+body.data-light-mode .tp-image-card {
+    background-color: var(--tp-grey-300);
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+body.data-light-mode .tp-image-card::after {
+    content: "Image Hidden (Data-Light)";
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    color: var(--tp-grey-800);
+}

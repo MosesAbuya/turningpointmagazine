@@ -22,8 +22,8 @@ $awards_won = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="includes/new-navbar.css">
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="includes/tp-navbar.css">
+    <link rel="stylesheet" href="tp-design-system.css">
     <link rel="stylesheet" href="global.css">
 
 
@@ -360,9 +360,6 @@ $awards_won = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'includes/preloader.php'; ?>
     <?php include 'includes/new-navbar.php';?>
 
-    <div class="breadcrumb-container fade-in-up">
-    </div>
-
     <section class="tp-fun-intro fade-in-up" style="animation-delay: 0.2s;">
         <h1 class="tp-intro-main">Our Achievements</h1>
         <h2 class="tp-intro-sub">Awards Won</h2>
@@ -406,3 +403,4 @@ $awards_won = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
+

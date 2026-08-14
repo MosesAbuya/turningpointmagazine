@@ -61,7 +61,7 @@ if (isset($_POST['add'])){
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="latest.css">
     <link rel="stylesheet" href="global.css">
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="tp-design-system.css">
     <link rel="stylesheet" href="collection.css">
     <link rel="stylesheet" href="patners.css">
     <link rel="stylesheet" href="form.css">

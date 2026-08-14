@@ -60,7 +60,7 @@ $title = $article['title'];
 $catch_phrase = $article['catch_phrase'];
 $writer = $article['writer'];
 $story_content = $article['story_content'];
-$top_image = "admin/" . $article['top_image'];
+$top_image = (defined('BASE_URL') ? BASE_URL : '/turningpoint/') . "admin/" . $article['top_image'];
 $category_name = $category['name'];
 $edition_name = $edition ? $edition['edition_name'] : '';
 $current_edition_id = $article['edition_id']; 
@@ -105,9 +105,9 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="includes/new-navbar.css">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>footer.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>tp-design-system.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>global.css">
 
     <!-- Open Graph & Twitter Cards -->
     <meta property="og:title" content="<?= htmlspecialchars($title) ?> - Turning Point Magazine" />
@@ -183,7 +183,7 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
 
     /* --- HEADER / HERO --- */
     .breadcrumb-container {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/breadcrumbs/bread.jpeg');
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/breadcrumbs/bread.jpeg');
         background-size: cover;
         background-position: center;
         position: absolute;
@@ -612,8 +612,6 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'includes/preloader.php'; ?>
     <?php include 'includes/new-navbar.php'; ?>
 
-    <div class="breadcrumb-container fade-in-up"></div>
-
     <section class="tp-fun-intro fade-in-up" style="animation-delay: 0.2s;">
         <h1 class="tp-article-title"><?= htmlspecialchars($title); ?></h1>
         <div class="tp-article-meta">
@@ -670,7 +668,7 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
             <?php if (!empty($adsList)): ?>
             <?php foreach ($adsList as $ad): ?>
             <a href="partners.php?id=<?= $ad['id']; ?>&edition_id=<?= $current_edition_id; ?>" class="partner-card">
-                <img loading="lazy" src="admin/<?= htmlspecialchars($ad['ad_banner_image']); ?>" class="partner-img" alt="Partner">
+                <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($ad['ad_banner_image']); ?>" class="partner-img" alt="Partner">
                 <div class="partner-info">
                     <h4><?= htmlspecialchars($ad['ad_company_name']); ?></h4>
                     <p><?= htmlspecialchars($ad['catch_phrase']); ?></p>
@@ -694,7 +692,7 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
                 <?php if (!empty($articlesList)): ?>
                 <?php foreach ($articlesList as $art): ?>
                 <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>article/<?= generate_slug($art['title']); ?>" class="edition-card">
-                    <img loading="lazy" src="admin/<?= htmlspecialchars($art['top_image']); ?>" alt="Article">
+                    <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($art['top_image']); ?>" alt="Article">
                     <div class="edition-card-content">
                         <div class="edition-cat"><?= htmlspecialchars($art['name']); ?></div>
                         <div class="edition-title"><?= htmlspecialchars($art['title']); ?></div>
@@ -769,3 +767,4 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
+
