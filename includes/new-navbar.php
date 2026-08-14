@@ -43,25 +43,28 @@ include_once('connection2.php');
             <li><a id="shop" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>shop" target="_blank">Shop</a></li>
 
             <li class="tp-search-mobile-wrapper">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; padding: 10px;">
-                <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; transition: all 0.3s ease;">
-                    <option value="en">🇬🇧 EN</option>
-                    <option value="fr">🇫🇷 FR</option>
-                    <option value="de">🇩🇪 DE</option>
-                    <option value="es">🇪🇸 ES</option>
-                    <option value="pt">🇵🇹 PT</option>
-                    <option value="zh-CN">🇨🇳 ZH</option>
-                    <option value="ar">🇸🇦 AR</option>
-                    <option value="sw">🇰🇪 SW</option>
-                </select>
-                <div class="tp-search-module" style="width: auto; flex: 0 0 auto;">
-                    <button onclick="document.getElementById('tp-search-modal').style.display='flex'; document.getElementById('tp-modal-search-input').focus();" class="tp-search-button" style="position: relative !important; top: auto !important; right: auto !important; transform: none !important; border:none; background:none; color:white; font-size:20px; cursor:pointer; padding:5px 10px;"><i class="fas fa-search"></i></button>
-                </div>
+                <div style="display: flex; align-items: center; justify-content: center; padding: 10px;">
+                    <button onclick="document.getElementById('tp-search-modal').style.display='flex'; document.getElementById('tp-modal-search-input').focus();" style="border:none; background:none; color:white; font-size:18px; cursor:pointer; padding:5px 10px; display:flex; align-items:center; gap:10px;">
+                        <i class="fas fa-search"></i> Search
+                    </button>
                 </div>
             </li>
         </ul>
         
-        <div class="tp-search-desktop-wrapper" style="display: flex; align-items: center; max-width: 400px; margin-left: 30px;">
+        <div class="tp-mobile-translation-wrapper">
+            <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; transition: all 0.3s ease;">
+                <option value="en">🇬🇧 EN</option>
+                <option value="fr">🇫🇷 FR</option>
+                <option value="de">🇩🇪 DE</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="pt">🇵🇹 PT</option>
+                <option value="zh-CN">🇨🇳 ZH</option>
+                <option value="ar">🇸🇦 AR</option>
+                <option value="sw">🇰🇪 SW</option>
+            </select>
+        </div>
+        
+        <div class="tp-search-desktop-wrapper">
             <select class="custom-lang-select" onchange="setLanguage(this.value)" onmouseover="this.style.backgroundColor='red'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';" title="Translate Website" style="background: transparent; background-color: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; outline: none; height: 35px; margin-right: 15px; transition: all 0.3s ease;">
                 <option value="en">🇬🇧 EN</option>
                 <option value="fr">🇫🇷 FR</option>
@@ -79,6 +82,33 @@ include_once('connection2.php');
         </div>
     </div>
 </nav>
+
+<style>
+.tp-mobile-translation-wrapper {
+    display: none;
+    margin-left: auto;
+    margin-right: 20px;
+}
+.tp-search-desktop-wrapper {
+    display: flex; 
+    align-items: center; 
+    max-width: 400px; 
+    margin-left: 30px;
+}
+
+@media (max-width: 992px) {
+    .tp-search-desktop-wrapper {
+        display: none !important;
+    }
+    .tp-mobile-translation-wrapper {
+        display: block !important;
+        order: 2;
+    }
+    .tp-hamburger {
+        margin-left: 0 !important;
+    }
+}
+</style>
 
 <div class="tp-sub-nav" id="tp-sub-nav">
     <div class="tp-sub-nav-content">
