@@ -82,37 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ob_end_flush();
                     flush();
 
-                    // Send Emails using Global SMTP Settings
-                    require_once '../includes/mailer.php';
-
-                    // ===== Email 1: Send to User =====
-                    $user_subject = 'Your Order Confirmation - Turning Point Magazine';
-                    $user_body = "
-                        <h2>Payment Successful ✅</h2>
-                        <p>Dear $user_name,</p>
-                        <p>Your payment has been received successfully! Here are your order details:</p>
-                        <p><strong>Invoice ID:</strong> $invoice_id</p>
-                        <p><strong>Total Amount:</strong> KES {$order_items[0]['total_amount']}</p>
-                        <p><strong>Order Items:</strong><br> $order_details</p>
-                        <p>You will be contacted ASAP for further processing.</p>
-                        <p>Thank you for choosing Turning Point Magazine Africa!</p>
-                    ";
-                    sendGlobalMail($pdo, $user_email, $user_name, $user_subject, $user_body);
-
-                    // ===== Email 2: Send to Admin =====
-                    // Send to admin from global SMTP settings (we'll fetch it to know the admin email, or just hardcode for now as info@)
-                    $admin_subject = 'New Purchase Alert - Turning Point Magazine';
-                    $admin_body = "
-                        <h2>New Purchase Notification 🛒</h2>
-                        <p>A new order has been placed.</p>
-                        <p><strong>Customer:</strong> $user_name</p>
-                        <p><strong>Email:</strong> $user_email</p>
-                        <p><strong>Invoice ID:</strong> $invoice_id</p>
-                        <p><strong>Total Amount:</strong> KES {$order_items[0]['total_amount']}</p>
-                        <p><strong>Order Items:</strong><br> $order_details</p>
-                        <p><strong>Contact:</strong> $user_contact</p>
-                    ";
-                    sendGlobalMail($pdo, 'info@turningpointmagazine.africa', 'Admin', $admin_subject, $admin_body);
+                    // Emails are now reliably sent by callback_url.php on successful M-PESA confirmation,
+                    // so we do not send them here to prevent duplicate emails and spam bounces.
 
                     exit;
                 } elseif ($status === "failed") {

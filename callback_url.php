@@ -82,14 +82,68 @@ if (isset($responseData['Body']['stkCallback'])) {
                         $email = $order['email'];
                         $name = trim($order['first_name'] . ' ' . $order['last_name']);
                         
+                        // Fetch order items
+                        $stmtItems = $pdo->prepare("
+                            SELECT oi.quantity, oi.price, p.name 
+                            FROM order_items oi 
+                            LEFT JOIN products p ON oi.product_id = p.id 
+                            WHERE oi.order_id = ?
+                        ");
+                        $stmtItems->execute([$order['id']]);
+                        $items = $stmtItems->fetchAll(PDO::FETCH_ASSOC);
+
+                        $itemsList = "<table style='width:100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px;'>
+                                        <tr style='background:#f4f4f4; text-align: left;'>
+                                            <th style='padding:8px; border:1px solid #ddd;'>Item</th>
+                                            <th style='padding:8px; border:1px solid #ddd;'>Qty</th>
+                                            <th style='padding:8px; border:1px solid #ddd;'>Price</th>
+                                        </tr>";
+                        if ($items) {
+                            foreach ($items as $item) {
+                                $itemName = !empty($item['name']) ? htmlspecialchars($item['name']) : 'Turning Point Item';
+                                $itemsList .= "<tr>
+                                    <td style='padding:8px; border:1px solid #ddd;'>{$itemName}</td>
+                                    <td style='padding:8px; border:1px solid #ddd;'>{$item['quantity']}</td>
+                                    <td style='padding:8px; border:1px solid #ddd;'>Kes " . number_format($item['price'], 2) . "</td>
+                                </tr>";
+                            }
+                        } else {
+                            $itemsList .= "<tr><td colspan='3' style='padding:8px; border:1px solid #ddd; text-align:center;'>Standard Checkout Item</td></tr>";
+                        }
+                        $itemsList .= "</table>";
+
                         // Email to Buyer
-                        $buyerSubject = "Payment Received - Order #" . $order['invoice_id'];
-                        $buyerBody = "Hello $name,<br><br>Your payment of Kes " . number_format($amount, 2) . " has been received successfully. We are now processing your order (Invoice: " . $order['invoice_id'] . ").<br><br>Thank you for shopping with Turning Point!";
+                        $buyerSubject = "Order Confirmation - Invoice " . $order['invoice_id'];
+                        $buyerBody = "
+                        <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; line-height: 1.6;'>
+                            <h2 style='color: #e8003d;'>Payment Received!</h2>
+                            <p>Hello <strong>$name</strong>,</p>
+                            <p>Your payment of <strong>Kes " . number_format($amount, 2) . "</strong> has been received successfully. We are now processing your order.</p>
+                            
+                            <h3>Order Summary (Invoice: {$order['invoice_id']})</h3>
+                            $itemsList
+                            
+                            <p><strong>Delivery Option:</strong> " . htmlspecialchars($order['delivery_option'] ?? 'N/A') . "</p>
+                            <p><strong>Delivery Address:</strong> " . htmlspecialchars($order['delivery_address'] ?? 'N/A') . "</p>
+                            <p>We will contact you as soon as your order is dispatched.</p>
+                            <br>
+                            <p>Thank you for choosing Turning Point Magazine Africa!</p>
+                        </div>";
                         sendGlobalMail($pdo, $email, $name, $buyerSubject, $buyerBody);
                         
                         // Email to Admin
                         $adminSubject = "New Paid Order - " . $order['invoice_id'];
-                        $adminBody = "A new payment of Kes " . number_format($amount, 2) . " was received from $name.<br>Order status is now Paid.<br>Invoice ID: " . $order['invoice_id'];
+                        $adminBody = "
+                        <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; line-height: 1.6;'>
+                            <h2 style='color: #0c1a30;'>New Purchase Alert</h2>
+                            <p>A new payment of <strong>Kes " . number_format($amount, 2) . "</strong> was received.</p>
+                            <p><strong>Customer:</strong> $name (<a href='mailto:$email'>$email</a>)</p>
+                            <p><strong>Phone:</strong> {$order['contact']}</p>
+                            <p><strong>Invoice ID:</strong> {$order['invoice_id']}</p>
+                            
+                            <h3>Order Items</h3>
+                            $itemsList
+                        </div>";
                         sendGlobalMail($pdo, 'info@turningpointmagazine.africa', 'Turning Point Admin', $adminSubject, $adminBody);
                     }
 

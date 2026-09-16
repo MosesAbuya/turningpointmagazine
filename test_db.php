@@ -1,6 +1,1 @@
-<?php
-require_once 'connection2.php';
-$pdo = connect();
-$stmt = $pdo->query("DESCRIBE blog");
-print_r($stmt->fetchAll());
-?>
+<?php require 'connection2.php'; $pdo = connect(); $stmt = $pdo->query('SELECT oi.*, p.name FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id LIMIT 5'); print_r($stmt->fetchAll(PDO::FETCH_ASSOC));

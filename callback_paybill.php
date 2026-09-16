@@ -122,27 +122,52 @@ echo json_encode(["ResultCode" => 0, "ResultDesc" => "Confirmation Received Succ
             }
 
             // Email content
+            require_once 'includes/mailer.php';
+            
+            $itemsList = "<table style='width:100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px;'>
+                            <tr style='background:#f4f4f4; text-align: left;'>
+                                <th style='padding:8px; border:1px solid #ddd;'>Item</th>
+                                <th style='padding:8px; border:1px solid #ddd;'>Qty</th>
+                                <th style='padding:8px; border:1px solid #ddd;'>Price</th>
+                            </tr>";
+            if ($order_items) {
+                foreach ($order_items as $item) {
+                    $itemName = !empty($item['product_name']) ? htmlspecialchars($item['product_name']) : 'Turning Point Item';
+                    $itemsList .= "<tr>
+                        <td style='padding:8px; border:1px solid #ddd;'>{$itemName}</td>
+                        <td style='padding:8px; border:1px solid #ddd;'>{$item['quantity']}</td>
+                        <td style='padding:8px; border:1px solid #ddd;'>Kes " . number_format($item['unit_price'], 2) . "</td>
+                    </tr>";
+                }
+            } else {
+                $itemsList .= "<tr><td colspan='3' style='padding:8px; border:1px solid #ddd; text-align:center;'>Standard Checkout Item</td></tr>";
+            }
+            $itemsList .= "</table>";
+
             $user_message = "
-                <h2>Payment Successful ✅</h2>
-                <p>Dear $user_name,</p>
-                <p>Your payment has been received successfully! Here are your order details:</p>
-                <p><strong>Invoice ID:</strong> $invoice_id</p>
-                <p><strong>Total Amount:</strong> KES {$order_items[0]['total_amount']}</p>
-                <p><strong>Order Items:</strong><br> $order_details</p>
-                <p>You will be contacted ASAP for further processing.</p>
-                <p>Thank you for choosing Turning Point Magazine Africa!</p>";
+            <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; line-height: 1.6;'>
+                <h2 style='color: #e8003d;'>Payment Successful!</h2>
+                <p>Hello <strong>$user_name</strong>,</p>
+                <p>Your payment of <strong>Kes " . number_format($transAmount, 2) . "</strong> has been received successfully!</p>
+                <h3>Order Summary (Invoice: {$invoice_id})</h3>
+                $itemsList
+                <p>We will contact you shortly regarding the processing of your order.</p>
+                <br>
+                <p>Thank you for choosing Turning Point Magazine Africa!</p>
+            </div>";
 
             $admin_message = "
-                <h2>New Purchase Notification 🛒</h2>
-                <p>A new order has been placed.</p>
-                <p><strong>Customer:</strong> $user_name</p>
-                <p><strong>Email:</strong> $user_email</p>
-                <p><strong>Invoice ID:</strong> $invoice_id</p>
-                <p><strong>Total Amount:</strong> KES {$order_items[0]['total_amount']}</p>
-                <p><strong>Order Items:</strong><br> $order_details</p>";
+            <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; line-height: 1.6;'>
+                <h2 style='color: #0c1a30;'>New Purchase Alert (Paybill)</h2>
+                <p>A new payment of <strong>Kes " . number_format($transAmount, 2) . "</strong> was received.</p>
+                <p><strong>Customer:</strong> $user_name (<a href='mailto:$user_email'>$user_email</a>)</p>
+                <p><strong>Invoice ID:</strong> {$invoice_id}</p>
+                <h3>Order Items</h3>
+                $itemsList
+            </div>";
 
             // Send email to user
-            sendEmail($user_email, "Your Order Confirmation - Turning Point Magazine", $user_message);
+            sendGlobalMail($pdo, $user_email, $user_name, "Order Confirmation - Invoice $invoice_id", $user_message);
             
             // Send email to admin
-            sendEmail("info@turningpointmagazine.africa", "New Purchase Alert - Turning Point Magazine", $admin_message);
+            sendGlobalMail($pdo, "info@turningpointmagazine.africa", "Admin", "New Purchase Alert (Paybill) - $invoice_id", $admin_message);
