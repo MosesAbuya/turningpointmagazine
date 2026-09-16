@@ -1,0 +1,247 @@
+/* =====================================================
+   Spotlight Flash Sale Banner (Homepage)
+   ===================================================== */
+.sale-spotlight-section {
+    background: linear-gradient(135deg, #FFD700 0%, #FFBA00 100%);
+    border-radius: 24px;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 40px 50px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(255, 185, 0, 0.5);
+    overflow: visible;
+}
+
+/* Watermark text */
+.sale-spotlight-section::before {
+    content: 'SALE  SALE  SALE';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 2rem;
+    overflow: hidden;
+    pointer-events: none;
+    white-space: nowrap;
+    border-radius: 24px;
+    padding: 0 30px;
+}
+
+.sale-spotlight-inner {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 30px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* LEFT: Text info */
+.sale-info-col {
+    color: #111;
+}
+.sale-info-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #7a5b00;
+    margin-bottom: 8px;
+}
+.sale-info-headline {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1.0;
+    margin-bottom: 12px;
+    color: #111;
+}
+.sale-info-badge {
+    display: inline-block;
+    background: #e60000;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    padding: 6px 18px;
+    border-radius: 50px;
+    transform: rotate(-2deg);
+    box-shadow: 0 6px 18px rgba(230, 0, 0, 0.45);
+    margin-bottom: 16px;
+}
+.sale-info-desc {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+.sale-info-btn {
+    display: inline-block;
+    background: #111;
+    color: #fff;
+    padding: 13px 32px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+.sale-info-btn:hover {
+    background: #fff;
+    color: #111;
+    transform: translateY(-3px);
+    text-decoration: none;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+/* RIGHT: Product spotlight slider */
+.sale-spotlight-slider {
+    position: relative;
+    padding: 0 55px;
+}
+
+/* The viewport clips the slides but NOT the nav buttons */
+.sale-spotlight-viewport {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 16px;
+}
+
+.sale-spotlight-track {
+    display: flex;
+    /* transition set by JS */
+}
+
+.sale-spotlight-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Floating product image */
+.sale-spotlight-img {
+    width: 100%;
+    max-width: 340px;
+    height: 320px;
+    object-fit: contain;
+    filter:
+        drop-shadow(0 10px 20px rgba(0,0,0,0.25))
+        drop-shadow(0 30px 50px rgba(0,0,0,0.15));
+    animation: floatProduct 3.5s ease-in-out infinite;
+}
+
+.sale-spotlight-slide:hover .sale-spotlight-img {
+    filter:
+        drop-shadow(0 20px 40px rgba(0,0,0,0.35))
+        drop-shadow(0 40px 60px rgba(0,0,0,0.2));
+}
+
+@keyframes floatProduct {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-16px); }
+}
+
+.sale-spotlight-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #111;
+    margin-top: 18px;
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+.sale-spotlight-price {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #e60000;
+}
+.sale-spotlight-was {
+    font-size: 1rem;
+    color: #555;
+    text-decoration: line-through;
+    margin-right: 8px;
+}
+
+/* Navigation buttons — sit inside the padded .sale-spotlight-slider,
+   OUTSIDE the clipping viewport, so they are never cropped */
+.sale-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
+    z-index: 20;
+}
+.sale-nav-btn:hover {
+    background: #e60000;
+    transform: translateY(-50%) scale(1.12);
+    box-shadow: 0 10px 25px rgba(230,0,0,0.4);
+}
+.sale-nav-prev { left: 0; }
+.sale-nav-next { right: 0; }
+
+/* Dot indicators */
+.sale-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+.sale-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s;
+}
+.sale-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: #111;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .sale-spotlight-inner {
+        grid-template-columns: 1fr;
+    }
+    .sale-info-col {
+        text-align: center;
+    }
+    .sale-spotlight-section {
+        padding: 30px 25px;
+    }
+    .sale-spotlight-section::before {
+        font-size: 4rem;
+    }
+    .sale-info-headline {
+        font-size: 2.2rem;
+    }
+    .sale-spotlight-img {
+        height: 220px;
+    }
+}

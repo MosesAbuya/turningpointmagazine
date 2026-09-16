@@ -73,6 +73,10 @@ closeConnection($pdo);
                             <?= htmlspecialchars($product['description']) ?>
                         </p>
 
+                        <div class="custom-control custom-switch mt-2 mb-2">
+                            <input type="checkbox" class="custom-control-input feature-toggle" id="featureSwitch<?= $product['id'] ?>" data-id="<?= $product['id'] ?>" <?= isset($product['is_featured']) && $product['is_featured'] ? 'checked' : '' ?>>
+                            <label class="custom-control-label" for="featureSwitch<?= $product['id'] ?>">Feature in Flash Sale</label>
+                        </div>
                         <div class="d-flex justify-content-between mt-3">
                             <a href="shop_product_edit.php?id=<?= $product['id'] ?>" class="btn btn-warning btn-sm w-100 mr-1">Edit Item</a>
                             <button class="btn btn-danger btn-sm w-100 ml-1 delete-product" data-id="<?= $product['id'] ?>">Delete</button>
@@ -96,6 +100,33 @@ closeConnection($pdo);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
+            // Toggle Feature
+            $(".feature-toggle").change(function() {
+                var id = $(this).data("id");
+                var is_featured = $(this).is(":checked") ? 1 : 0;
+                
+                $.ajax({
+                    url: "shop_product_action",
+                    type: "POST",
+                    data: { action: "toggle_feature", id: id, is_featured: is_featured },
+                    dataType: "json",
+                    success: function(response) {
+                        if(response.status === "success") {
+                            Swal.fire({
+                                title: "Success!",
+                                text: response.message,
+                                icon: "success",
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                        } else {
+                            Swal.fire("Error", response.message, "error");
+                        }
+                    }
+                });
+            });
             // Sync Magazines
             $('#syncMagazinesBtn').click(function() {
                 Swal.fire({
@@ -168,3 +199,5 @@ closeConnection($pdo);
 </body>
 <?php include 'sidebar.php'; ?>
 </html>
+
+

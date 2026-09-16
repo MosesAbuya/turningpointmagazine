@@ -320,3 +320,84 @@ h1, h2, h3, h4, h5, h6 {
     .filter-item { border-bottom: 1px solid #eee; padding-bottom: 10px; width: 100%; text-align: center; }
     .modern-container { padding: 20px; }
 }
+/* Sale CTA Banner */
+.sale-cta-banner {
+    background: linear-gradient(135deg, #FFD700 0%, #FFB300 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 40px auto 10px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+.sale-cta-banner::before {
+    content: 'SALE SALE SALE SALE SALE';
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    width: 150%;
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-50%) rotate(-5deg);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+}
+.sale-cta-content {
+    position: relative;
+    z-index: 2;
+    color: #111;
+}
+.sale-cta-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 5px;
+}
+.sale-cta-discount {
+    background: #e60000;
+    color: #fff;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    transform: rotate(-3deg);
+    box-shadow: 0 5px 15px rgba(230, 0, 0, 0.4);
+}
+.sale-cta-button {
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 2;
+}
+.sale-cta-button:hover {
+    background: #fff;
+    color: #111;
+    transform: scale(1.05);
+}
+@media (max-width: 768px) {
+    .sale-cta-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    .sale-cta-title {
+        font-size: 2rem;
+    }
+    .sale-cta-button {
+        margin-top: 20px;
+    }
+}
+

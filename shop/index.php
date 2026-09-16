@@ -20,6 +20,11 @@ $heroProducts = array_slice($products, 0, 3);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turning Point Shop</title>
+    <!-- Global Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="manifest" href="../site.webmanifest">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
     <!-- Bootstrap CDN -->
@@ -82,6 +87,18 @@ $heroProducts = array_slice($products, 0, 3);
     <?php endif; ?>
 </div>
 <?php endif; ?>
+
+<!-- Sale CTA Banner -->
+<div class="container">
+    <div class="sale-cta-banner">
+        <div class="sale-cta-content">
+            <h2 class="sale-cta-title">Mega Flash Sale</h2>
+            <p class="mb-0 font-weight-bold" style="font-size: 1.1rem; color: #111;">Grab the latest Turning Point Magazines & Merch!</p>
+            <div class="sale-cta-discount">UP TO 60% OFF</div>
+        </div>
+        <a href="#products-grid" class="sale-cta-button">Shop the Sale <i class="fas fa-arrow-right ml-1"></i></a>
+    </div>
+</div>
 
 <!-- Filter Bar -->
 <div class="container">

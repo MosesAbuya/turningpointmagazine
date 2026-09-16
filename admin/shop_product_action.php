@@ -137,5 +137,23 @@ if ($action === 'add_product') {
     exit;
 }
 
+if ($action === 'toggle_feature') {
+    $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+    $is_featured = isset($_POST['is_featured']) ? intval($_POST['is_featured']) : 0;
+    
+    if ($id > 0) {
+        $stmt = $pdo->prepare("UPDATE products SET is_featured = ? WHERE id = ?");
+        if ($stmt->execute([$is_featured, $id])) {
+            echo json_encode(["status" => "success", "message" => "Feature status updated."]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Database error."]);
+        }
+    } else {
+        echo json_encode(["status" => "error", "message" => "Invalid product ID."]);
+    }
+    exit;
+}
+
 echo json_encode(["status" => "error", "message" => "Invalid action."]);
 ?>
+

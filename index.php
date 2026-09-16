@@ -88,6 +88,7 @@ try {
     <link rel="stylesheet" href="includes/new-navbar.css">
 
     <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="sale-spotlight.css">
 
 
     <link rel="stylesheet" href="dflip/css/dflip.min.css" type="text/css">
@@ -1454,11 +1455,115 @@ try {
                     </div>
                     <?php endforeach; ?>
                 </div>
+            </div>        </section>
+
+        <!-- Mega Flash Sale CTA Banner -->
+        <section class="page-section fade-in-up" style="position: relative; z-index: 100;">
+            <div class="sale-spotlight-section">
+                <div class="sale-spotlight-inner">
+
+                    <!-- Left: Text -->
+                    <div class="sale-info-col">
+                        <div class="sale-info-label">✦ Limited Time Only</div>
+                        <h2 class="sale-info-headline">Flash<br>Sale</h2>
+                        <div class="sale-info-badge">UP TO 60% OFF</div>
+                        <p class="sale-info-desc">Get the latest Turning Point Magazines & exclusive Merch at unbeatable prices. Don't miss out!</p>
+                        <a href="shop/index.php" class="sale-info-btn">Shop All Deals &rarr;</a>
+                    </div>
+
+                    <!-- Right: Product spotlight slider -->
+                    <div class="sale-spotlight-slider">
+                        <!-- Prev button — lives OUTSIDE so it's never clipped -->
+                        <button class="sale-nav-btn sale-nav-prev" id="salePrev" aria-label="Previous product">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+
+                        <div class="sale-spotlight-viewport" style="overflow: hidden; width: 100%; border-radius: 16px;">
+                            <div class="sale-spotlight-track" id="saleTrack">
+                                <?php 
+                                $saleProducts = [];
+                            try {
+                                $stmt = $pdo->query("SELECT id, name, img_path, current_price, prev_price FROM products WHERE is_featured = 1 ORDER BY id DESC");
+                                $saleProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                if(empty($saleProducts)) {
+                                    $stmt = $pdo->query("SELECT id, name, img_path, current_price, prev_price FROM products ORDER BY id DESC LIMIT 6");
+                                    $saleProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                }
+                            } catch (Exception $e) {}
+                            
+                            foreach($saleProducts as $prod): 
+                            ?>
+                            <a class="sale-spotlight-slide" href="shop/product.php?id=<?= $prod['id'] ?>">
+                                <img 
+                                    src="admin/<?= htmlspecialchars($prod['img_path']) ?>" 
+                                    class="sale-spotlight-img"
+                                    alt="<?= htmlspecialchars($prod['name']) ?>"
+                                    onerror="this.src='shop/images/placeholder.jpg';"
+                                >
+                                <div class="sale-spotlight-name"><?= htmlspecialchars($prod['name']) ?></div>
+                                <div class="sale-spotlight-price">
+                                    <?php if($prod['prev_price'] > 0): ?>
+                                        <span class="sale-spotlight-was">Kes <?= number_format($prod['prev_price']) ?></span>
+                                    <?php endif; ?>
+                                    Kes <?= number_format($prod['current_price']) ?>
+                                </div>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
+                        </div> <!-- End viewport -->
+
+                        <!-- Next button — also outside the track -->
+                        <button class="sale-nav-btn sale-nav-next" id="saleNext" aria-label="Next product">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+
+                        <!-- Dot indicators -->
+                        <div class="sale-dots" id="saleDots">
+                            <?php foreach($saleProducts as $i => $p): ?>
+                            <button class="sale-dot <?= $i === 0 ? 'active' : '' ?>" data-index="<?= $i ?>"></button>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
 
+        <script>
+        (function() {
+            var track = document.getElementById('saleTrack');
+            var slides = track ? track.querySelectorAll('.sale-spotlight-slide') : [];
+            var dots   = document.querySelectorAll('#saleDots .sale-dot');
+            var current = 0;
+            
+            function goTo(index) {
+                if (!slides.length) return;
+                current = (index + slides.length) % slides.length;
+                track.style.transform = 'translateX(-' + (current * 100) + '%)';
+                dots.forEach(function(d, i) {
+                    d.classList.toggle('active', i === current);
+                });
+            }
+            
+            var prevBtn = document.getElementById('salePrev');
+            var nextBtn = document.getElementById('saleNext');
+            if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); });
+            dots.forEach(function(d) {
+                d.addEventListener('click', function() { goTo(parseInt(this.dataset.index)); });
+            });
+            
+            // Auto-advance every 4 seconds
+            setInterval(function() { goTo(current + 1); }, 4000);
+            
+            // Init
+            if (track) { track.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)'; }
+        })();
+        </script>
+
 <?php
 // Fetch articles for First and Second editions
+
 $target_edition_ids = [];
 $first_edition_id = null;
 $second_edition_id = null;
@@ -2137,3 +2242,5 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
+
+
