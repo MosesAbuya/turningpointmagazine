@@ -788,6 +788,12 @@ try {
             color: #fff;
         }
 
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+            width: 100%;
+        }
+
         .tp-fun-intro {
             margin-top: -80px;
         }

@@ -248,25 +248,21 @@
 
 /* Mobile Fixes (Max-width: 768px) */
 @media (max-width: 768px) {
-    /* Ensure nothing on the page can escape the viewport */
+    /* Nuclear fix: anchor section directly to viewport width */
     .sale-spotlight-section {
         padding: 24px 16px;
         margin: 0;
         border-radius: 16px;
-        width: 100%;
-        max-width: 100%;
+        width: calc(100vw - 30px); /* 15px page-section padding each side */
+        max-width: calc(100vw - 30px);
         box-sizing: border-box;
-        overflow: hidden; /* clip the watermark from escaping */
+        overflow: hidden;
     }
 
-    /* Contain the watermark — it's the biggest culprit */
+    /* Kill the watermark completely on mobile — it's the overflow culprit */
     .sale-spotlight-section::before {
-        font-size: 2.5rem;
-        letter-spacing: 0.5rem;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 100%;
-        max-width: 100%;
+        content: none;
+        display: none;
     }
 
     .sale-spotlight-inner {
@@ -276,8 +272,29 @@
         box-sizing: border-box;
     }
 
+    .sale-info-col {
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Clamp all text to prevent overflow */
     .sale-info-headline {
-        font-size: 2rem;
+        font-size: clamp(1.6rem, 8vw, 2.2rem);
+        word-break: break-word;
+    }
+
+    .sale-info-desc {
+        font-size: 0.9rem;
+        word-break: break-word;
+    }
+
+    .sale-info-btn {
+        max-width: 100%;
+        box-sizing: border-box;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     /* Slider must stay within the section width */
@@ -298,6 +315,15 @@
         min-width: 0;
         max-width: 100%;
         box-sizing: border-box;
+    }
+
+    .sale-spotlight-name {
+        font-size: 1.1rem;
+        word-break: break-word;
+    }
+
+    .sale-spotlight-price {
+        font-size: 1.3rem;
     }
 
     .sale-spotlight-img {
