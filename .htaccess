@@ -44,6 +44,7 @@ RewriteRule ^(.*)$ https://www.turningpointmagazine.africa/$1 [L,R=301,NE]
 
 # Force redirect direct .php access to extensionless (External redirect - Directory Agnostic)
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?]
+RewriteCond %{REQUEST_URI} !^/callback_url\.php$
 RewriteRule ^ /%1 [R=301,L]
 
 # Rewrite sitemap.xml to sitemap.php
@@ -61,3 +62,4 @@ RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.*)$ $1.php [L]
 
 </IfModule>
+

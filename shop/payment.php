@@ -101,7 +101,22 @@ $contact_phone = $order['contact'];
                     
                     <div class="form-group text-left mt-4">
                         <label for="contact" class="font-weight-bold">M-Pesa Phone Number:</label>
-                        <input type="tel" name="contact" id="contact" class="form-control form-control-modern text-center" style="font-size: 1.2rem;" required placeholder="e.g. 254712345678" value="<?= htmlspecialchars($contact_phone) ?>">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <select class="custom-select" style="font-weight: bold; background: #eee; border-top-right-radius: 0; border-bottom-right-radius: 0; padding-right: 5px;">
+                                    <option value="254">🇰🇪 +254</option>
+                                </select>
+                            </div>
+                            <?php
+                            $display_phone = $contact_phone;
+                            if (strpos($display_phone, '254') === 0) {
+                                $display_phone = substr($display_phone, 3);
+                            } elseif (strpos($display_phone, '0') === 0) {
+                                $display_phone = substr($display_phone, 1);
+                            }
+                            ?>
+                            <input type="tel" name="contact" id="contact" class="form-control form-control-modern text-center" style="font-size: 1.2rem; border-top-left-radius: 0; border-bottom-left-radius: 0;" required placeholder="e.g. 712345678" value="<?= htmlspecialchars($display_phone) ?>">
+                        </div>
                         <small class="form-text text-muted mt-2 text-center">We will send an STK push prompt to this number.</small>
                     </div>
 
@@ -120,10 +135,25 @@ $contact_phone = $order['contact'];
     $(document).ready(function() {
         $("#pay-btn").click(function() {
             var contact = $("#contact").val().trim();
-            if (contact.length < 10 || isNaN(contact)) {
+            
+            // Strip leading zero if present
+            if (contact.startsWith('0')) {
+                contact = contact.substring(1);
+            }
+            // Strip 254 if they somehow pasted it
+            if (contact.startsWith('254')) {
+                contact = contact.substring(3);
+            }
+            
+            if (contact.length < 9 || isNaN(contact)) {
                 Swal.fire('Invalid Number', 'Please enter a valid M-Pesa phone number.', 'warning');
                 return;
             }
+
+            // Append 254
+            var formattedContact = '254' + contact;
+            // Temporarily set it back so serialize captures it correctly
+            $("#contact").val(formattedContact);
 
             var btn = $(this);
             btn.html('<i class="fa fa-spinner fa-spin"></i> Sending Prompt...').prop("disabled", true);
