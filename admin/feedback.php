@@ -27,12 +27,7 @@ closeConnection($pdo);
     <title>Feedback Management</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
 
     /* Highlight unread feedback */
     .unread {
@@ -45,25 +40,33 @@ closeConnection($pdo);
     }
     </style>
     <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 
-<?php include 'nav.php' ?>
+
 
 <body id="body">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
 
 
 
 
-    <div class="container mt-5">
-        <h2 class="text-center underline">Feedback Management Dashboard</h2>
-        <div class="sep"></div>
-        <div class="text-right mb-3 no-print">
-            <button class="btn btn-success" onclick="window.print()">Print Table</button>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold m-0">Feedback Management Dashboard</h2>
+            <div class="text-right mb-3 no-print d-flex gap-2">
+                <button class="btn btn-danger d-none" id="bulkDeleteBtn"><i class="fas fa-trash"></i> Delete Selected</button>
+                <button class="btn btn-success" onclick="window.print()">Print Table</button>
+            </div>
         </div>
+        <div class="sep"></div>
 
         <!-- Feedback Table -->
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-modern">
                 <thead class="thead-dark">
                     <tr>
                         <th><input type="checkbox" id="selectAll"></th>
@@ -101,14 +104,15 @@ closeConnection($pdo);
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        </div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
     // Handle delete feedback
     $(document).on('click', '.deleteBtn', function() {
         const feedbackId = $(this).data('id');
-        if (confirm('Are you sure you want to delete this feedback?')) {
+        Swal.fire({title: 'Are you sure?', text: 'Delete this feedback?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e8003d', cancelButtonColor: '#6c757d'}).then((result) => { if (result.isConfirmed) {
             $.ajax({
                 url: 'delete_feedback.php',
                 type: 'POST',
@@ -116,17 +120,51 @@ closeConnection($pdo);
                     id: feedbackId
                 },
                 success: function(response) {
-                    alert(response);
-                    location.reload();
+                    Swal.fire({title: 'Success', text: response, icon: 'success', confirmButtonColor: '#e8003d'}).then(() => {
+                        location.reload();
+                    });
                 }
             });
-        }
+        } });
     });
 
     // Handle select/deselect all rows
+    const bulkDeleteBtn = $('#bulkDeleteBtn');
+    
+    function toggleBulkDelete() {
+        const checkedCount = $('.selectRow:checked').length;
+        if (checkedCount > 0) {
+            bulkDeleteBtn.removeClass('d-none');
+        } else {
+            bulkDeleteBtn.addClass('d-none');
+        }
+    }
+
     $('#selectAll').on('click', function() {
         const isChecked = $(this).prop('checked');
         $('.selectRow').prop('checked', isChecked);
+        toggleBulkDelete();
+    });
+
+    $(document).on('change', '.selectRow', toggleBulkDelete);
+
+    bulkDeleteBtn.on('click', function() {
+        Swal.fire({title: 'Are you sure?', text: 'Delete selected feedback?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e8003d', cancelButtonColor: '#6c757d'}).then((result) => { if (result.isConfirmed) {
+            const ids = $('.selectRow:checked').map(function() {
+                return $(this).data('id');
+            }).get();
+
+            $.ajax({
+                url: 'delete_selected_feedback.php',
+                type: 'POST',
+                data: { ids: ids },
+                success: function(response) {
+                    Swal.fire({title: 'Success', text: response, icon: 'success', confirmButtonColor: '#e8003d'}).then(() => {
+                        location.reload();
+                    });
+                }
+            });
+        } });
     });
 
     // Handle mark as read
@@ -139,8 +177,9 @@ closeConnection($pdo);
                 id: feedbackId
             },
             success: function(response) {
-                alert(response);
-                location.reload();
+                Swal.fire({title: 'Success', text: response, icon: 'success', confirmButtonColor: '#e8003d'}).then(() => {
+                    location.reload();
+                });
             }
         });
     });
@@ -155,6 +194,6 @@ closeConnection($pdo);
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<?php include 'sidebar.php'; ?>
+
 
 </html>

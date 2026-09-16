@@ -43,6 +43,7 @@ RewriteCond %{HTTP_HOST} ^(?:www\.)?turningpointmagazine\.africa [NC]
 RewriteRule ^(.*)$ https://www.turningpointmagazine.africa/$1 [L,R=301,NE]
 
 # Force redirect direct .php access to extensionless (External redirect - Directory Agnostic)
+RewriteCond %{REQUEST_METHOD} ^GET$
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?]
 RewriteCond %{REQUEST_URI} !^/callback_url\.php$
 RewriteRule ^ /%1 [R=301,L]

@@ -22,23 +22,23 @@ closeConnection($pdo);
     <title>Manage Spotlight Posts</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
     </style>
     <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
-    <div class="container mt-5">
-        <h2 class="text-center underline">Manage Spotlight Posts</h2>
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
+        <h2 class="fw-bold mb-4">Manage Spotlight Posts</h2>
         <div class="sep"></div>
         <a href="add-spotlight.php" class="btn btn-primary mb-4">Add New Spotlight Post</a>
-        <table class="table table-bordered">
+        <table class="table table-modern">
             <thead>
                 <tr>
                     <th>Partner Name</th>
@@ -71,9 +71,10 @@ closeConnection($pdo);
         </table>
     </div>
 
-    <script>
+        </div>
+<script>
     function deletePost(id) {
-        if (confirm("Are you sure you want to delete this post?")) {
+        Swal.fire({title: 'Are you sure?', text: 'Delete this post?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e8003d', cancelButtonColor: '#6c757d'}).then((result) => { if (result.isConfirmed) {
             // Use AJAX to call a deletion script
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "delete_spotlight_post.php", true);
@@ -89,5 +90,5 @@ closeConnection($pdo);
     }
     </script>
 </body>
-<?php include 'sidebar.php'; ?>
+
 </html>

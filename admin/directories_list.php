@@ -28,23 +28,23 @@ closeConnection($pdo);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="form.css">
     <style>
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
     <div class="container-fluid mt-5">
-        <h2 class="text-center underline">Manage Organizations</h2>
+        <h2 class="fw-bold mb-4">Manage Organizations</h2>
         <div class="sep"></div>
         <a href="directories_add.php" class="btn btn-primary mb-4">Add New Organization</a>
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-modern">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -78,9 +78,10 @@ closeConnection($pdo);
         </div>
     </div>
 
-    <script>
+        </div>
+<script>
     function deleteOrganization(id) {
-        if (confirm("Are you sure you want to delete this organization?")) {
+        Swal.fire({title: 'Are you sure?', text: 'Delete this organization?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e8003d', cancelButtonColor: '#6c757d'}).then((result) => { if (result.isConfirmed) {
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "delete_organization.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -94,5 +95,5 @@ closeConnection($pdo);
     }
     </script>
 </body>
-<?php include 'sidebar.php'; ?>
+
 </html>

@@ -47,12 +47,7 @@ $pdo = connect();
     <title>Attendance Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        #body {
-            background-color: #f8f9fa;
-            width: calc(100% - 250px);
-            margin-left: 250px;
-            margin-top: 100px;
-        }
+        
 
         .table-hover tbody tr:hover {
             background-color: #f1f1f1;
@@ -78,11 +73,16 @@ $pdo = connect();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
-    <div class="container mt-5">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
         <h2 class="text-center">Attendance Dashboard</h2>
         <div class="sep"></div>
 
@@ -101,6 +101,7 @@ $pdo = connect();
     </div>
 </div>
 
+    </div>
 <script>
     function updateAttendeeCounts() {
     $.ajax({
@@ -174,7 +175,7 @@ $(document).on('click', '.mark-present', function() {
 
         <!-- Attendees Table -->
         <div class="table-responsive mt-3">
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-modern">
                 <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
@@ -302,6 +303,6 @@ $(document).ready(function() {
     </script>
 </body>
 
-<?php include 'sidebar.php'; ?>
+
 
 </html>

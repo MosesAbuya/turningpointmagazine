@@ -71,26 +71,26 @@ closeConnection($pdo);
     <title>Edit Category</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
 
     .table {
         margin-top: 50px;
     }
     </style>
     <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 
 <body id="body">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
 
-    <?php include 'nav.php'; ?>
+    
 
-    <div class="container mt-5">
-        <h2 class="text-center underline"><?= isset($category) ? 'Edit Category' : 'Add New Category' ?></h2>
+    <div class="container-fluid">
+        <h2 class="fw-bold mb-4"><?= isset($category) ? 'Edit Category' : 'Add New Category' ?></h2>
         <div class="sep"></div>
 
         <!-- Category Form (Add or Edit) -->
@@ -121,11 +121,12 @@ closeConnection($pdo);
         </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        </div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-<?php include 'sidebar.php'; ?>
+
 
 </html>

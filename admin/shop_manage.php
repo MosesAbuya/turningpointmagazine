@@ -23,12 +23,7 @@ closeConnection($pdo);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
     .card {
         margin-bottom: 20px;
         padding: 10px;
@@ -43,12 +38,17 @@ closeConnection($pdo);
     .type-magazine { background-color: #007bff; }
     .type-merch { background-color: #28a745; }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php' ?>
+
 
 <body id="body">
-    <div class="container mt-5">
-        <h2 class="text-center underline">Shop Management</h2>
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
+        <h2 class="fw-bold mb-4">Shop Management</h2>
 
         <div class="text-right mb-4 no-print">
             <button class="btn btn-warning" id="syncMagazinesBtn"><i class="fas fa-sync"></i> Auto-Sync Magazines</button>
@@ -95,7 +95,8 @@ closeConnection($pdo);
     </div>
 
     <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -197,7 +198,7 @@ closeConnection($pdo);
         });
     </script>
 </body>
-<?php include 'sidebar.php'; ?>
+
 </html>
 
 

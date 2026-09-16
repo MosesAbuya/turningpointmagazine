@@ -30,20 +30,20 @@ closeConnection($pdo);
     <title>Articles</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
     </style>
     <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
-    <div class="container mt-5">
-        <h2 class="text-center underline">Articles</h2>
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
+        <h2 class="fw-bold mb-4">Articles</h2>
         <div class="sep"></div>
         <div class="row">
             <?php if (!empty($articles)): ?>
@@ -72,7 +72,8 @@ closeConnection($pdo);
         </div>
         <a href="add_article.php?edition_id=<?= $editionId ?>" class="btn btn-primary mt-4">Add New Article</a>
     </div>
+    </div>
 </body>
-<?php include 'sidebar.php'; ?>
+
 </html>
 

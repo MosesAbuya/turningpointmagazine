@@ -64,6 +64,8 @@ if ($action === 'edit_product') {
     $name = $_POST['name'] ?? '';
     $desc = $_POST['description'] ?? '';
     $price = $_POST['current_price'] ?? 0;
+    $prev_price = $_POST['prev_price'] ?? 0;
+    $cost_price = $_POST['cost_price'] ?? 0;
     $edition_id = isset($_POST['edition_id']) && $_POST['edition_id'] !== '' ? intval($_POST['edition_id']) : null;
     
     if ($id <= 0) {
@@ -88,8 +90,8 @@ if ($action === 'edit_product') {
             }
         }
 
-        $updateStmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, current_price = ?, img_path = ? WHERE id = ?");
-        if ($updateStmt->execute([$name, $desc, $price, $imgPath, $id])) {
+        $updateStmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, current_price = ?, prev_price = ?, cost_price = ?, img_path = ? WHERE id = ?");
+        if ($updateStmt->execute([$name, $desc, $price, $prev_price, $cost_price, $imgPath, $id])) {
             // If it's a magazine, also update the editions table
             if ($edition_id) {
                 $edStmt = $pdo->prepare("UPDATE editions SET price = ?, front_page_image = ? WHERE id = ?");
@@ -110,6 +112,8 @@ if ($action === 'add_product') {
     $name = $_POST['name'] ?? '';
     $desc = $_POST['description'] ?? '';
     $price = $_POST['current_price'] ?? 0;
+    $prev_price = $_POST['prev_price'] ?? 0;
+    $cost_price = $_POST['cost_price'] ?? 0;
     
     $imgPath = 'images/placeholder.jpg';
     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
@@ -124,8 +128,8 @@ if ($action === 'add_product') {
 
     $code = 'MERCH-' . time();
     try {
-        $stmt = $pdo->prepare("INSERT INTO products (code, name, description, current_price, img_path, edition_id) VALUES (?, ?, ?, ?, ?, NULL)");
-        if ($stmt->execute([$code, $name, $desc, $price, $imgPath])) {
+        $stmt = $pdo->prepare("INSERT INTO products (code, name, description, current_price, prev_price, cost_price, img_path, edition_id) VALUES (?, ?, ?, ?, ?, ?, ?, NULL)");
+        if ($stmt->execute([$code, $name, $desc, $price, $prev_price, $cost_price, $imgPath])) {
             echo json_encode(["status" => "success", "message" => "Merchandise added successfully!"]);
         } else {
             echo json_encode(["status" => "error", "message" => "Failed to add merchandise."]);

@@ -31,15 +31,20 @@ closeConnection($pdo);
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
-    #body { background-color: #f8f9fa; width: calc(100% - 250px); margin-left: 250px; margin-top: 100px; }
+    
     .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
     .current-img { max-width: 150px; border-radius: 5px; margin-bottom: 10px; display: block; border: 1px solid #ccc; }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php' ?>
+
 
 <body id="body">
-    <div class="container mt-5">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="form-container">
@@ -56,9 +61,19 @@ closeConnection($pdo);
                             <label>Description</label>
                             <textarea name="description" class="form-control" rows="4" required><?= htmlspecialchars($product['description']) ?></textarea>
                         </div>
-                        <div class="form-group">
-                            <label>Price (Ksh)</label>
-                            <input type="number" step="0.01" name="current_price" class="form-control" required value="<?= htmlspecialchars($product['current_price']) ?>">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label>Current Price (Ksh)</label>
+                                <input type="number" step="0.01" name="current_price" class="form-control" required value="<?= htmlspecialchars($product['current_price']) ?>">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Slash Price (Ksh)</label>
+                                <input type="number" step="0.01" name="prev_price" class="form-control" value="<?= htmlspecialchars($product['prev_price'] ?? 0) ?>">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Cost Price (Ksh)</label>
+                                <input type="number" step="0.01" name="cost_price" class="form-control" required value="<?= htmlspecialchars($product['cost_price'] ?? 0) ?>">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Current Image</label>
@@ -74,7 +89,8 @@ closeConnection($pdo);
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
     $(document).ready(function() {
@@ -115,5 +131,5 @@ closeConnection($pdo);
     });
     </script>
 </body>
-<?php include 'sidebar.php'; ?>
+
 </html>

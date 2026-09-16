@@ -133,14 +133,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_organization']
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="form.css">
     <style>
-    #body { background-color: #f8f9fa; width: calc(100% - 250px); margin-left: 250px; margin-top: 100px; }
+    
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
-<div class="container mt-5">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+<div class="container-fluid">
     <h2 class="underline">Edit Organization</h2>
     <div class="sep"></div>
     <form method="POST" enctype="multipart/form-data">
@@ -268,6 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_organization']
         <button type="submit" class="btn btn-primary mt-3" name="update_organization">Update Organization</button>
     </form>
 </div>
+    </div>
 </body>
-<?php include 'sidebar.php'; ?>
+
 </html>

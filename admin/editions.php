@@ -30,12 +30,7 @@ closeConnection($pdo);
     <title>Editions Management Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
 
     .card {
         margin-bottom: 20px;
@@ -96,13 +91,18 @@ closeConnection($pdo);
         }
     }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php' ?>
+
 
 <body id="body">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
 
-    <div class="container mt-5">
-        <h2 class="text-center underline">Editions Management Dashboard</h2>
+    <div class="container-fluid">
+        <h2 class="fw-bold mb-4">Editions Management Dashboard</h2>
 
         <div class="text-right mb-3 no-print">
             <a href="edition.php" class="btn btn-success">Add New Edition</a>
@@ -129,11 +129,12 @@ closeConnection($pdo);
     </div>
 
     <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        </div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-<?php include 'sidebar.php'; ?>
+
 
 </html>

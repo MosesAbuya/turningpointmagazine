@@ -74,12 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
 closeConnection($pdo);
 ?>
 <style>
-#body {
-    background-color: #f8f9fa;
-    width: calc(100% - 250px);
-    margin-left: 250px;
-    margin-top: 100px;
-}
+
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,11 +93,16 @@ closeConnection($pdo);
         background-color: #f9f9f9;
     }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
-    <div class="container mt-5">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
         <h2>Applicant Details</h2>
 
         <?php if (isset($_GET['status_updated'])): ?>
@@ -155,7 +155,8 @@ closeConnection($pdo);
         </div>
         <a href="award_applicants.php" class="btn btn-light mt-3">Back to Applicants List</a>
     </div>
+    </div>
 </body>
-<?php include 'sidebar.php'; ?>
+
 
 </html>

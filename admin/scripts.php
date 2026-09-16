@@ -24,7 +24,7 @@ $(document).on('click', '.editBtn', function() {
 $(document).on('click', '.deleteBtn', function() {
     const id = $(this).data('id');
 
-    if (confirm('Are you sure you want to delete this record?')) {
+    Swal.fire({title: 'Are you sure?', text: 'Delete this record?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e8003d', cancelButtonColor: '#6c757d'}).then((result) => { if (result.isConfirmed) {
         $.ajax({
             url: 'delete_record.php',
             type: 'POST',
@@ -32,7 +32,7 @@ $(document).on('click', '.deleteBtn', function() {
                 id: id
             },
             success: function() {
-                alert('Record deleted successfully!');
+                Swal.fire({title: 'Success', text: 'Record deleted successfully!', icon: 'success', confirmButtonColor: '#e8003d'});
                 location.reload(); // Reload the page to reflect changes
             }
         });

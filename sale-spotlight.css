@@ -245,3 +245,35 @@
         height: 220px;
     }
 }
+
+/* Mobile Fixes (Max-width: 768px) */
+@media (max-width: 768px) {
+    .sale-spotlight-section {
+        padding: 24px 16px;
+        margin: 0 12px;
+        border-radius: 16px;
+    }
+    .sale-spotlight-inner {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .sale-info-headline {
+        font-size: 2rem;
+    }
+    .sale-spotlight-slider {
+        padding: 0 40px;
+    }
+    .sale-spotlight-img {
+        height: 200px;
+        max-width: 100%;
+    }
+    .sale-nav-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+    .sale-spotlight-section::before {
+        font-size: 3rem;
+        letter-spacing: 1rem;
+    }
+}

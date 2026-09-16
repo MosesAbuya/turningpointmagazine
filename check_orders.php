@@ -1,0 +1,1 @@
+<?php require 'admin/connection2.php';  = connect();  = ->query('SHOW CREATE TABLE orders'); print_r(->fetch(PDO::FETCH_ASSOC));  = ->query('SHOW CREATE TABLE order_items'); print_r(->fetch(PDO::FETCH_ASSOC)); ?>

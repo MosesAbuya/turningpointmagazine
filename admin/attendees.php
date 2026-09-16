@@ -27,12 +27,7 @@ closeConnection($pdo);
     <title>Attendees Management Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
 
     .table td.text-truncate {
         white-space: nowrap;
@@ -60,13 +55,18 @@ closeConnection($pdo);
     }
     </style>
     <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php' ?>
+
 
 <body id="body">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
 
-    <div class="container mt-5">
-        <h2 class="text-center underline">Turning Point International Women's Day & Trade & Exhibition Expo Attendees Management</h2>
+    <div class="container-fluid">
+        <h2 class="fw-bold mb-4">Turning Point International Women's Day & Trade & Exhibition Expo Attendees Management</h2>
         <div class="sep"></div>
         <div class="text-right mb-3 no-print">
             <button class="btn btn-success" onclick="window.print()">Print Table</button>
@@ -83,7 +83,7 @@ closeConnection($pdo);
 
         <!-- Attendees Table -->
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-modern">
                 <thead class="thead-dark">
                     <tr>
                         <th><input type="checkbox" id="selectAll"></th>
@@ -121,14 +121,15 @@ closeConnection($pdo);
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        </div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
     $(document).on('click', '.deleteBtn', function() {
         const id = $(this).data('id');
 
-        if (confirm('Are you sure you want to delete this attendee?')) {
+        Swal.fire({title: 'Are you sure?', text: 'Are you sure you want to delete this attendee?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e8003d', cancelButtonColor: '#6c757d', confirmButtonText: 'Yes, delete it!'}).then((result) => { if (result.isConfirmed) {
             $.ajax({
                 url: 'delete_attendee.php',
                 type: 'POST',
@@ -136,11 +137,11 @@ closeConnection($pdo);
                     id: id
                 },
                 success: function() {
-                    alert('Attendee deleted successfully!');
+                    Swal.fire({title: 'Success', text: 'Attendee deleted successfully!', icon: 'success', confirmButtonColor: '#e8003d'});
                     location.reload();
                 }
             });
-        }
+        } });
     });
 
     // Handle select/deselect all rows
@@ -156,7 +157,7 @@ closeConnection($pdo);
             selectedIds.push($(this).data('id'));
         });
 
-        if (selectedIds.length > 0 && confirm('Are you sure you want to delete the selected attendees?')) {
+        if (selectedIds.length === 0) { Swal.fire('Error', 'Please select attendees to delete.', 'error'); return; } Swal.fire({title: 'Are you sure?', text: 'Delete selected attendees?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e8003d', cancelButtonColor: '#6c757d'}).then((result) => { if (result.isConfirmed) {
             $.ajax({
                 url: 'delete_selected_attendees.php',
                 type: 'POST',
@@ -164,17 +165,17 @@ closeConnection($pdo);
                     ids: selectedIds
                 },
                 success: function() {
-                    alert('Selected attendees deleted successfully!');
+                    Swal.fire({title: 'Success', text: 'Selected attendees deleted successfully!', icon: 'success', confirmButtonColor: '#e8003d'});
                     location.reload();
                 }
             });
         } else {
-            alert('Please select attendees to delete.');
+            
         }
     });
     </script>
 
 </body>
-<?php include 'sidebar.php'; ?>
+
 
 </html>

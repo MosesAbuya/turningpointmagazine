@@ -19,12 +19,7 @@ $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 closeConnection($pdo);
 ?>
 <style>
-#body {
-    background-color: #f8f9fa;
-    width: calc(100% - 250px);
-    margin-left: 250px;
-    margin-top: 100px;
-}
+
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,14 +30,19 @@ closeConnection($pdo);
     <title>Manage Awards to Apply For</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
-    <div class="container mt-5">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
         <h2>Manage Awards to Apply For</h2>
         <a href="add_award_to_apply.php" class="btn btn-primary mb-4">Add New Award</a>
-        <table class="table table-bordered">
+        <table class="table table-modern">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -67,7 +67,8 @@ closeConnection($pdo);
             </tbody>
         </table>
     </div>
+    </div>
 </body>
-<?php include 'sidebar.php'; ?>
+
 
 </html>

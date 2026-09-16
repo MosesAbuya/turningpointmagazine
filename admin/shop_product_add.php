@@ -14,14 +14,19 @@ include 'consent.php';
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
-    #body { background-color: #f8f9fa; width: calc(100% - 250px); margin-left: 250px; margin-top: 100px; }
+    
     .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php' ?>
+
 
 <body id="body">
-    <div class="container mt-5">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="form-container">
@@ -36,9 +41,19 @@ include 'consent.php';
                             <label>Description</label>
                             <textarea name="description" class="form-control" rows="4" required placeholder="Enter product details..."></textarea>
                         </div>
-                        <div class="form-group">
-                            <label>Price (Ksh)</label>
-                            <input type="number" step="0.01" name="current_price" class="form-control" required placeholder="e.g. 1500">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label>Current Price (Ksh)</label>
+                                <input type="number" step="0.01" name="current_price" class="form-control" required placeholder="e.g. 1500">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Slash Price (Promo) (Ksh)</label>
+                                <input type="number" step="0.01" name="prev_price" class="form-control" placeholder="e.g. 2000 (Optional)">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>Cost Price (For P&L) (Ksh)</label>
+                                <input type="number" step="0.01" name="cost_price" class="form-control" required placeholder="e.g. 800">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Product Image</label>
@@ -52,7 +67,8 @@ include 'consent.php';
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
     $(document).ready(function() {
@@ -93,5 +109,5 @@ include 'consent.php';
     });
     </script>
 </body>
-<?php include 'sidebar.php'; ?>
+
 </html>

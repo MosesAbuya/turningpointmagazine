@@ -51,12 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <style>
-#body {
-    background-color: #f8f9fa;
-    width: calc(100% - 250px);
-    margin-left: 250px;
-    margin-top: 100px;
-}
+
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,11 +61,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Add New Personal Award</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
-    <div class="container mt-5">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
         <h2>Add New Personal Award</h2>
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
@@ -100,7 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn btn-primary">Add Award</button>
         </form>
     </div>
+    </div>
 </body>
-<?php include 'sidebar.php'; ?>
+
 
 </html>

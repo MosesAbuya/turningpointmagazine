@@ -121,20 +121,20 @@ closeConnection($pdo);
         margin: 5px;
     }
 
-    #body {
-        background-color: #f8f9fa;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        margin-top: 100px;
-    }
+    
     </style>
     <link rel="stylesheet" href="form.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<?php include 'nav.php'; ?>
+
 
 <body id="body">
-    <div class="container mt-5">
+    <?php include "nav.php"; ?>
+    <?php include "sidebar.php"; ?>
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
         <h2 class="underline">Edit Article</h2>
         <div class="sep"></div>
         <form method="POST" enctype="multipart/form-data">
@@ -213,7 +213,8 @@ closeConnection($pdo);
             <button type="submit" class="btn btn-primary" name="edit_article">Save Changes</button>
         </form>
     </div>
+    </div>
 </body>
-<?php include 'sidebar.php'; ?>
+
 
 </html>
