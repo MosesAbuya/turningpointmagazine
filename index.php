@@ -794,6 +794,8 @@ try {
 
         .page-section {
             padding: 60px 15px;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         .page-section.bg-light {

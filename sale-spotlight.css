@@ -248,32 +248,69 @@
 
 /* Mobile Fixes (Max-width: 768px) */
 @media (max-width: 768px) {
+    /* Ensure nothing on the page can escape the viewport */
     .sale-spotlight-section {
         padding: 24px 16px;
-        margin: 0 12px;
+        margin: 0;
         border-radius: 16px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden; /* clip the watermark from escaping */
     }
+
+    /* Contain the watermark — it's the biggest culprit */
+    .sale-spotlight-section::before {
+        font-size: 2.5rem;
+        letter-spacing: 0.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+
     .sale-spotlight-inner {
         grid-template-columns: 1fr;
         gap: 16px;
+        width: 100%;
+        box-sizing: border-box;
     }
+
     .sale-info-headline {
         font-size: 2rem;
     }
+
+    /* Slider must stay within the section width */
     .sale-spotlight-slider {
         padding: 0 40px;
+        width: 100%;
+        box-sizing: border-box;
     }
+
+    .sale-spotlight-viewport {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .sale-spotlight-slide {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
     .sale-spotlight-img {
         height: 200px;
         max-width: 100%;
+        width: 100%;
+        object-fit: contain;
     }
+
     .sale-nav-btn {
         width: 36px;
         height: 36px;
         font-size: 0.9rem;
     }
-    .sale-spotlight-section::before {
-        font-size: 3rem;
-        letter-spacing: 1rem;
-    }
 }
+
