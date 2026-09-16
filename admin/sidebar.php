@@ -109,6 +109,9 @@ body {
             <li class="<?php echo (basename($_SERVER['PHP_SELF']) == 'editions.php') ? 'active' : ''; ?>">
                 <a href="editions.php" class="text-white">Editions</a>
             </li>
+            <li class="<?php echo (basename($_SERVER['PHP_SELF']) == 'shop_manage.php') ? 'active' : ''; ?>">
+                <a href="shop_manage.php" class="text-white">Shop Management</a>
+            </li>
             <li class="<?php echo (basename($_SERVER['PHP_SELF']) == 'feedback.php') ? 'active' : ''; ?>">
                 <a href="feedback.php" class="text-white">Feedback</a>
             </li>

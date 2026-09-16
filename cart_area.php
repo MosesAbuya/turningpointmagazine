@@ -16,11 +16,13 @@ if (isset($_POST['add'])){
         if(in_array($_POST['product_id'], array_keys($_SESSION['cart']))){
             $_SESSION['cart'][$_POST['product_id']] += 1;
             header("location: ./");
+            exit;
         }else{
             // Create new session variable
             $_SESSION['cart'][$_POST['product_id']] = 1;
             // print_r($_SESSION['cart']);
             header("location: ./");
+            exit;
         }
 
     }else{
@@ -28,6 +30,7 @@ if (isset($_POST['add'])){
         $_SESSION['cart'][$_POST['product_id']] = 1;
         // print_r($_SESSION['cart']);
         header("location: ./");
+        exit;
     }
 }
 

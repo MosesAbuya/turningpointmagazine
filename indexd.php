@@ -17,11 +17,13 @@ if (isset($_POST['add'])){
         if(in_array($_POST['product_id'], array_keys($_SESSION['cart']))){
             $_SESSION['cart'][$_POST['product_id']] += 1;
             header("location: shop.php");
+            exit;
         }else{
             // Create new session variable
             $_SESSION['cart'][$_POST['product_id']] = 1;
             // print_r($_SESSION['cart']);
             header("location: shop.php");
+            exit;
         }
 
     }else{
@@ -29,6 +31,7 @@ if (isset($_POST['add'])){
         $_SESSION['cart'][$_POST['product_id']] = 1;
         // print_r($_SESSION['cart']);
         header("location: shop.php");
+        exit;
     }
 }
 
@@ -296,7 +299,7 @@ try {
                         </div>
                     </a>
                     <div class="tp-book-actions">
-                        <a href="shop.php?edition_id=<?= htmlspecialchars($edition['id']) ?>" class="tp-cart-button">
+                        <a href="shop/index.php?edition_id=<?= htmlspecialchars($edition['id']) ?>" class="tp-cart-button">
                             <div class="tp-cart-icon">
                                 <i class="fas fa-shopping-cart"></i>
                             </div>

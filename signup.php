@@ -128,7 +128,7 @@ include('connection2.php');
 ?>
 <div class="next-head-text">
         <h1>Register</h1>
-<h2 id="b-crumb-h2"><a  href="index.php">Home </a>/<a href="shop.php"> Shop </a>/ Sign Up</h2>
+<h2 id="b-crumb-h2"><a  href="index.php">Home </a>/<a href="shop/index.php"> Shop </a>/ Sign Up</h2>
     </div>
 <hr>
 
@@ -177,7 +177,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "process_signup.php",
+            url: "process_signup",
             data: $("#signupForm").serialize(),
             dataType: "json",
             success: function (response) {

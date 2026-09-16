@@ -18,8 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $cart[] = [
                     'product_id' => $productId,
-                    'quantity' => $quantity,
-                    'price' => // Get price from database
+                    'quantity' => $quantity
                 ];
             }
             break;

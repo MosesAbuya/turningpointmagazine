@@ -385,7 +385,7 @@ $order_id = $order['invoice_id'];
         <p>Thank you for your purchase.</p>
         <p><strong>Order ID:</strong> <?php echo htmlspecialchars($order_id); ?></p>
         <p>A confirmation email has been sent to you.</p>
-        <a href="shop.php" class="btn">Continue Shopping</a>
+        <a href="shop/index.php" class="btn">Continue Shopping</a>
     </div>
 
     <?php include 'includes/footer.php'; ?>

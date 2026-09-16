@@ -1,8 +1,41 @@
+<?php
+session_start();
+include('connection2.php');
 
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: signin.php");
+//     exit();
+// }
+
+$pdo = connect();
+$userId = $_SESSION['user_id'];
+
+// Fetch user details
+$stmt = $pdo->prepare("SELECT first_name, last_name, email, contact FROM customers WHERE id = ?");
+$stmt->execute([$userId]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$user) {
+    die("User not found.");
+}
+
+// Get Cart Items
+$cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+$totalAmount = 0;
+
+if (!empty($cart)) {
+    $placeholders = implode(',', array_fill(0, count($cart), '?'));
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE id IN ($placeholders)");
+    $stmt->execute(array_keys($cart));
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    header("Location: shop.php");
+    exit();
+}
+?>
 <head>
 <title>Turning Point Magazine - Africa's Premier Source for News, Culture, and Innovation</title>
     <meta charset="UTF-8">
-    <meta name="robots" content="noindex, nofollow">
     <meta name="description"
         content="Turning Point Magazine is a digital platform dedicated to amplifying grassroots voices and celebrating stories of positive change across Africa. Join us in shaping a brighter future through inclusive, transformative content." />
 
@@ -34,7 +67,7 @@
     <link rel="stylesheet" href="contact.css">
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="global.css">
-    <link rel="stylesheet" href="tp-design-system.css"> <!-- Assuming style.css is minified or optimized -->
+    <link rel="stylesheet" href="footer.css"> <!-- Assuming style.css is minified or optimized -->
     <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="button.css">
     <link rel="stylesheet" href="nav-2.css">
@@ -352,242 +385,99 @@ z-index: 1000;
 <link rel="stylesheet" href="issue_1.css">
 <link rel="stylesheet" href="cat.css">
 <link rel="stylesheet" href="booking.css">
-  <style>
-        /* Add this to prevent FOUC */
-        body {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        body.loaded {
-            opacity: 1;
-        }
-        
-        /* Your existing CSS styles */
-        .customer-info {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
 
-        .customer-info h3 {
-            color: #d32f2f;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            border-bottom: 2px solid #d32f2f;
-            padding-bottom: 0.5rem;
-        }
+<body>
+    
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            border-color: #d32f2f;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
-        }
-
-        .disclaimer {
-            color: #d32f2f;
-            background: #fff3f3;
-            padding: 1rem;
-            border-radius: 4px;
-            border-left: 4px solid #d32f2f;
-            margin-top: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .customer-info {
-                padding: 1.5rem;
-                margin: 1rem;
-            }
-            
-            .form-group input {
-                padding: 0.7rem;
-            }
-        }
-    </style>
-
-
-<?php
-session_start(); // Add session start
-include('connection2.php');
-$pdo = connect();
-
-// Handle cart data from POST or session recovery
-$cart = !empty($_POST['cart']) ? json_decode($_POST['cart'], true) : [];
-if (empty($cart) && isset($_SESSION['checkout_data']['cart'])) {
-    $cart = json_decode($_SESSION['checkout_data']['cart'], true);
-}
-
-$productIds = array_column($cart, 'product_id');
-$totalAmount = 0;
-
-if (!empty($productIds)) {
-    try {
-        $placeholders = implode(',', array_fill(0, count($productIds), '?'));
-        $stmt = $pdo->prepare("SELECT * FROM products WHERE id IN ($placeholders)");
-        $stmt->execute($productIds);
-        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        // Calculate totals and validate products
-        $validProducts = [];
-        foreach ($cart as $item) {
-            $product = current(array_filter($products, fn($p) => $p['id'] == $item['product_id']));
-            if ($product) {
-                $validProducts[] = $product;
-                $totalAmount += $product['current_price'] * $item['quantity'];
-            }
-        }
-        
-        if (empty($validProducts)) {
-            header("Location: shop.php");
-            exit();
-        }
-    } catch (PDOException $e) {
-        die("Database error: " . $e->getMessage());
-    }
-} else {
-    header("Location: shop.php");
-    exit();
-}
-?>
-
-  
-<body class="loaded"> <!-- Add loaded class -->
 <?php require_once ('shop/inc/header.php'); ?>
 
-<div class="next-head-text">
-    <h1>Checkout</h1>
-    <h2 id="b-crumb-h2"><a href="index.php">Home</a><a href="shop.php">/ Shop</a>/ Checkout</h2>
-</div>
 
+    <div class="next-head-text">
+        <h1>Checkout</h1>
+        <h2 id="b-crumb-h2"><a  href="index.php">Home </a><a  href="shop/index.php">/ Shop </a>/ Checkout</h2>
+    </div>
 <div class="checkout-container">
-    <h2>Checkout</h2>
+    <h2>Checkout</h2> 
 
-    <form id="checkout-form">
-        <div class="customer-info">
-            <h3>Customer Information</h3>
-            
-            <div class="form-group">
-                <label for="first_name">First Name:</label>
-                <input type="text" name="first_name" id="first_name" required
-                       value="<?= htmlspecialchars($_SESSION['checkout_data']['first_name'] ?? '') ?>">
-            </div>
-            
-            <div class="form-group">
-                <label for="last_name">Last Name:</label>
-                <input type="text" name="last_name" id="last_name" required
-                       value="<?= htmlspecialchars($_SESSION['checkout_data']['last_name'] ?? '') ?>">
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" required
-                       value="<?= htmlspecialchars($_SESSION['checkout_data']['email'] ?? '') ?>">
-            </div>
+    <!-- Customer Information -->
+    <div class="customer-info">
+        <h3>Customer Information</h3>
+        <p><strong>Name:</strong> <?php echo htmlspecialchars($user['first_name'] . " " . $user['last_name']); ?></p>
+        <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+        <p><strong>Contact:</strong> <?php echo htmlspecialchars($user['contact']); ?></p>
+        <p style="color: red;"><strong><span  >Disclaimer: </span></strong> The amount stated below does not include delivery fees. You will be contacted.</p>
 
-            <div class="form-group">
-                <label for="contact">Phone Number:</label>
-                <input type="tel" name="contact" id="contact" required
-                       value="<?= htmlspecialchars($_SESSION['checkout_data']['contact'] ?? '') ?>">
-            </div>
+    </div>
 
-            <p class="disclaimer">
-                <strong>Disclaimer:</strong> The amount stated below does not include delivery fees. You will be contacted.
-            </p>
-        </div>
-
-        <h3>Order Summary</h3>
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-            </tr>
-            <?php foreach ($validProducts as $product): 
-                $quantity = current(array_filter($cart, fn($item) => $item['product_id'] == $product['id']))['quantity'];
+    <!-- Order Summary -->
+    <h3>Order Summary</h3>
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        <?php foreach ($products as $product): ?>
+            <?php 
+                $productId = $product['id'];
+                $quantity = $cart[$productId];
                 $subtotal = $product['current_price'] * $quantity;
+                $totalAmount += $subtotal;
             ?>
-                <tr>
-                    <td><?= htmlspecialchars($product['name']) ?></td>
-                    <td>Ksh <?= htmlspecialchars($product['current_price']) ?></td>
-                    <td><?= $quantity ?></td>
-                    <td>Ksh <?= $subtotal ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
+            <tr>
+                <td><?php echo htmlspecialchars($product['name']); ?></td>
+                <td>Ksh <?php echo htmlspecialchars($product['current_price']); ?></td>
+                <td><?php echo $quantity; ?></td>
+                <td>Ksh <?php echo $subtotal; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 
-        <h3>Total Amount: Ksh <span id="total-amount"><?= $totalAmount ?></span></h3>
+    <h3>Total Amount: Ksh <span id="total-amount"><?php echo $totalAmount; ?></span></h3>
 
-        <input type="hidden" name="total_amount" value="<?= $totalAmount ?>">
+    <!-- Checkout Form -->
+    <form id="checkout-form">
+        <!-- Hidden User Details -->
+        <input type="hidden" name="first_name" value="<?php echo htmlspecialchars($user['first_name']); ?>">
+        <input type="hidden" name="last_name" value="<?php echo htmlspecialchars($user['last_name']); ?>">
+        <input type="hidden" name="email" value="<?php echo htmlspecialchars($user['email']); ?>">
+        <input type="hidden" name="contact" value="<?php echo htmlspecialchars($user['contact']); ?>">
+        <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
         
-        <?php foreach ($validProducts as $product): 
-            $quantity = current(array_filter($cart, fn($item) => $item['product_id'] == $product['id']))['quantity'];
-        ?>
-            <input type="hidden" name="product_id[]" value="<?= $product['id'] ?>">
-            <input type="hidden" name="quantity[]" value="<?= $quantity ?>">
-            <input type="hidden" name="price[]" value="<?= $product['current_price'] ?>">
+        <!-- Hidden Order Details -->
+        <input type="hidden" name="total_amount" value="<?php echo $totalAmount; ?>">
+
+        <!-- Hidden Cart Items -->
+        <?php foreach ($products as $product): ?>
+            <input type="hidden" name="product_id[]" value="<?php echo $product['id']; ?>">
+            <input type="hidden" name="quantity[]" value="<?php echo $cart[$product['id']]; ?>">
+            <input type="hidden" name="price[]" value="<?php echo $product['current_price']; ?>">
         <?php endforeach; ?>
 
+        <!-- Payment Method Selection -->
         <div class="payment-method">
             <h3>Select Payment Method:</h3>
-            <label><input type="radio" name="payment_method" value="mpesa" required checked> M-Pesa</label>
+            <label><input type="radio" name="payment_method" value="mpesa" required> M-Pesa</label>
+            <!-- <label><input type="radio" name="payment_method" value="cash" required> Cash on Delivery</label> -->
         </div>
-
-        <input type="hidden" name="csrf_token" value="<?= bin2hex(random_bytes(32)) ?>">
 
         <button type="button" id="place-order-btn">Proceed to Payment</button>
     </form>
 </div>
 
+
 <div id="error-popup" class="popup">
     <p id="popup-message"></p>
 </div>
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    // Get cart from localStorage
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // Serialize cart data for submission
-    $('#checkout-form').append(
-        $('<input>').attr({type: 'hidden', name: 'cart'})
-                    .val(JSON.stringify(cart))
-    );
-
+    $(document).ready(function() {
     $("#place-order-btn").on("click", function() {
-        // Validate M-Pesa number format
-        const phone = $("#contact").val().trim();
-        if (!/^254\d{9}$/.test(phone)) {
-            showErrorPopup("Please enter a valid M-Pesa number in 254XXXXXXXXX format");
-            return;
-        }
+        let formData = $("#checkout-form").serialize(); // Serialize form data
 
-        const formData = $("#checkout-form").serialize();
-        
         $.ajax({
             url: "process_checkout.php",
             type: "POST",
@@ -595,57 +485,32 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 if (response.status === "success") {
-                    localStorage.removeItem('cart');
-                    window.location.href = "payment.php?invoice_id=" + response.invoice_id;
+                    window.location.href = "payment.php?order_id=" + response.order_id;
                 } else {
-                    showErrorPopup(response.message);
+                    showErrorPopup(response.message); // Use popup instead of alert
                 }
             },
-            error: function(xhr) {
-                console.error(xhr.responseText);
-                showErrorPopup("Error processing order. Please try again.");
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                showErrorPopup("Error processing order.");
             }
         });
     });
 });
 
+// Function to Show Error Popup
 function showErrorPopup(message) {
-    const popup = $("#error-popup");
+    var popup = $("#error-popup");
     $("#popup-message").text(message);
     popup.addClass("show");
-    setTimeout(() => popup.removeClass("show"), 3000);
+
+    setTimeout(function () {
+        popup.removeClass("show");
+    }, 3000); // Hide after 3 seconds
 }
+
 </script>
-
-
 </body>
-<!-- Add popup styles -->
-<style>
-.popup {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #ffebee;
-    color: #d32f2f;
-    padding: 1rem;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    z-index: 1000;
-}
-
-.popup.show {
-    display: block;
-    animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
-}
-</style>
-</html>
-
 <?php include 'includes/footer.php' ?>
 <script>
 document.getElementById("menu-icon").addEventListener("click", function() {

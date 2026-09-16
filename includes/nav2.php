@@ -149,7 +149,7 @@
             <li><a href="about.php">About</a></li>
             <li><a href="contact.php">Contact</a></li>
             <li><a href="story.php">Contribute</a></li>
-            <li><a href="shop.php">Shop</a></li>
+            <li><a href="shop/index.php">Shop</a></li>
         </ul>
         <div class="n-search-module">
             <input type="text" placeholder="Search..." class="n-search-input" id="search-input" />

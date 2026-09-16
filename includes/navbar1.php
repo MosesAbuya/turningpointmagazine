@@ -425,7 +425,7 @@
         <li><a id="about" href="about.php">About</a></li>
         <li><a id="contact" href="contact.php">Contact</a></li>
         <li><a id="story" href="story.php">Contribute</a></li>
-        <li><a id="shop" href="shop.php" target="blank">Shop</a></li>
+        <li><a id="shop" href="shop/index.php" target="blank">Shop</a></li>
     </ul>
 
     <div style="display: flex; align-items: center; margin-left: auto;">

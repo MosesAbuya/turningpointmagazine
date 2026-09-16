@@ -128,7 +128,7 @@ include('connection2.php');
 ?>
 <div class="next-head-text">
         <h1>Login</h1>
-        <h2 id="b-crumb-h2"><a  href="index.php">Home </a>/<a href="shop.php"> Shop </a>/ Login</h2>
+        <h2 id="b-crumb-h2"><a  href="index.php">Home </a>/<a href="shop/index.php"> Shop </a>/ Login</h2>
     </div>
 <hr>
 
@@ -177,7 +177,7 @@ Don't have an account? Signup Here
 
             $.ajax({
                 type: "POST",
-                url: "process_signin.php", // The PHP file that handles login
+                url: "process_signin", // The PHP file that handles login
                 data: $("#bookingForm").serialize(), // Serialize form data
                 dataType: "json",
                 success: function (response) {
@@ -189,7 +189,7 @@ Don't have an account? Signup Here
                         );
 
                         setTimeout(function () {
-                            window.location.href = "cart.php"; // Redirect after successful login
+                            window.location.href = "shop/cart.php"; // Redirect after successful login
                         }, 2000);
                     } else {
                         $("#subscribe-response").html(

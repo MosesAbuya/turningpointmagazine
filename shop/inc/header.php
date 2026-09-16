@@ -263,10 +263,19 @@ body, ul {
         <div class="menu-icon" id="menu-icon">&#9776;</div>
 
         <ul class="nav-links" id="nav-links">
-           <li><a href="cart.php">
+            <li><a href="index.php"><i class="fas fa-store"></i> Shop Home</a></li>
+            <li><a href="../index.php"><i class="fas fa-globe"></i> Back to Website</a></li>
+            <li><a href="cart.php">
     <i class="fas fa-shopping-cart"></i>
-    <!-- Remove PHP session code, use JavaScript-powered count -->
-    <span id="cart_count">0</span>
+    <span id="cart_count">
+        <?php
+            if (isset($_SESSION['cart'])){
+                echo count($_SESSION['cart']);
+            } else {
+                echo "0";
+            }
+        ?>
+    </span>
 </a></li>
 
 
@@ -303,40 +312,10 @@ body, ul {
     const menuIcon = document.getElementById("menu-icon");
     const navLinks = document.getElementById("nav-links");
 
-    menuIcon.addEventListener("click", function () {
-        navLinks.classList.toggle("nav-active");
-    });
-
-    // Account Dropdown
-   document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.getElementById("accountDropdown");
-    const accountBtn = document.getElementById("accountBtn");
-
-    accountBtn.addEventListener("mouseover", function () {
-        dropdown.style.display = "block";
-    });
-
-    document.addEventListener("click", function (event) {
-        if (!accountBtn.contains(event.target) && !dropdown.contains(event.target)) {
-            setTimeout(function() {
-                dropdown.style.display = "none";
-            }, 800); // Delay disappearance by 0.8 seconds
-        }
-    });
-
-    dropdown.addEventListener("mouseover", function () {
-        clearTimeout(); // Prevent disappearance when hovering over dropdown
-    });
+    if (menuIcon && navLinks) {
+        menuIcon.addEventListener("click", function () {
+            navLinks.classList.toggle("nav-active");
+        });
+    }
 });
-
-
-
-    // Close dropdown when clicking outside
-    document.addEventListener("click", function (event) {
-        if (!accountBtn.contains(event.target) && !accountDropdown.contains(event.target)) {
-            accountDropdown.style.display = "none";
-        }
-    });
-});
-
 </script>

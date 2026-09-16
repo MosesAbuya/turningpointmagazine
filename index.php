@@ -9,7 +9,21 @@ include('connection2.php');
 $database = new Database();
 
 if (isset($_POST['add'])){
-  // ... (Your cart logic remains untouched) ...
+    if(isset($_SESSION['cart'])){
+        if(in_array($_POST['product_id'], array_keys($_SESSION['cart']))){
+            $_SESSION['cart'][$_POST['product_id']] += 1;
+            header("location: ./");
+            exit;
+        }else{
+            $_SESSION['cart'][$_POST['product_id']] = 1;
+            header("location: ./");
+            exit;
+        }
+    }else{
+        $_SESSION['cart'][$_POST['product_id']] = 1;
+        header("location: ./");
+        exit;
+    }
 }
 
 // --- PRE-LOAD ALL DATA ---
@@ -1431,7 +1445,7 @@ try {
                             </div>
                         </a>
                         <div class="tp-book-actions">
-                            <a href="shop.php?edition_id=<?= htmlspecialchars($edition['id']) ?>"
+                            <a href="shop/index.php?edition_id=<?= htmlspecialchars($edition['id']) ?>"
                                 class="tp-cart-button">
                                 <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i>
                                 Order A Physical Copy

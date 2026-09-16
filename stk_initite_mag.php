@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $TransactionDesc = 'Payment for Booking';
             $Timestamp = date('YmdHis');
             $Password = base64_encode($BusinessShortCode . $Passkey . $Timestamp);
-            $CallBackURL = 'https://www.turningpointmagazine.africa/callback_url.php';
+            $CallBackURL = 'https://www.turningpointmagazine.africa/callback_url';
 
             // Insert into database with "pending" status
             $stmt = $pdo->prepare("

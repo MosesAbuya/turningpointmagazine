@@ -61,6 +61,17 @@ if (isset($responseData['Body']['stkCallback'])) {
 
                 if ($stmt->execute(['complete', $mpesaReceiptNumber, $amount, $checkoutRequestID]))
  {
+                    // Update orders table as well
+                    $stmtOrder = $pdo->prepare("
+                        UPDATE orders 
+                        SET status = 'paid' 
+                        WHERE invoice_id = (
+                            SELECT invoice_id FROM payments WHERE transaction_id = ? LIMIT 1
+                        )
+                    ");
+                    // Note: Since we changed transaction_id to $mpesaReceiptNumber above, we use it to find the invoice
+                    $stmtOrder->execute([$mpesaReceiptNumber]);
+
                     file_put_contents($logFile, "Payment updated successfully for Transaction ID: {$checkoutRequestID}" . PHP_EOL, FILE_APPEND);
                 } else {
                     file_put_contents($logFile, "Database Update Error: " . implode(", ", $stmt->errorInfo()) . PHP_EOL, FILE_APPEND);

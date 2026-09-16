@@ -1,70 +1,79 @@
 <?php
 
 function prodElement($product_details){
+    $type = $product_details['edition_id'] ? 'Magazine' : 'Merch';
     $element = "
-    
-    <div class=\"col-lg-3 col-md-6 col-sm-12 col-sm-6 my-3 rounded-0\">
-                <form action=\"index.php\" method=\"post\">
-                    <div class=\"card shadow rounded-0\">
-                        <div class='position-relative rounded-0'>
-                            <img loading=\"lazy\" src=\"../admin/{$product_details['img_path']}\" alt=\"Image1\" class=\"img-fluid product-img card-img-top rounded-0\">
-                        </div>
-                        <div class=\"card-body rounded-0\">
-                            <h5 class=\"card-title\">{$product_details['name']}</h5>
-                            <h6>
-                                <i class=\"fas fa-star\"></i>
-                                <i class=\"fas fa-star\"></i>
-                                <i class=\"fas fa-star\"></i>
-                                <i class=\"far fa-star\"></i>
-                                <i class=\"far fa-star\"></i>
-                            </h6>
-                            <p class=\"card-text\">
-                                {$product_details['description']}
-                            </p>
-                            <h5>
-                                ".($product_details['prev_price'] > 0 ? "<small><s class=\"text-secondary\">Kes ".(number_format($product_details['prev_price'],2))."</s></small>" : "")."
-                                <span class=\"price\">Kes ".(number_format($product_details['current_price'],2))."</span>
-                            </h5>
+    <div class=\"col-lg-4 col-md-6 col-sm-12 mb-5\">
+        <div class=\"modern-card\">
+            <a href=\"product?id={$product_details['id']}\" style=\"text-decoration: none; color: inherit;\">
+                <div class=\"modern-card-bg-top\"></div>
+                
+                <div class=\"img-wrapper\">
+                    <img src=\"../admin/{$product_details['img_path']}\" alt=\"{$product_details['name']}\" class=\"product-img\" onerror=\"this.src='../images/placeholder.jpg';\">
+                </div>
+            </a>
+            
+            <div class=\"modern-card-body text-center\">
+                <a href=\"product?id={$product_details['id']}\" style=\"text-decoration: none; color: inherit;\">
+                    <h5 class=\"modern-card-title\">{$product_details['name']}</h5>
+                </a>
+                <div class=\"modern-card-subtitle\">{$type} Collection</div>
+                
+                <div class=\"stars\">
+                    <i class=\"fas fa-star\"></i>
+                    <i class=\"fas fa-star\"></i>
+                    <i class=\"fas fa-star\"></i>
+                    <i class=\"fas fa-star\"></i>
+                    <i class=\"far fa-star\"></i>
+                </div>
+                
+                <div class=\"modern-card-price\">
+                    ".($product_details['prev_price'] > 0 ? "<small><s class=\"text-muted mr-2\">Kes ".(number_format($product_details['prev_price'], 2))."</s></small>" : "")."
+                    Kes ".(number_format($product_details['current_price'], 2))."
+                </div>
 
-                            <button type=\"submit\" class=\"btn btn-primary my-3 rounded-0\" name=\"add\"><i class=\"fa fa-cart-plus\"> Add to Cart</i></button>
-                             <input type='hidden' name='product_id' value='{$product_details['id']}'>
-                        </div>
-                    </div>
-                </form>
+                <div class=\"d-flex mt-auto pt-3\" style=\"gap: 10px;\">
+                    <a href=\"product?id={$product_details['id']}\" class=\"btn-more w-50 text-center\" style=\"text-decoration: none; display: flex; align-items: center; justify-content: center;\">
+                        MORE
+                    </a>
+                    <form action=\"index.php\" method=\"post\" class=\"add-to-cart-form w-50 m-0\">
+                        <input type='hidden' name='product_id' value='{$product_details['id']}'>
+                        <button type=\"submit\" class=\"btn-brand-red w-100\" name=\"add\" style=\"padding: 8px 10px; font-size: 0.9rem;\">
+                            <i class=\"fas fa-cart-plus\"></i> CART
+                        </button>
+                    </form>
+                </div>
             </div>
+        </div>
+    </div>
     ";
     echo $element;
 }
 
 function cartItems($product_details){
     $element = "
-    
-    <form action=\"\" method=\"post\" class=\"cart-items\">
-                    <div class=\"border rounded\">
-                        <div class=\"row bg-white\">
-                            <div class=\"col-md-3 pl-0\">
-                                <div class=\"position-relative\">
-                                    <img loading=\"lazy\" src=\"../admin/{$product_details['img_path']}\" alt=\"Image1\" class=\"img-fluid prod-img-cart\">
-                                </div>
-                            </div>
-                            <div class=\"col-md-6 py-3\">
-                                <h5 class=\"pt-2\">{$product_details['name']}</h5>
-                                <small class=\"text-secondary\">Description: {$product_details['description']}</small>
-                                <h5 class=\"pt-2\">Kes {$product_details['current_price']}</h5>
-                                <button onclick=\"if(confirm('Are you sure to remove this item from list?') === true)location.replace('cart.php?action=removeItem&id={$product_details['id']}');\" type=\"button\" class=\"btn btn-outline-danger btn-sm rounded-0 mx-2\" name=\"remove\"><i class=\"fas fa-trash\"></i> Remove Item</button>
-                            </div>
-                            <div class=\"col-md-3 py-5\">
-                                <div class=\"input-group\">
-                                    <button onclick=\"location.replace('cart.php?action=update_qty&pid={$product_details['id']}&operation=minus')\" type=\"button\" class=\"btn bg-light border rounded-0\"><i class=\"fas fa-minus\"></i></button>
-                                    <input type=\"text\" value=\"{$_SESSION['cart'][$product_details['id']]}\" class=\"form-control w-25 d-inline text-center\" readonly>
-                                    <button onclick=\"location.replace('cart.php?action=update_qty&pid={$product_details['id']}&operation=add')\" type=\"button\" class=\"btn bg-light border rounded-0\"><i class=\"fas fa-plus\"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-    
+    <div class=\"modern-cart-item\" id=\"cart-item-{$product_details['id']}\">
+        <img src=\"../admin/{$product_details['img_path']}\" alt=\"{$product_details['name']}\" class=\"modern-cart-img\" onerror=\"this.src='../images/placeholder.jpg';\">
+        
+        <div class=\"flex-grow-1 px-4\">
+            <h5 class=\"font-weight-bold mb-1\">{$product_details['name']}</h5>
+            <p class=\"text-muted small mb-2 text-truncate\" style=\"max-width:300px;\">{$product_details['description']}</p>
+            <h6 class=\"text-brand-red font-weight-bold mb-0\">Kes ".(number_format($product_details['current_price'], 2))."</h6>
+        </div>
+        
+        <div class=\"d-flex align-items-center\">
+            <div class=\"qty-control mr-4\">
+                <button type=\"button\" class=\"update-qty-btn\" data-pid=\"{$product_details['id']}\" data-operation=\"minus\"><i class=\"fas fa-minus\"></i></button>
+                <input type=\"text\" value=\"{$_SESSION['cart'][$product_details['id']]}\" class=\"qty-input-{$product_details['id']}\" readonly>
+                <button type=\"button\" class=\"update-qty-btn\" data-pid=\"{$product_details['id']}\" data-operation=\"add\"><i class=\"fas fa-plus\"></i></button>
+            </div>
+            
+            <button type=\"button\" class=\"btn btn-sm btn-outline-danger rounded-circle remove-item-btn\" data-id=\"{$product_details['id']}\" style=\"width:35px; height:35px;\" title=\"Remove Item\">
+                <i class=\"fas fa-times\"></i>
+            </button>
+        </div>
+    </div>
     ";
     echo  $element;
 }
-
+?>

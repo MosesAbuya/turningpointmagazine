@@ -291,7 +291,7 @@
 <div class="next-head-text">
     <h1>My Profile</h1>
     <h2 id="b-crumb-h2">
-        <a href="index.php">Home </a>/<a href="shop.php"> Shop </a>/ Profile
+        <a href="index.php">Home </a>/<a href="shop/index.php"> Shop </a>/ Profile
     </h2>
 </div>
 <hr>

@@ -1,8 +1,8 @@
 <?php
-include 'connection2.php';
+include '../connection2.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($order_items) {
                         $order_details = "";
                         foreach ($order_items as $item) {
-                            $order_details .= "{$item['product_name']} - Quantity: {$item['quantity']} - Price: {$item['price']}<br>";
+                            $order_details .= "{$item['product_name']} - Quantity: {$item['quantity']} - Price: {$item['unit_price']}<br>";
                         }
                     } else {
                         $order_details = "No order items found.";
