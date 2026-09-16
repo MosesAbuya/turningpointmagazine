@@ -34,12 +34,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Fetch current settings
-$stmt = $pdo->query("SELECT * FROM smtp_settings WHERE id = 1");
-$settings = $stmt->fetch(PDO::FETCH_ASSOC);
+try {
+    $stmt = $pdo->query("SELECT * FROM smtp_settings WHERE id = 1");
+    $settings = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    // If table doesn't exist on live server, automatically create it
+    $pdo->exec("
+        CREATE TABLE IF NOT EXISTS smtp_settings (
+            id INT PRIMARY KEY,
+            host VARCHAR(255) NOT NULL,
+            port INT NOT NULL,
+            username VARCHAR(255) NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            encryption VARCHAR(50) NOT NULL,
+            from_email VARCHAR(255) NOT NULL,
+            from_name VARCHAR(255) NOT NULL
+        )
+    ");
+    $settings = false;
+}
 
 if (!$settings) {
-    // Insert defaults if somehow deleted
-    $pdo->query("INSERT INTO smtp_settings (id, host, port, username, password, encryption, from_email, from_name) VALUES (1, '', 587, '', '', 'tls', '', '')");
+    // Insert defaults if somehow deleted or newly created
+    try {
+        $pdo->query("INSERT INTO smtp_settings (id, host, port, username, password, encryption, from_email, from_name) VALUES (1, '', 587, '', '', 'tls', '', '')");
+    } catch (PDOException $e) {}
+    
     $settings = [
         'host' => '', 'port' => 587, 'username' => '', 'password' => '',
         'encryption' => 'tls', 'from_email' => '', 'from_name' => ''
