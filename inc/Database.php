@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../config.php';
 
 class Database
 {
@@ -13,11 +14,11 @@ class Database
 
         // class constructor
     public function __construct(
-        $dbname = "turning2_turningpoint1",
+        $dbname = DB_NAME,
         $tablename = "products",
-        $servername = "localhost",
-        $username = "turning2_turningpoint2",
-        $password = "Amo20.03"
+        $servername = DB_HOST,
+        $username = DB_USER,
+        $password = DB_PASS
     )
     {
       $this->dbname = $dbname;

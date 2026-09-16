@@ -71,6 +71,27 @@ if (isset($responseData['Body']['stkCallback'])) {
                     ");
                     // Note: Since we changed transaction_id to $mpesaReceiptNumber above, we use it to find the invoice
                     $stmtOrder->execute([$mpesaReceiptNumber]);
+                    
+                    // Fetch order details for email
+                    $stmtFetch = $pdo->prepare("SELECT * FROM orders WHERE invoice_id = (SELECT invoice_id FROM payments WHERE transaction_id = ? LIMIT 1)");
+                    $stmtFetch->execute([$mpesaReceiptNumber]);
+                    $order = $stmtFetch->fetch(PDO::FETCH_ASSOC);
+
+                    if ($order) {
+                        require_once 'includes/mailer.php';
+                        $email = $order['email'];
+                        $name = trim($order['first_name'] . ' ' . $order['last_name']);
+                        
+                        // Email to Buyer
+                        $buyerSubject = "Payment Received - Order #" . $order['invoice_id'];
+                        $buyerBody = "Hello $name,<br><br>Your payment of Kes " . number_format($amount, 2) . " has been received successfully. We are now processing your order (Invoice: " . $order['invoice_id'] . ").<br><br>Thank you for shopping with Turning Point!";
+                        sendGlobalMail($pdo, $email, $name, $buyerSubject, $buyerBody);
+                        
+                        // Email to Admin
+                        $adminSubject = "New Paid Order - " . $order['invoice_id'];
+                        $adminBody = "A new payment of Kes " . number_format($amount, 2) . " was received from $name.<br>Order status is now Paid.<br>Invoice ID: " . $order['invoice_id'];
+                        sendGlobalMail($pdo, 'info@turningpointmagazine.africa', 'Turning Point Admin', $adminSubject, $adminBody);
+                    }
 
                     file_put_contents($logFile, "Payment updated successfully for Transaction ID: {$checkoutRequestID}" . PHP_EOL, FILE_APPEND);
                 } else {

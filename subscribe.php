@@ -71,32 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Execute the insertion query
     if ($stmt->execute()) {
+        require_once 'includes/mailer.php';
         
-        // Send confirmation email with the same activation code
-        $mail = new PHPMailer(true);
-
-        try {
-            $mail->isSMTP();
-            $mail->Host = 'da8.host-ww.net';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'info@turningpointmagazine.africa';
-            $mail->Password = 'Amo20.03';
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;
-
-            $mail->setFrom('info@turningpointmagazine.africa', 'Turningpoint');
-            $mail->addAddress($email);
-
-            $mail->isHTML(true);
-            $mail->Subject = 'Confirm your email';
-            $mail->Body = "Thank you for subscribing! Please click the link below to activate your subscription:<br>
-                           <a href='https://turningpointmagazine.africa/activate.php?code=$activation_code'>Activate Subscription</a>";
-
-            // Send the email
-            $mail->send();
+        $subject = 'Confirm your email';
+        $body = "Thank you for subscribing! Please click the link below to activate your subscription:<br>
+                 <a href='https://turningpointmagazine.africa/activate.php?code=$activation_code'>Activate Subscription</a>";
+        
+        if (sendGlobalMail($pdo, $email, "$firstname $lastname", $subject, $body)) {
             echo "Thank you for subscribing! Please check your email to confirm your subscription.";
-        } catch (Exception $e) {
-            echo "Subscription successful, but we couldn't send the activation email. Error: " . $e->getMessage();
+        } else {
+            echo "Subscription successful, but we couldn't send the activation email.";
         }
     } else {
         echo "Error occurred while saving your subscription.";

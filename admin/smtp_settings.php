@@ -129,12 +129,53 @@ if (!$settings) {
                             <input type="text" name="from_name" class="form-control" value="<?= htmlspecialchars($settings['from_name']) ?>" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3" style="background-color: var(--primary-color); border: none;">Save Settings</button>
+                    <button type="submit" class="btn btn-dark fw-bold px-4 rounded-pill">Save Settings</button>
                 </form>
             </div>
+
+            <!-- Test SMTP Form -->
+            <div class="content-card p-4 mt-4">
+                <h4 class="fw-bold mb-3">Test Email Server</h4>
+                <p class="text-muted small">Send a test email to verify your SMTP settings. Save your settings first!</p>
+                <form id="testEmailForm">
+                    <div class="row align-items-end">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Send Test Email To:</label>
+                            <input type="email" id="test_email" class="form-control" placeholder="your-email@example.com" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <button type="submit" class="btn btn-outline-danger fw-bold px-4 rounded-pill">
+                                <i class="fas fa-paper-plane me-2"></i> Send Test
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div id="testResult" class="mt-3 p-3 rounded" style="display: none; background: #f8f9fa; border: 1px solid #ddd; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.85rem;">
+                </div>
+            </div>
+
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#testEmailForm').on('submit', function(e) {
+                e.preventDefault();
+                var email = $('#test_email').val();
+                var resultBox = $('#testResult');
+                
+                resultBox.show().html('<i class="fas fa-spinner fa-spin"></i> Sending test email... Please wait.');
+                
+                $.post('test_smtp.php', { email: email }, function(response) {
+                    resultBox.html('<strong>Status Report:</strong><br>' + response);
+                }).fail(function(xhr) {
+                    resultBox.html('<span class="text-danger">Request failed. Check network tab.</span><br>' + xhr.responseText);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

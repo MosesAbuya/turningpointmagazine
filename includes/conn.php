@@ -1,15 +1,11 @@
 <?php
 
-// $host = 'localhost';
-// $db = 'turning2_turningpoint1';
-// $user = 'turning2_turningpoint1';
-// $pass = 'Amo20.03'; // Replace with a secure password
+require_once __DIR__ . '/../config.php';
 
-
-$host = 'localhost';
-$db = 'salonone_turningpoint';
-$user = 'salonone_turningpoint';
-$pass = 'Turningpoint@2026'; // Replace with a secure password
+$host = DB_HOST;
+$db = DB_NAME;
+$user = DB_USER;
+$pass = DB_PASS;
 
 function connect() {
     global $host, $db, $user, $pass;
