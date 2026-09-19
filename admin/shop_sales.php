@@ -24,6 +24,15 @@ if ($range === 'this_month') {
     $dateCondition = "1=1"; // all time
 }
 
+// Auto-migrate database schema on the live server if cost_price is missing
+try {
+    $pdo->query("SELECT cost_price FROM products LIMIT 1");
+} catch (Exception $e) {
+    if (strpos($e->getMessage(), "Unknown column 'cost_price'") !== false) {
+        $pdo->exec("ALTER TABLE products ADD COLUMN cost_price DECIMAL(10,2) DEFAULT 0.00 AFTER prev_price");
+    }
+}
+
 // Fetch KPIs
 $kpiQuery = "
     SELECT 

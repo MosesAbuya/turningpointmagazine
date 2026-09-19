@@ -90,16 +90,34 @@ if ($action === 'edit_product') {
             }
         }
 
-        $updateStmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, current_price = ?, prev_price = ?, cost_price = ?, img_path = ? WHERE id = ?");
-        if ($updateStmt->execute([$name, $desc, $price, $prev_price, $cost_price, $imgPath, $id])) {
-            // If it's a magazine, also update the editions table
+        try {
+            $updateStmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, current_price = ?, prev_price = ?, cost_price = ?, img_path = ? WHERE id = ?");
+            $updateStmt->execute([$name, $desc, $price, $prev_price, $cost_price, $imgPath, $id]);
+            
             if ($edition_id) {
                 $edStmt = $pdo->prepare("UPDATE editions SET price = ?, front_page_image = ? WHERE id = ?");
                 $edStmt->execute([$price, $imgPath, $edition_id]);
             }
             echo json_encode(["status" => "success", "message" => "Product updated successfully!"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Failed to update product."]);
+        } catch (Exception $e) {
+            // Auto-migrate the database on the live server if cost_price is missing
+            if (strpos($e->getMessage(), "Unknown column 'cost_price'") !== false) {
+                try {
+                    $pdo->exec("ALTER TABLE products ADD COLUMN cost_price DECIMAL(10,2) DEFAULT 0.00 AFTER prev_price");
+                    
+                    // Retry the exact same execution
+                    $updateStmt->execute([$name, $desc, $price, $prev_price, $cost_price, $imgPath, $id]);
+                    if ($edition_id) {
+                        $edStmt = $pdo->prepare("UPDATE editions SET price = ?, front_page_image = ? WHERE id = ?");
+                        $edStmt->execute([$price, $imgPath, $edition_id]);
+                    }
+                    echo json_encode(["status" => "success", "message" => "Product updated! (Database schema auto-fixed)"]);
+                } catch (Exception $e2) {
+                    echo json_encode(["status" => "error", "message" => "Auto-fix failed: " . $e2->getMessage()]);
+                }
+            } else {
+                echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+            }
         }
     } catch (Exception $e) {
         echo json_encode(["status" => "error", "message" => $e->getMessage()]);
@@ -129,13 +147,20 @@ if ($action === 'add_product') {
     $code = 'MERCH-' . time();
     try {
         $stmt = $pdo->prepare("INSERT INTO products (code, name, description, current_price, prev_price, cost_price, img_path, edition_id) VALUES (?, ?, ?, ?, ?, ?, ?, NULL)");
-        if ($stmt->execute([$code, $name, $desc, $price, $prev_price, $cost_price, $imgPath])) {
-            echo json_encode(["status" => "success", "message" => "Merchandise added successfully!"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Failed to add merchandise."]);
-        }
+        $stmt->execute([$code, $name, $desc, $price, $prev_price, $cost_price, $imgPath]);
+        echo json_encode(["status" => "success", "message" => "Merchandise added successfully!"]);
     } catch (Exception $e) {
-        echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        if (strpos($e->getMessage(), "Unknown column 'cost_price'") !== false) {
+            try {
+                $pdo->exec("ALTER TABLE products ADD COLUMN cost_price DECIMAL(10,2) DEFAULT 0.00 AFTER prev_price");
+                $stmt->execute([$code, $name, $desc, $price, $prev_price, $cost_price, $imgPath]);
+                echo json_encode(["status" => "success", "message" => "Merchandise added! (Database schema auto-fixed)"]);
+            } catch (Exception $e2) {
+                echo json_encode(["status" => "error", "message" => "Auto-fix failed: " . $e2->getMessage()]);
+            }
+        } else {
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        }
     }
     closeConnection($pdo);
     exit;
