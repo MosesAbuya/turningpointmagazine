@@ -39,39 +39,37 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Settings - Admin Dashboard</title>
-    <link rel="stylesheet" href="../includes/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        .sidebar { height: 100vh; position: fixed; width: 250px; background-color: #343a40; }
-        .main-content { margin-left: 250px; padding: 20px; }
-    </style>
+    <title>Shop Settings - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<?php include 'sidebar.php'; ?>
+    <?php include 'nav.php'; ?>
+    <?php include 'sidebar.php'; ?>
 
-<div class="main-content">
-    <h2>Shop Settings</h2>
-    <?php if ($success): ?><div class="alert alert-success"><?= $success ?></div><?php endif; ?>
-    <?php if ($error): ?><div class="alert alert-danger"><?= $error ?></div><?php endif; ?>
+    <div id="page-content-wrapper">
+        <h2 class="mb-4 fw-bold">Shop Settings</h2>
 
-    <div class="card mt-4" style="max-width: 500px;">
-        <div class="card-header bg-dark text-white">General Delivery Fee</div>
-        <div class="card-body">
-            <form method="POST">
-                <div class="form-group">
-                    <label>Delivery Fee (Ksh)</label>
-                    <input type="number" step="0.01" name="delivery_fee" class="form-control" value="<?= htmlspecialchars($delivery_fee) ?>" required>
-                    <small class="text-muted">This flat rate will be added to the customer's total at checkout if they choose Delivery.</small>
-                </div>
-                <button type="submit" class="btn btn-primary">Save Settings</button>
-            </form>
+        <?php if ($success): ?><div class="alert alert-success"><?= $success ?></div><?php endif; ?>
+        <?php if ($error): ?><div class="alert alert-danger"><?= $error ?></div><?php endif; ?>
+
+        <div class="content-card" style="max-width: 500px;">
+            <div class="card-header">General Delivery Fee</div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Delivery Fee (Ksh)</label>
+                        <input type="number" step="0.01" name="delivery_fee" class="form-control" value="<?= htmlspecialchars($delivery_fee) ?>" required>
+                        <small class="text-muted">This flat rate will be added to the customer's total at checkout if they choose Delivery.</small>
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100">Save Settings</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="../includes/js/jquery.min.js"></script>
-<script src="../includes/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

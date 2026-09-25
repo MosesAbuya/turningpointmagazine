@@ -54,93 +54,95 @@ $sizes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Sizes - Admin Dashboard</title>
-    <link rel="stylesheet" href="../includes/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        .sidebar { height: 100vh; position: fixed; width: 250px; background-color: #343a40; }
-        .main-content { margin-left: 250px; padding: 20px; }
-    </style>
+    <title>Manage Sizes - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<?php include 'sidebar.php'; ?>
+    <?php include 'nav.php'; ?>
+    <?php include 'sidebar.php'; ?>
 
-<div class="main-content">
-    <h2>Manage Product Sizes</h2>
-    <p class="text-muted">These sizes will be shown in the dropdown for products that require size selection.</p>
-    <?php if ($success): ?><div class="alert alert-success"><?= $success ?></div><?php endif; ?>
-    <?php if ($error): ?><div class="alert alert-danger"><?= $error ?></div><?php endif; ?>
+    <div id="page-content-wrapper">
+        <h2 class="mb-2 fw-bold">Manage Product Sizes</h2>
+        <p class="text-muted mb-4">These sizes will be shown in the dropdown for products that require size selection.</p>
 
-    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#sizeModal" onclick="resetForm()">Add New Size</button>
+        <?php if ($success): ?><div class="alert alert-success"><?= $success ?></div><?php endif; ?>
+        <?php if ($error): ?><div class="alert alert-danger"><?= $error ?></div><?php endif; ?>
 
-    <table class="table table-bordered table-striped" style="max-width: 600px;">
-        <thead>
-            <tr>
-                <th>Size Name</th>
-                <th>Order Index</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($sizes as $s): ?>
-            <tr>
-                <td><?= htmlspecialchars($s['size_name']) ?></td>
-                <td><?= $s['order_index'] ?></td>
-                <td>
-                    <button class="btn btn-sm btn-info" onclick='editSize(<?= json_encode($s) ?>)' data-toggle="modal" data-target="#sizeModal"><i class="fas fa-edit"></i></button>
-                    <a href="?delete=<?= $s['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#sizeModal" onclick="resetForm()">Add New Size</button>
 
-<!-- Modal -->
-<div class="modal fade" id="sizeModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form method="POST">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalTitle">Add Size</h5>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <input type="hidden" name="id" id="size_id">
-            <div class="form-group">
-                <label>Size Name (e.g. Small, Medium, Large, XL, 4 Years)</label>
-                <input type="text" name="size_name" id="size_name" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>Order Index (Lower numbers appear first)</label>
-                <input type="number" name="order_index" id="size_order" class="form-control" value="0">
+        <div class="content-card" style="max-width: 600px;">
+            <div class="card-body p-0">
+                <table class="table table-modern mb-0">
+                    <thead>
+                        <tr>
+                            <th>Size Name</th>
+                            <th>Order Index</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($sizes as $s): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($s['size_name']) ?></td>
+                            <td><?= $s['order_index'] ?></td>
+                            <td>
+                                <button class="btn btn-sm btn-info text-white" onclick='editSize(<?= json_encode($s) ?>)' data-bs-toggle="modal" data-bs-target="#sizeModal"><i class="fas fa-edit"></i></button>
+                                <a href="?delete=<?= $s['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save Size</button>
-        </div>
-      </form>
     </div>
-  </div>
-</div>
 
-<script src="../includes/js/jquery.min.js"></script>
-<script src="../includes/js/bootstrap.min.js"></script>
-<script>
-function resetForm() {
-    $('#modalTitle').text('Add Size');
-    $('#size_id').val('');
-    $('#size_name').val('');
-    $('#size_order').val('0');
-}
+    <!-- Modal -->
+    <div class="modal fade" id="sizeModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="POST">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalTitle">Add Size</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="id" id="size_id">
+                <div class="mb-3">
+                    <label class="form-label">Size Name (e.g. Small, Medium, XL, 4 Years)</label>
+                    <input type="text" name="size_name" id="size_name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Order Index (Lower numbers appear first)</label>
+                    <input type="number" name="order_index" id="size_order" class="form-control" value="0">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-danger">Save Size</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-function editSize(s) {
-    $('#modalTitle').text('Edit Size');
-    $('#size_id').val(s.id);
-    $('#size_name').val(s.size_name);
-    $('#size_order').val(s.order_index);
-}
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function resetForm() {
+        document.getElementById('modalTitle').textContent = 'Add Size';
+        document.getElementById('size_id').value = '';
+        document.getElementById('size_name').value = '';
+        document.getElementById('size_order').value = '0';
+    }
+
+    function editSize(s) {
+        document.getElementById('modalTitle').textContent = 'Edit Size';
+        document.getElementById('size_id').value = s.id;
+        document.getElementById('size_name').value = s.size_name;
+        document.getElementById('size_order').value = s.order_index;
+    }
+    </script>
 </body>
 </html>

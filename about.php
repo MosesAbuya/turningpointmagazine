@@ -242,125 +242,159 @@
     }
 
     .team-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 2rem;
         margin-bottom: 4rem;
     }
 
     .team-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 2.5rem 2rem;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        border: 1px solid #eee;
+        flex: 0 1 280px;
+        width: 100%;
+        max-width: 320px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        border: 1px solid #f0f0f0;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+        position: relative;
     }
 
     .team-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         border-color: var(--brand-teal);
+    }
+    
+    .team-card-inner {
+        padding: 1.5rem 1.5rem 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        flex-grow: 1;
     }
 
     .avatar {
-        width: 110px;
-        height: 110px;
-        border-radius: 50%;
+        width: 100%;
+        height: 220px;
         background: linear-gradient(135deg, var(--brand-teal), var(--brand-pink));
         color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2.5rem;
+        font-size: 3.5rem;
         font-weight: bold;
-        margin-bottom: 1.5rem;
         position: relative;
         overflow: hidden;
-        border: 3px solid #fff;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 0;
+        flex-shrink: 0;
     }
-
-    /* Fallback Initials */
-    .avatar::before {
-        content: attr(data-initials);
-        position: absolute;
+    
+    .team-card:hover .avatar img {
+        transform: scale(1.05);
     }
-
+    
     .avatar img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         position: relative;
         z-index: 1;
+        transition: transform 0.4s ease;
+    }
+
+    .avatar::before {
+        content: attr(data-initials);
+        position: absolute;
     }
 
     .team-name {
         font-family: 'florania', sans-serif;
         color: var(--brand-teal);
-        font-size: 1.6rem;
-        margin-bottom: 0.3rem;
+        font-size: 1.4rem;
+        margin-bottom: 0.2rem;
     }
 
     .team-role {
         font-family: 'Poppins', sans-serif;
         color: var(--brand-red);
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: 1.2rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .team-summary, .team-full-info {
-        color: var(--text-light);
-        font-size: 0.95rem;
-        line-height: 1.6;
+        font-size: 0.75rem;
+        font-weight: 700;
         margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        background: rgba(232, 0, 61, 0.06);
+        padding: 4px 12px;
+        border-radius: 20px;
     }
 
+    .team-summary {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 1.2rem;
+    }
+    
     .team-full-info {
-        display: none; /* Hidden initially */
-        border-top: 1px dashed var(--border-light);
-        padding-top: 1rem;
-        margin-top: 0.5rem;
+        display: none; 
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--text-dark);
+        background: #f8f9fa;
+        padding: 1.2rem;
+        border-radius: 10px;
+        margin-bottom: 1.2rem;
+        text-align: left;
+        
+        width: 100%;
     }
 
-    /* Toggled State */
     .team-full-info.open {
         display: block;
-        animation: fadeIn 0.4s ease-in-out;
+        animation: fadeIn 0.3s ease-in-out;
     }
-
+    
     .toggle-btn {
-        background: none;
-        border: none;
+        background: transparent;
+        border: 2px solid var(--brand-teal);
         color: var(--brand-teal);
-        font-size: 1.8rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
         cursor: pointer;
-        transition: color 0.3s ease;
+        transition: all 0.3s ease;
+        padding: 6px 20px;
+        border-radius: 30px;
         margin-top: auto;
-        padding: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
     }
 
     .toggle-btn:hover {
-        color: var(--brand-pink);
+        background: var(--brand-teal);
+        color: #fff;
     }
 
     .toggle-btn i {
         transition: transform 0.3s ease;
     }
 
+    .toggle-btn.open {
+        background: var(--brand-red);
+        border-color: var(--brand-red);
+        color: #fff;
+    }
     .toggle-btn.open i {
         transform: rotate(180deg);
-        color: var(--brand-red);
     }
-
-    /* --- ALERT BOX --- */
     .alert-box {
         max-width: 800px;
         margin: 2rem auto 0 auto;
@@ -505,6 +539,25 @@
                 $teamGroups[$member['group_name']][] = $member;
             }
 
+            // ORDERING logic
+            $groupOrder = [
+                'Advisory Council',
+                'Secretariat',
+                'Design Team',
+                'Content Team',
+                'Photography',
+                'Legal',
+                'Printing'
+            ];
+            
+            uksort($teamGroups, function($a, $b) use ($groupOrder) {
+                $posA = array_search($a, $groupOrder);
+                $posB = array_search($b, $groupOrder);
+                if ($posA === false) $posA = 999;
+                if ($posB === false) $posB = 999;
+                return $posA <=> $posB;
+            });
+
             $delayOffset = 0.85;
             foreach ($teamGroups as $groupName => $groupMembers):
             ?>
@@ -517,17 +570,19 @@
                 ?>
                 <div class="team-card">
                     <div class="avatar" data-initials="<?= $initials ?>">
-                        <img loading="lazy" src="<?= htmlspecialchars($m['image']) ?>" alt="<?= htmlspecialchars($m['name']) ?>" onerror="this.style.display='none'">
+                            <img loading="lazy" src="<?= htmlspecialchars($m['image']) ?>" alt="<?= htmlspecialchars($m['name']) ?>" onerror="this.style.display='none'">
+                        </div>
+                    <div class="team-card-inner">
+                        <h3 class="team-name"><?= htmlspecialchars($m['name']) ?></h3>
+                        <p class="team-role"><?= htmlspecialchars($m['role']) ?></p>
+                        <p class="team-summary"><?= htmlspecialchars($m['summary']) ?></p>
+                        <div class="team-full-info">
+                            <?= nl2br(htmlspecialchars($m['full_info'])) ?>
+                        </div>
+                        <?php if(!empty($m['full_info'])): ?>
+                        <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><span class="btn-text">Read More</span> <i class="fas fa-chevron-down"></i></button>
+                        <?php endif; ?>
                     </div>
-                    <h3 class="team-name"><?= htmlspecialchars($m['name']) ?></h3>
-                    <p class="team-role"><?= htmlspecialchars($m['role']) ?></p>
-                    <p class="team-summary"><?= htmlspecialchars($m['summary']) ?></p>
-                    <div class="team-full-info">
-                        <?= nl2br(htmlspecialchars($m['full_info'])) ?>
-                    </div>
-                    <?php if(!empty($m['full_info'])): ?>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                    <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
 
@@ -568,15 +623,24 @@
             const card = btn.closest('.team-card');
             const fullInfo = card.querySelector('.team-full-info');
             
-            // Toggle open classes
             fullInfo.classList.toggle('open');
             btn.classList.toggle('open');
             
-            // Swap icon visually
+            const span = btn.querySelector('.btn-text') || btn.querySelector('span');
+            const icon = btn.querySelector('.fas') || btn.querySelector('svg');
+            
             if (fullInfo.classList.contains('open')) {
-                btn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                if (span) span.innerText = 'Read Less';
+                if (icon) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
             } else {
-                btn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                if (span) span.innerText = 'Read More';
+                if (icon) {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
             }
         }
     </script>

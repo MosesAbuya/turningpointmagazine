@@ -75,6 +75,10 @@ closeConnection($pdo);
                                 <input type="number" step="0.01" name="cost_price" class="form-control" required value="<?= htmlspecialchars($product['cost_price'] ?? 0) ?>">
                             </div>
                         </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" name="has_sizes" class="form-check-input" id="has_sizes" value="1" <?= (!empty($product['has_sizes'])) ? 'checked' : '' ?>>
+                            <label class="form-check-label font-weight-bold" for="has_sizes">This product requires size selection (e.g., T-Shirts)</label>
+                        </div>
                         <div class="form-group">
                             <label>Current Image</label>
                             <img src="<?= htmlspecialchars($product['img_path']) ?>" class="current-img" onerror="this.src='../images/placeholder.jpg';">
