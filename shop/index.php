@@ -149,16 +149,26 @@ $(document).ready(function() {
         e.preventDefault();
         var form = $(this);
         var productId = form.find('input[name="product_id"]').val();
+        var sizeSelect = form.find('select[name="size"]');
+        var qtyInput = form.find('input[name="qty"]');
         var btn = form.find('button[type="submit"]');
         var originalText = btn.html();
         
+        var sizeVal = sizeSelect.length ? sizeSelect.val() : '';
+        var qtyVal = qtyInput.length ? qtyInput.val() : 1;
+        
+        if (sizeSelect.length && !sizeVal) {
+            Swal.fire('Error', 'Please select a size first.', 'warning');
+            return;
+        }
+
         btn.html('<i class="fa fa-spinner fa-spin"></i> Adding...');
         btn.prop('disabled', true);
 
         $.ajax({
-            url: 'ajax_cart',
+            url: 'ajax_cart.php',
             type: 'POST',
-            data: { action: 'add', pid: productId },
+            data: { action: 'add', pid: productId, size: sizeVal, qty: qtyVal },
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {

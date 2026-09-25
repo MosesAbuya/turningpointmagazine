@@ -111,7 +111,27 @@ $type = $product['edition_id'] ? 'Magazine' : 'Merch';
                     
                     <form action="index.php" method="post" class="add-to-cart-form">
                         <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                        <button type="submit" class="btn-brand-red py-3 px-5 text-uppercase w-100" style="font-size: 1.1rem; border-radius: 50px;">
+                        
+                        <?php if ($product['has_sizes'] == 1): 
+                            $stmtSizes = $database->conn->query("SELECT * FROM product_sizes ORDER BY order_index ASC");
+                        ?>
+                            <div class="form-group mb-4">
+                                <label class="font-weight-bold">Select Size:</label>
+                                <select name="size" class="form-control" required>
+                                    <option value="">-- Choose Size --</option>
+                                    <?php while($s = $stmtSizes->fetch_assoc()): ?>
+                                        <option value="<?= htmlspecialchars($s['size_name']) ?>"><?= htmlspecialchars($s['size_name']) ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="form-group mb-4">
+                            <label class="font-weight-bold">Quantity:</label>
+                            <input type="number" name="qty" class="form-control" value="1" min="1" required style="max-width: 150px;">
+                        </div>
+
+                        <button type="submit" class="btn-brand-red py-3 px-5 text-uppercase w-100 mt-2" style="font-size: 1.1rem; border-radius: 50px;">
                             Add to Cart <i class="fas fa-cart-plus ml-2"></i>
                         </button>
                     </form>
@@ -131,16 +151,26 @@ $(document).ready(function() {
         e.preventDefault();
         var form = $(this);
         var productId = form.find('input[name="product_id"]').val();
+        var sizeSelect = form.find('select[name="size"]');
+        var qtyInput = form.find('input[name="qty"]');
         var btn = form.find('button[type="submit"]');
         var originalText = btn.html();
+        
+        var sizeVal = sizeSelect.length ? sizeSelect.val() : '';
+        var qtyVal = qtyInput.length ? qtyInput.val() : 1;
+
+        if (sizeSelect.length && !sizeVal) {
+            Swal.fire('Error', 'Please select a size first.', 'warning');
+            return;
+        }
         
         btn.html('<i class="fa fa-spinner fa-spin"></i> Adding...');
         btn.prop('disabled', true);
 
         $.ajax({
-            url: 'ajax_cart',
+            url: 'ajax_cart.php',
             type: 'POST',
-            data: { action: 'add', pid: productId },
+            data: { action: 'add', pid: productId, size: sizeVal, qty: qtyVal },
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {
