@@ -68,6 +68,13 @@ try {
         $mail->SMTPAutoTLS = false;
     }
     
+    // Force IPv4 to avoid "Network is unreachable" errors on servers without IPv6
+    $mail->SMTPOptions = array(
+        'socket' => array(
+            'bindto' => '0.0.0.0:0'
+        )
+    );
+    
     $mail->Port = $settings['port'];
 
     // Recipients

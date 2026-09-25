@@ -20,19 +20,43 @@ $deliveryAddress = isset($_POST['delivery_address']) ? $_POST['delivery_address'
 $totalAmount = 0;
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
-if (!empty($cart)) {
-    $placeholders = implode(',', array_fill(0, count($cart), '?'));
-    $stmt = $pdo->prepare("SELECT id, current_price FROM products WHERE id IN ($placeholders)");
-    $stmt->execute(array_keys($cart));
+$pids = [];
+foreach (array_keys($cart) as $k) {
+    $parts = explode('_', $k);
+    $pids[] = intval($parts[0]);
+}
+$pids = array_unique($pids);
+
+$products_map = [];
+if (!empty($pids)) {
+    $placeholders = implode(',', array_fill(0, count($pids), '?'));
+    $stmt = $pdo->prepare("SELECT id, name, current_price FROM products WHERE id IN ($placeholders)");
+    $stmt->execute($pids);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    foreach ($products as $product) {
-        $totalAmount += ($product['current_price'] * $cart[$product['id']]);
+    foreach ($products as $p) {
+        $products_map[$p['id']] = $p;
+    }
+    
+    foreach ($cart as $k => $qty) {
+        $pid = intval(explode('_', $k)[0]);
+        if (isset($products_map[$pid])) {
+            $totalAmount += ($products_map[$pid]['current_price'] * intval($qty));
+        }
     }
 }
 
+// Fetch dynamic delivery fee
+$delivery_fee = 150; // default
+try {
+    $stmt = $pdo->query("SELECT delivery_fee FROM shop_settings LIMIT 1");
+    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $delivery_fee = floatval($row['delivery_fee']);
+    }
+} catch (Exception $e) {}
+
 if ($deliveryOption === 'Delivery') {
-    $totalAmount += 150;
+    $totalAmount += $delivery_fee;
 }
 
 // Generate Unique Invoice
@@ -47,12 +71,16 @@ $success = $stmt->execute([$invoiceNumber, $firstName, $lastName, $email, $conta
 if ($success) {
     $orderId = $pdo->lastInsertId(); // Get inserted order ID
 
-    // Insert Order Items
-    if (isset($_POST['product_id'])) {
-        $stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+    // Insert Order Items directly from session cart
+    $stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, price, size) VALUES (?, ?, ?, ?, ?)");
+    
+    foreach ($cart as $k => $qty) {
+        $parts = explode('_', $k);
+        $pid = intval($parts[0]);
+        $size = isset($parts[1]) ? $parts[1] : null;
         
-        for ($i = 0; $i < count($_POST['product_id']); $i++) {
-            $stmt->execute([$orderId, $_POST['product_id'][$i], $_POST['quantity'][$i], $_POST['price'][$i]]);
+        if (isset($products_map[$pid])) {
+            $stmt->execute([$orderId, $pid, intval($qty), $products_map[$pid]['current_price'], $size]);
         }
     }
 

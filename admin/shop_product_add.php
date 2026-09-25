@@ -55,6 +55,10 @@ include 'consent.php';
                                 <input type="number" step="0.01" name="cost_price" class="form-control" required placeholder="e.g. 800">
                             </div>
                         </div>
+                                                <div class="form-group form-check">
+                            <input type="checkbox" name="has_sizes" class="form-check-input" id="has_sizes" value="1">
+                            <label class="form-check-label font-weight-bold" for="has_sizes">This product requires size selection (e.g., T-Shirts)</label>
+                        </div>
                         <div class="form-group">
                             <label>Product Image</label>
                             <input type="file" name="product_image" class="form-control-file" accept="image/*">

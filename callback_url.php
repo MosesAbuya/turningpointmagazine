@@ -84,7 +84,7 @@ if (isset($responseData['Body']['stkCallback'])) {
                         
                         // Fetch order items
                         $stmtItems = $pdo->prepare("
-                            SELECT oi.quantity, oi.price, p.name 
+                            SELECT oi.quantity, oi.price, oi.size, p.name 
                             FROM order_items oi 
                             LEFT JOIN products p ON oi.product_id = p.id 
                             WHERE oi.order_id = ?
@@ -101,6 +101,7 @@ if (isset($responseData['Body']['stkCallback'])) {
                         if ($items) {
                             foreach ($items as $item) {
                                 $itemName = !empty($item['name']) ? htmlspecialchars($item['name']) : 'Turning Point Item';
+                                if (!empty($item['size'])) { $itemName .= ' (' . htmlspecialchars($item['size']) . ')'; }
                                 $itemsList .= "<tr>
                                     <td style='padding:8px; border:1px solid #ddd;'>{$itemName}</td>
                                     <td style='padding:8px; border:1px solid #ddd;'>{$item['quantity']}</td>

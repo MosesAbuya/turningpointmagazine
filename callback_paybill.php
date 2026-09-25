@@ -103,7 +103,7 @@ echo json_encode(["ResultCode" => 0, "ResultDesc" => "Confirmation Received Succ
 
  // Retrieve order details
             $stmt = $pdo->prepare("
-                SELECT o.id, o.total_amount, oi.product_id, oi.quantity, oi.price, p.name AS product_name
+                SELECT o.id, o.total_amount, oi.product_id, oi.quantity, oi.price, oi.size, p.name AS product_name
                 FROM orders o
                 JOIN order_items oi ON o.id = oi.order_id
                 JOIN products p ON oi.product_id = p.id
@@ -133,6 +133,7 @@ echo json_encode(["ResultCode" => 0, "ResultDesc" => "Confirmation Received Succ
             if ($order_items) {
                 foreach ($order_items as $item) {
                     $itemName = !empty($item['product_name']) ? htmlspecialchars($item['product_name']) : 'Turning Point Item';
+                    if (!empty($item['size'])) { $itemName .= ' (' . htmlspecialchars($item['size']) . ')'; }
                     $itemsList .= "<tr>
                         <td style='padding:8px; border:1px solid #ddd;'>{$itemName}</td>
                         <td style='padding:8px; border:1px solid #ddd;'>{$item['quantity']}</td>

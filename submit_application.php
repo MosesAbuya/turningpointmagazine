@@ -35,6 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
+    // Force IPv4 to avoid Network is unreachable
+    $mail->SMTPOptions = [
+        'socket' => [
+            'bindto' => '0.0.0.0:0'
+        ]
+    ];
             $mail->Host = 'da8.host-ww.net';
             $mail->SMTPAuth = true;
             $mail->Username = 'info@turningpointmagazine.africa';

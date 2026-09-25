@@ -66,6 +66,7 @@ if ($action === 'edit_product') {
     $price = $_POST['current_price'] ?? 0;
     $prev_price = $_POST['prev_price'] ?? 0;
     $cost_price = $_POST['cost_price'] ?? 0;
+    $has_sizes = isset($_POST['has_sizes']) ? 1 : 0;
     $edition_id = isset($_POST['edition_id']) && $_POST['edition_id'] !== '' ? intval($_POST['edition_id']) : null;
     
     if ($id <= 0) {
@@ -91,8 +92,8 @@ if ($action === 'edit_product') {
         }
 
         try {
-            $updateStmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, current_price = ?, prev_price = ?, cost_price = ?, img_path = ? WHERE id = ?");
-            $updateStmt->execute([$name, $desc, $price, $prev_price, $cost_price, $imgPath, $id]);
+            $updateStmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, current_price = ?, prev_price = ?, cost_price = ?, img_path = ?, has_sizes = ? WHERE id = ?");
+            $updateStmt->execute([$name, $desc, $price, $prev_price, $cost_price, $imgPath, $has_sizes, $id]);
             
             if ($edition_id) {
                 $edStmt = $pdo->prepare("UPDATE editions SET price = ?, front_page_image = ? WHERE id = ?");
@@ -106,7 +107,7 @@ if ($action === 'edit_product') {
                     $pdo->exec("ALTER TABLE products ADD COLUMN cost_price DECIMAL(10,2) DEFAULT 0.00 AFTER prev_price");
                     
                     // Retry the exact same execution
-                    $updateStmt->execute([$name, $desc, $price, $prev_price, $cost_price, $imgPath, $id]);
+                    $updateStmt->execute([$name, $desc, $price, $prev_price, $cost_price, $imgPath, $has_sizes, $id]);
                     if ($edition_id) {
                         $edStmt = $pdo->prepare("UPDATE editions SET price = ?, front_page_image = ? WHERE id = ?");
                         $edStmt->execute([$price, $imgPath, $edition_id]);
@@ -132,6 +133,7 @@ if ($action === 'add_product') {
     $price = $_POST['current_price'] ?? 0;
     $prev_price = $_POST['prev_price'] ?? 0;
     $cost_price = $_POST['cost_price'] ?? 0;
+    $has_sizes = isset($_POST['has_sizes']) ? 1 : 0;
     
     $imgPath = 'images/placeholder.jpg';
     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
@@ -146,14 +148,14 @@ if ($action === 'add_product') {
 
     $code = 'MERCH-' . time();
     try {
-        $stmt = $pdo->prepare("INSERT INTO products (code, name, description, current_price, prev_price, cost_price, img_path, edition_id) VALUES (?, ?, ?, ?, ?, ?, ?, NULL)");
-        $stmt->execute([$code, $name, $desc, $price, $prev_price, $cost_price, $imgPath]);
+        $stmt = $pdo->prepare("INSERT INTO products (code, name, description, current_price, prev_price, cost_price, img_path, has_sizes, edition_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL)");
+        $stmt->execute([$code, $name, $desc, $price, $prev_price, $cost_price, $imgPath, $has_sizes]);
         echo json_encode(["status" => "success", "message" => "Merchandise added successfully!"]);
     } catch (Exception $e) {
         if (strpos($e->getMessage(), "Unknown column 'cost_price'") !== false) {
             try {
                 $pdo->exec("ALTER TABLE products ADD COLUMN cost_price DECIMAL(10,2) DEFAULT 0.00 AFTER prev_price");
-                $stmt->execute([$code, $name, $desc, $price, $prev_price, $cost_price, $imgPath]);
+                $stmt->execute([$code, $name, $desc, $price, $prev_price, $cost_price, $imgPath, $has_sizes]);
                 echo json_encode(["status" => "success", "message" => "Merchandise added! (Database schema auto-fixed)"]);
             } catch (Exception $e2) {
                 echo json_encode(["status" => "error", "message" => "Auto-fix failed: " . $e2->getMessage()]);

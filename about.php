@@ -491,133 +491,53 @@
             </div>
         </div>
 
-        <div class="team-container">
-            <h2 class="team-section-title fade-in-up" style="animation-delay: 0.85s;">Advisory Council</h2>
-            <div class="team-grid fade-in-up" style="animation-delay: 0.9s;">
+                <div class="team-container">
+            <?php
+            require_once 'connection2.php';
+            $pdo = connect();
+            // Fetch team members from database
+            $stmt = $pdo->query("SELECT * FROM team_members ORDER BY group_name ASC, order_index ASC");
+            $members = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Group them by group_name
+            $teamGroups = [];
+            foreach ($members as $member) {
+                $teamGroups[$member['group_name']][] = $member;
+            }
+
+            $delayOffset = 0.85;
+            foreach ($teamGroups as $groupName => $groupMembers):
+            ?>
+            <h2 class="team-section-title fade-in-up" style="animation-delay: <?= $delayOffset ?>s;"><?= htmlspecialchars($groupName) ?></h2>
+            <div class="team-grid fade-in-up" style="animation-delay: <?= $delayOffset + 0.05 ?>s;">
                 
+                <?php foreach ($groupMembers as $m): 
+                    $nameParts = explode(' ', $m['name'] ?? ' ');
+                    $initials = strtoupper(substr($m['name'], 0, 1) . substr($nameParts[1] ?? '', 0, 1));
+                ?>
                 <div class="team-card">
-                    <div class="avatar" data-initials="JO">
-                        <img loading="lazy" src="assets/team/julia_ojiambo.png" alt="Prof. Julia Ojiambo" onerror="this.style.display='none'">
+                    <div class="avatar" data-initials="<?= $initials ?>">
+                        <img loading="lazy" src="<?= htmlspecialchars($m['image']) ?>" alt="<?= htmlspecialchars($m['name']) ?>" onerror="this.style.display='none'">
                     </div>
-                    <h3 class="team-name">Prof. Julia Ojiambo</h3>
-                    <p class="team-role">CBS, EBS, MBS</p>
-                    <p class="team-summary">A pioneering Kenyan leader and the first Black African woman appointed as a Lecturer at the University of Nairobi’s College of Health Sciences.</p>
+                    <h3 class="team-name"><?= htmlspecialchars($m['name']) ?></h3>
+                    <p class="team-role"><?= htmlspecialchars($m['role']) ?></p>
+                    <p class="team-summary"><?= htmlspecialchars($m['summary']) ?></p>
                     <div class="team-full-info">
-                        She later earned her PhD there and became Kenya’s first female Cabinet Member. In 1976, she received the FAO Ceres Gold Medal for advancing socioeconomic empowerment for rural youth and women. She has also been honored with the President’s Awards of the Order of the Burning Spear (MBS, EBS, and CBS) for her distinguished public service and leadership in the Labour Party of Kenya.
+                        <?= nl2br(htmlspecialchars($m['full_info'])) ?>
                     </div>
+                    <?php if(!empty($m['full_info'])): ?>
                     <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
+                    <?php endif; ?>
                 </div>
-
-                <div class="team-card">
-                    <div class="avatar" data-initials="BA">
-                        <img loading="lazy" src="assets/team/betty_adera.png" alt="Ms Betty Adera" onerror="this.style.display='none'">
-                    </div>
-                    <h3 class="team-name">Ms Betty Adera</h3>
-                    <p class="team-role">Global Health Leader</p>
-                    <p class="team-summary">A dynamic global health leader with over 20 years of experience driving impactful programs across Africa.</p>
-                    <div class="team-full-info">
-                        A public health expert with strong credentials (MPH, PMD, PGMD) and a PhD candidate, she brings a proven record in strategic leadership, health systems strengthening, policy advocacy, and program management.
-                    </div>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                </div>
-
-                <div class="team-card">
-                    <div class="avatar" data-initials="MA">
-                        <img loading="lazy" src="assets/team/michael_ager.png" alt="Mr. Michael Ager" onerror="this.style.display='none'">
-                    </div>
-                    <h3 class="team-name">Mr. Michael Ager</h3>
-                    <p class="team-role">Global Consultant</p>
-                    <p class="team-summary">Global Consultant in Public Relations, Governance, and Advocacy.</p>
-                    <div class="team-full-info">
-                        He is a passionate, results-driven expert with over a decade of experience collaborating with government agencies (Kenya’s Ministry of Labour), UN bodies (UNDP, UNAIDS), and NGOs across national, regional, and international levels.
-                    </div>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                </div>
-
-                <div class="team-card">
-                    <div class="avatar" data-initials="LM">
-                        <img loading="lazy" src="assets/team/lucy_mworia.png" alt="Ms Lucy Mworia" onerror="this.style.display='none'">
-                    </div>
-                    <h3 class="team-name">Ms Lucy Mworia</h3>
-                    <p class="team-role">HSC - CEO & Founder</p>
-                    <p class="team-summary">CEO & Founder of the Kenya Pro-Ageing organization, seconded to the Ministry of Health’s Department of Public Health.</p>
-                    <div class="team-full-info">
-                        She serves as a key liaison between the Ministry and implementing partners, strengthening coordination in program planning. Previously with the Ministry of Foreign and Diaspora Affairs, she brings diplomatic expertise to advocacy and partnership building. Through the Kenya Pro-Ageing Organization, she champions initiatives improving the welfare, health, and social inclusion of older persons in Kenya.
-                    </div>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                </div>
-
-                <div class="team-card">
-                    <div class="avatar" data-initials="BT">
-                        <img loading="lazy" src="assets/team/bruce_tushabe.png" alt="Mr Bruce Tushabe" onerror="this.style.display='none'">
-                    </div>
-                    <h3 class="team-name">Mr Bruce Tushabe</h3>
-                    <p class="team-role">Regional Training Lead</p>
-                    <p class="team-summary">A Ugandan national with over 20 years of global development experience, leading Capacity Strengthening at ARASA.</p>
-                    <div class="team-full-info">
-                        A public health advocate and activist, he has supported governments and civil society across East and Southern Africa to advance HIV, TB, and sexual and reproductive health programs.
-                    </div>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                </div>
-            </div>
-
-            <h2 class="team-section-title fade-in-up" style="animation-delay: 1s;">Management Team</h2>
-            <div class="team-grid fade-in-up" style="animation-delay: 1.1s;">
-                
-                <div class="team-card">
-                    <div class="avatar" data-initials="SO">
-                        <img loading="lazy" src="assets/team/shem_otina.png" alt="Mr. Shem Otina" onerror="this.style.display='none'">
-                    </div>
-                    <h3 class="team-name">Mr. Shem Otina</h3>
-                    <p class="team-role">Operations Manager</p>
-                    <p class="team-summary">The Lead Creative and Communications professional guiding the magazine’s storytelling vision and creative direction.</p>
-                    <div class="team-full-info">
-                        He develops people-centered narratives that highlight transformative African voices and translates complex social issues into engaging, accessible content while overseeing editorial consistency, brand identity, and multimedia storytelling.
-                    </div>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                </div>
-
-                <div class="team-card">
-                    <div class="avatar" data-initials="NN">
-                        <img loading="lazy" src="assets/team/namiso_nafundo.png" alt="Ms Namiso Nafundo" onerror="this.style.display='none'">
-                    </div>
-                    <h3 class="team-name">Ms Namiso Nafundo</h3>
-                    <p class="team-role">Creative and Brand Lead</p>
-                    <p class="team-summary">Lead Journalist driving impactful storytelling that highlights accountability, social issues, and community change.</p>
-                    <div class="team-full-info">
-                        She is a communications specialist with a distinct passion for sports journalism, leveraging her platform to elevate grassroots voices.
-                    </div>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                </div>
-
-                <div class="team-card">
-                    <div class="avatar" data-initials="FS">
-                        <img loading="lazy" src="assets/team/fred_sadia.png" alt="Fred Sadia" onerror="this.style.display='none'">
-                    </div>
-                    <h3 class="team-name">Hon. Fred Sadia</h3>
-                    <p class="team-role">Global Partnerships Strategist</p>
-                    <p class="team-summary">A distinguished global strategist connecting grassroots movements with international policy frameworks.</p>
-                    <div class="team-full-info">
-                        He works to advance volunteerism as a professionally managed tool for peacebuilding and sustainable development. Through strategic collaborations and cross-sector partnerships, he strengthens community-driven initiatives to align them with global priorities.
-                    </div>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                </div>
-
-                <div class="team-card">
-                    <div class="avatar" data-initials="MO">
-                        <img loading="lazy" src="assets/team/moses.png" alt="Moses" onerror="this.style.display='none'">
-                    </div>
-                    <h3 class="team-name">Moses Abuya</h3>
-                    <p class="team-role">Lead Software Engineer</p>
-                    <p class="team-summary">The primary architect behind the magazine's digital framework and seamless online experience.</p>
-                    <div class="team-full-info">
-                        Moses developed the Turning Point Magazine platform from scratch utilizing HTML, PHP, JavaScript, CSS, and SQL. A passionate web and Android developer, he bridges complex logic with clean user interfaces, ensuring the platform runs reliably to support the magazine's vision across Africa.
-                    </div>
-                    <button class="toggle-btn" aria-label="Read more" onclick="toggleInfo(this)"><i class="fas fa-chevron-down"></i></button>
-                </div>
+                <?php endforeach; ?>
 
             </div>
+            <?php 
+                $delayOffset += 0.15;
+            endforeach; 
+            ?>
         </div>
+    </section>
 
         <div class="licence-container">
             <div class="info-card licence fade-in-up" id="licencing" style="animation-delay: 1.2s;">

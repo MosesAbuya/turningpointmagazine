@@ -96,8 +96,17 @@ $directory_pages = ['directories_list.php', 'directories_add.php', 'directories_
         </li>
         
         <div class="section-title">Settings</div>
+        <li class="<?= isActive('team_manage.php', $current_page) ?>">
+            <a href="team_manage.php"><i class="fas fa-users-cog"></i> Manage Team</a>
+        </li>
+        <li class="<?= isActive('manage_sizes.php', $current_page) ?>">
+            <a href="manage_sizes.php"><i class="fas fa-ruler"></i> Product Sizes</a>
+        </li>
+        <li class="<?= isActive('shop_settings.php', $current_page) ?>">
+            <a href="shop_settings.php"><i class="fas fa-cog"></i> Shop Settings</a>
+        </li>
         <li class="<?= isActive('smtp_settings.php', $current_page) ?>">
-            <a href="smtp_settings.php"><i class="fas fa-cog"></i> SMTP Settings</a>
+            <a href="smtp_settings.php"><i class="fas fa-envelope"></i> SMTP Settings</a>
         </li>
     </ul>
 </div>

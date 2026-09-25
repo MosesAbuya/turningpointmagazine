@@ -7,10 +7,22 @@ $total = 0;
 $count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 
 if ($count > 0) {
-    $pids = array_keys($_SESSION['cart']);
+    $pids = [];
+    foreach (array_keys($_SESSION['cart']) as $k) {
+        $parts = explode('_', $k);
+        $pids[] = intval($parts[0]);
+    }
+    $pids = array_unique($pids);
+
     $result = $db->getData($pids);
-    while ($row = $result->fetch_assoc()){
-        $total += (floatval($row['current_price']) * intval($_SESSION['cart'][$row['id']]));
+    if ($result) {
+        while ($row = $result->fetch_assoc()){
+            foreach ($_SESSION['cart'] as $k => $qty) {
+                if (explode('_', $k)[0] == $row['id']) {
+                    $total += (floatval($row['current_price']) * intval($qty));
+                }
+            }
+        }
     }
 }
 

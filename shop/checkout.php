@@ -70,7 +70,18 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
                         <label class="font-weight-bold">Delivery Option</label>
                         <select name="delivery_option" id="delivery_option" class="form-control form-control-modern" required>
                             <option value="Pick up">Pick Up (Free)</option>
-                            <option value="Delivery">Delivery (+ Ksh 150)</option>
+                                                        <?php 
+                                require_once '../connection2.php';
+                                $pdo_fee = connect();
+                                $delivery_fee = 150;
+                                try {
+                                    $stmt_fee = $pdo_fee->query("SELECT delivery_fee FROM shop_settings LIMIT 1");
+                                    if ($row_fee = $stmt_fee->fetch(PDO::FETCH_ASSOC)) {
+                                        $delivery_fee = floatval($row_fee['delivery_fee']);
+                                    }
+                                } catch (Exception $e) {}
+                            ?>
+                            <option value="Delivery">Delivery (+ Ksh <?= number_format($delivery_fee, 2) ?>)</option>
                         </select>
                     </div>
 

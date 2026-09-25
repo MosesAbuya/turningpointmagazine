@@ -99,9 +99,12 @@ function getBadgeClass($status) {
                             <tbody>
                                 <?php foreach($items as $item): ?>
                                 <tr>
-                                    <td>
+                                                                        <td>
                                         <img src="../<?= htmlspecialchars($item['img_path']) ?>" alt="Img" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
                                         <?= htmlspecialchars($item['name']) ?>
+                                        <?php if (!empty($item['size'])): ?>
+                                            <span class="badge bg-secondary ms-2"><?= htmlspecialchars($item['size']) ?></span>
+                                        <?php endif; ?>
                                     </td>
                                     <td><?= $item['quantity'] ?></td>
                                     <td>KES <?= number_format($item['price'], 2) ?></td>
