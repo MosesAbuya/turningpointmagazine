@@ -1765,8 +1765,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             <input type="text" placeholder="First Name" class="input" name="f-name" required>
                             <input type="text" placeholder="Last Name" class="input" name="l-name" required>
                             <input type="email" placeholder="Email Address" class="input" name="email" required>
-                            <select class="input" name="address" required>
-                                <option value="" disabled selected>Select a country
+                            <select class="input" name="address" style="background-color: black; color: white;" required>
+                                <option value="Kenya" selected>Kenya
                                 </option>
                             </select>
                             <button type="submit" class="btn">

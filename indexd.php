@@ -399,7 +399,7 @@ try {
                     </div>
                     <div class="form-item select-wrapper">
                         <select class="input" name="address" required>
-                            <option value="" disabled selected>Select a country</option>
+                            <option value="Kenya" selected>Kenya</option>
                         </select>
                     </div>
 
