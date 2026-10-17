@@ -18,7 +18,7 @@ if (isset($_POST['invoice_id'])) {
             if ($payment['status'] === "complete") {
                 $response = [
                     "status" => "complete",
-                    "message" => "Your payment was successful! 🎉 Your registration is confirmed."
+                    "message" => "Your payment was successful! ðŸŽ‰ Your registration is confirmed."
                 ];
             } elseif ($payment['status'] === "failed") {
                 $response = [

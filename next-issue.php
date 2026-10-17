@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="nav-2.css">
     <link rel="stylesheet" href="global.css">
-    <link rel="stylesheet" href="tp-design-system.css"> <!-- Assuming style.css is minified or optimized -->
+    <link rel="stylesheet" href="design-system.css"> <!-- Assuming style.css is minified or optimized -->
     <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="button.css">
 
@@ -103,7 +103,7 @@
     <?php include 'includes/navbar.php' ?>
     <section class="next-container">
         <div class="next-head-text">
-            <h1>Theme</h1>
+            <h2>Theme</h2>
             <h2>"For ALL women and girls: Rights.Equality. Empowerment."</h2>
             <h3>Next Edition</h3>
         </div>
@@ -112,9 +112,9 @@
                 <img loading="lazy" src="assets/wmn.jpg" alt="next-issue">
             </div>
             <div class="next-intro-text">
-                <h1 style="text-align: left;">Introduction</h1>
+                <h2 style="text-align: left;">Introduction</h2>
                 <p><strong>Turning Point Magazine Africa</strong> is seeking partners to support the <strong>2025
-                        International Women’s Day Celebration</strong>, which will feature a <strong>two-day Trade
+                        International WomenÃ¢â‚¬â„¢s Day Celebration</strong>, which will feature a <strong>two-day Trade
                         Fair</strong> at the <em>Kenyatta International Convention Centre (KICC)</em> Courtyard,
                     Nairobi, Kenya, on <strong>7th-8th March 2025</strong>. The event will host over <strong>100
                         exhibitors</strong> from government agencies, NGOs, and corporate companies across Kenya and
@@ -124,10 +124,10 @@
                     systemic gender inequalities by showcasing projects that empower women, promote gender equality, and
                     drive sustainable development. Key highlights include the launch of the <strong>second issue of
                         Turning Point Magazine</strong>, which will amplify grassroots voices, spotlight transformative
-                    solutions, and inspire collective action toward women’s empowerment and regional progress.
+                    solutions, and inspire collective action toward womenÃ¢â‚¬â„¢s empowerment and regional progress.
                     Additionally, the event will celebrate <strong>25 influential African women</strong> and provide a
                     platform for exhibitors to <strong>launch products, programs, and projects</strong>. This initiative
-                    aligns with <strong>Kenya’s Gender Agenda</strong>, the <em>African Union’s Agenda 2063</em>, and
+                    aligns with <strong>KenyaÃ¢â‚¬â„¢s Gender Agenda</strong>, the <em>African UnionÃ¢â‚¬â„¢s Agenda 2063</em>, and
                     the overarching <em>Agenda 2030 for development</em>.</p>
                 <!-- <button class="btn-issue"><a href="assets/concept.pdf">Read The Full Concept
                         Note</a></button> -->
@@ -142,13 +142,13 @@
 
         <div class="next-sponsor">
             <div class="next-sponsor-text">
-                <h1>Invitation To Sponsor International Women’s Day 2025
+                <h1>Invitation To Sponsor International WomenÃ¢â‚¬â„¢s Day 2025
                     Celebration</h1>
-                <p>The <strong>International Women’s Day 2025 Celebration</strong> offers a unique opportunity for sponsors to partner in a transformative two-day trade fair at the <em>KICC Courtyard, Nairobi</em>, focused on empowering women, promoting gender equality, and celebrating excellence.  
+                <p>The <strong>International WomenÃ¢â‚¬â„¢s Day 2025 Celebration</strong> offers a unique opportunity for sponsors to partner in a transformative two-day trade fair at the <em>KICC Courtyard, Nairobi</em>, focused on empowering women, promoting gender equality, and celebrating excellence.  
 
 Sponsorship packages, including <strong>Platinum, Gold, Bronze, Media, Gala Dinner</strong>, and <strong>Registration sponsorships</strong>, provide extensive branding, promotional, and networking opportunities. Benefits range from premium visibility on event materials, websites, and social media, to exclusive speaking slots, exhibition booths, and recognition during the event.  
 
-This partnership aligns with a shared vision of driving collective action for women’s empowerment while offering businesses a platform to showcase their contributions and engage with key stakeholders.</p>
+This partnership aligns with a shared vision of driving collective action for womenÃ¢â‚¬â„¢s empowerment while offering businesses a platform to showcase their contributions and engage with key stakeholders.</p>
 
                 <button class="btn-issue"><a href="assets/sponsorship.pdf">Read
                         More</a></button>
@@ -168,19 +168,19 @@ This partnership aligns with a shared vision of driving collective action for wo
             <div class="faqs-head">
                 <h3>Turning Point Magazine Africa</h3>
                 <h2>International Women's Day Celebrations 2025 Africa Exhibition and Trade Fair </h2>
-                <h1>FAQ'S About The Event</h1>
+                <h2>FAQ'S About The Event</h2>
             </div>
             <div class="faqs-area">
                 <p>
                     <span style="color: red; font-weight: bold;">What is the event about?</span><br>
                     Turning Point Magazine Africa invites partners to support the International Women's Day Celebration
                     2025. This exciting two-day event will feature a Trade Fair at the Kenyatta International Convention
-                    Centre (KICC) Courtyard in Nairobi, Kenya, on 7th–8th March 2025. The event will host 100+
+                    Centre (KICC) Courtyard in Nairobi, Kenya, on 7thÃ¢â‚¬â€œ8th March 2025. The event will host 100+
                     exhibitors from government agencies, NGOs, and corporate organizations across Kenya and the
                     Pan-African region, drawing an anticipated 20,000 attendees.<br>
                     Under the theme "Accelerate Action," the event aims to amplify efforts towards systemic gender
                     equality, empowering women and fostering sustainable development.<br>
-                    - Key Highlight: Launch of the Second Issue of Turning Point Magazine—showcasing grassroots voices
+                    - Key Highlight: Launch of the Second Issue of Turning Point MagazineÃ¢â‚¬â€showcasing grassroots voices
                     and transformative solutions driving women's empowerment.
                 </p>
 
@@ -188,7 +188,7 @@ This partnership aligns with a shared vision of driving collective action for wo
                     <span style="color: red; font-weight: bold;">Main Objectives</span><br>
                     1. Accelerate Gender Equality: Address economic, political, and social disparities with a special
                     focus on Kenya.<br>
-                    2. Showcase Women’s Leadership: Highlight impactful initiatives led by Kenyan and Pan-African women
+                    2. Showcase WomenÃ¢â‚¬â„¢s Leadership: Highlight impactful initiatives led by Kenyan and Pan-African women
                     in governance, business, and community development.<br>
                     3. Strengthen Regional Collaboration: Promote partnerships among public, private, and civil society
                     organizations for inclusive policies and programs.
@@ -198,8 +198,8 @@ This partnership aligns with a shared vision of driving collective action for wo
                     <span style="color: red; font-weight: bold;">When and where is the event taking place?</span><br>
                     Location: <a href="https://kicc.co.ke/" style="color: black; text-decoration: none;">Kenyatta
                         International Convention Centre (KICC)</a>, Nairobi, Kenya<br>
-                    Date: 7th–8th March 2025<br>
-                    Time: 9:00 AM – 5:00 PM (EAT)
+                    Date: 7thÃ¢â‚¬â€œ8th March 2025<br>
+                    Time: 9:00 AM Ã¢â‚¬â€œ 5:00 PM (EAT)
                 </p>
 
                 <p>

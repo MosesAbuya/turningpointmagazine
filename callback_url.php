@@ -45,6 +45,32 @@ if (isset($responseData['Body']['stkCallback'])) {
                 // Update the database with payment success details
                 $pdo = connect(); // Ensure this function connects to your database properly
 
+                // Check if this callback belongs to an Event Booking (Leadership Dinner 2026)
+                try {
+                    $stmtEv = $pdo->prepare("SELECT id, booking_reference FROM tp_event_bookings WHERE mpesa_checkout_request_id = ? LIMIT 1");
+                    $stmtEv->execute([$checkoutRequestID]);
+                    $eventBooking = $stmtEv->fetch(PDO::FETCH_ASSOC);
+
+                    if ($eventBooking) {
+                        $stmtEvUp = $pdo->prepare("
+                            UPDATE tp_event_bookings 
+                            SET payment_status = 'paid', mpesa_receipt_number = ?, paid_at = NOW(), updated_at = NOW() 
+                            WHERE id = ?
+                        ");
+                        $stmtEvUp->execute([$mpesaReceiptNumber, $eventBooking['id']]);
+
+                        require_once __DIR__ . '/includes/event_email_helper.php';
+                        send_event_booking_confirmation_email($pdo, $eventBooking['id']);
+
+                        file_put_contents($logFile, "Event booking {$eventBooking['booking_reference']} updated to paid with receipt {$mpesaReceiptNumber}" . PHP_EOL, FILE_APPEND);
+                        closeConnection($pdo);
+                        echo json_encode(["ResultCode" => 0, "ResultDesc" => "Event Payment Confirmed"]);
+                        exit;
+                    }
+                } catch (Exception $evEx) {
+                    file_put_contents($logFile, "Event Booking Callback Check Exception: " . $evEx->getMessage() . PHP_EOL, FILE_APPEND);
+                }
+
                 // Update payment status to 'complete'
                $stmt = $pdo->prepare("
                     UPDATE payments 
@@ -165,6 +191,14 @@ if (isset($responseData['Body']['stkCallback'])) {
         // Handle failed transactions (ResultCode != 0)
         try {
             $pdo = connect();
+
+            // Check if this failed transaction belongs to an Event Booking
+            try {
+                $stmtEvFail = $pdo->prepare("UPDATE tp_event_bookings SET payment_status = 'failed', updated_at = NOW() WHERE mpesa_checkout_request_id = ?");
+                $stmtEvFail->execute([$checkoutRequestID]);
+            } catch (Exception $evFailEx) {
+                file_put_contents($logFile, "Event Booking Fail Update Exception: " . $evFailEx->getMessage() . PHP_EOL, FILE_APPEND);
+            }
 
             // Update payment status to 'failed'
             $stmt = $pdo->prepare("

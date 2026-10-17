@@ -73,8 +73,11 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/site.webmanifest">
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,15 +87,15 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
         rel="stylesheet">
 
     <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>footer.css">
-    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>tp-design-system.css">
-    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>tp-pages.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>design-system.css">
+    
     <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>global.css">
 
     <style>
     /* --- THEME FONTS & VARS --- */
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     :root {
@@ -495,8 +498,8 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
         <div class="nav-buttons">
-            <button id="prev-btn" class="nav-btn"><i class="fas fa-arrow-left"></i></button>
-            <button id="next-btn" class="nav-btn"><i class="fas fa-arrow-right"></i></button>
+            <button id="prev-btn" class="nav-btn" aria-label="Previous"><i class="fas fa-arrow-left"></i></button>
+            <button id="next-btn" class="nav-btn" aria-label="Next"><i class="fas fa-arrow-right"></i></button>
         </div>
     </section>
 
@@ -509,7 +512,7 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
         // Function to load articles
         function loadArticles(category_id, sub_category_id) {
             $.ajax({
-                url: 'load_article.php', // This is the new file you need
+                url: '<?= defined("BASE_URL") ? BASE_URL : "/turningpoint/" ?>load_article.php', // This is the new file you need
                 method: 'GET',
                 data: {
                     id: category_id,
@@ -543,7 +546,7 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
         });
 
         // Initial page load (loads the default active sub-category)
-        loadArticles(<?= $category_id ?>, <?= $sub_category_id ?>);
+        loadArticles(<?= $category_id ?>, <?= $sub_category_id ? $sub_category_id : 'null' ?>);
     });
     </script>
 

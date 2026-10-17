@@ -27,15 +27,7 @@ include_once('connection2.php');
 
         <ul class="tp-nav-menu" id="tp-main-menu">
             <li><a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>">Home</a></li>
-            <!--<li class="tp-dropdown">-->
-            <!--    <a href="#">Features <span class="tp-arrow-span">▼</span></a>-->
-            <!--    <ul class="tp-dropdown-menu">-->
-            <!--        <li><a href="index.php#latest">Latest Issue</a></li>-->
-            <!--        <li><a href="index.php#collection">Library</a></li>-->
-            <!--        <li><a href="index.php#subscribe">Subscribe</a></li>-->
-            <!--        <li><a href="index.php#promo-advertise">Advertise</a></li>-->
-            <!--    </ul>-->
-            <!--</li>-->
+            <li><a id="dinner2026" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>leadership-dinner-2026.php">Dinner 2026</a></li>
             <li><a id="about" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>about">About</a></li>
             <li><a id="contact" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>contact">Contact</a></li>
             <li><a id="story" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>story">Contribute</a></li>

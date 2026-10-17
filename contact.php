@@ -17,7 +17,7 @@
     <link rel="manifest" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>site.webmanifest">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="tp-design-system.css">
+    <link rel="stylesheet" href="design-system.css">
     <link rel="stylesheet" href="includes/tp-navbar.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
     <style>
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     :root {
@@ -414,14 +414,20 @@
 
                 <div class="form-wrapper fade-in-up" style="animation-delay: 0.3s;">
                     <form id="contact-form" enctype="multipart/form-data">
+                        <p style="text-align: center; color: var(--text-light-gray); font-size: 1rem; margin-bottom: 20px;">
+                            We would love to hear from you. We typically respond within 24-48 hours.
+                        </p>
                         <div class="form-item">
-                            <input type="text" class="input" placeholder="First Name" name="f-name" required>
+                            <label class="sr-only" for="contact-f-name" style="display:none;">First Name</label>
+                            <input type="text" class="input" placeholder="First Name" id="contact-f-name" aria-label="First Name" name="f-name" required>
                         </div>
                         <div class="form-item">
-                            <input type="text" class="input" placeholder="Last Name" name="l-name" required>
+                            <label class="sr-only" for="contact-l-name" style="display:none;">Last Name</label>
+                            <input type="text" class="input" placeholder="Last Name" id="contact-l-name" aria-label="Last Name" name="l-name" required>
                         </div>
                         <div class="form-item">
-                            <input type="email" class="input" placeholder="Your Email" name="email" required>
+                            <label class="sr-only" for="contact-email" style="display:none;">Email Address</label>
+                            <input type="email" class="input" placeholder="Your Email" id="contact-email" aria-label="Email Address" name="email" required>
                         </div>
                         <div class="form-item">
                             <select class="input" name="category" required>

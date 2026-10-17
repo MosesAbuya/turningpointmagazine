@@ -11,10 +11,10 @@
 
     <link rel="canonical" href="https://www.turningpointmagazine.africa/story.php">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>favicon-16x16.png">
-    <link rel="manifest" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/site.webmanifest">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +28,7 @@
     <style>
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     :root {
@@ -327,19 +327,34 @@
                 <div class="form-wrapper fade-in-up" style="animation-delay: 0.5s;">
                     <form id="storyForm" enctype="multipart/form-data">
                         <h2 class="form-title">Submission Form</h2>
+                        
+                        <div class="story-guidelines" style="background:#f9f9f9; padding:20px; border-radius:8px; margin-bottom:20px; font-size:0.9rem; color:var(--text-light); border-left:4px solid var(--brand-teal);">
+                            <strong>Submission Guidelines:</strong>
+                            <ul style="margin:10px 0 0 20px; padding:0;">
+                                <li><strong>Accepted Stories:</strong> Personal stories, environmental conservation efforts, organizational impact, and charity work.</li>
+                                <li><strong>File Requirements:</strong> We accept Images, PDF, DOCX (Max 5MB per file).</li>
+                                <li><strong>Permissions:</strong> Please ensure you own the rights to the uploaded images and documents.</li>
+                                <li><strong>Review Timeline:</strong> Submissions are typically reviewed within 7-14 days.</li>
+                                <li><strong>Consent:</strong> By submitting, you grant Turning Point Magazine permission to publish the story and images.</li>
+                            </ul>
+                        </div>
 
                         <div class="form-item">
-                            <input type="text" class="input" placeholder="First Name" name="f-name" required>
+                            <label class="sr-only" for="f-name" style="display:none;">First Name</label>
+                            <input type="text" class="input" placeholder="First Name" name="f-name" id="f-name" aria-label="First Name" required>
                         </div>
                         <div class="form-item">
-                            <input type="text" class="input" placeholder="Last Name" name="l-name" required>
+                            <label class="sr-only" for="l-name" style="display:none;">Last Name</label>
+                            <input type="text" class="input" placeholder="Last Name" name="l-name" id="l-name" aria-label="Last Name" required>
                         </div>
                         <div class="form-item">
-                            <input type="email" class="input" placeholder="Your Email" name="email" required>
+                            <label class="sr-only" for="email" style="display:none;">Email Address</label>
+                            <input type="email" class="input" placeholder="Your Email" name="email" id="email" aria-label="Email Address" required>
                         </div>
 
                         <div class="form-item">
-                            <select class="input" name="category" required>
+                            <label class="sr-only" for="category" style="display:none;">Category</label>
+                            <select class="input" name="category" id="category" aria-label="Category" required>
                                 <option value="" disabled selected>Select an area</option>
                                 <option value="My story">My story</option>
                                 <option value="Environmental conservation">Environmental conservation</option>
@@ -350,19 +365,22 @@
                         </div>
 
                         <div class="form-item">
+                            <label class="sr-only" for="story" style="display:none;">Your Story</label>
                             <textarea class="input-message" placeholder="Type your story here..." rows="8"
-                                name="story"></textarea>
+                                name="story" id="story" aria-label="Your Story"></textarea>
                         </div>
 
                         <div class="form-divider-title">OR Upload a Document</div>
 
                         <div class="form-item">
+                            <label class="sr-only" for="p_description" style="display:none;">Document Description</label>
                             <textarea class="input-message" placeholder="Short description of the document(s)..."
-                                rows="3" name="p_description"></textarea>
+                                rows="3" name="p_description" id="p_description" aria-label="Document Description"></textarea>
                         </div>
 
                         <div class="form-item">
-                            <input type="file" id="imageInput" name="photo[]" accept="image/*, .pdf, .docx, .doc, .webp"
+                            <label class="sr-only" for="imageInput" style="display:none;">Upload Files</label>
+                            <input type="file" id="imageInput" name="photo[]" aria-label="Upload Files" accept="image/*, .pdf, .docx, .doc, .webp"
                                 multiple>
                         </div>
 

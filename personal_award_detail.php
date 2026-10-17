@@ -37,14 +37,14 @@ if (!$award) {
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="includes/tp-navbar.css">
-    <link rel="stylesheet" href="tp-design-system.css">
+    <link rel="stylesheet" href="design-system.css">
     <link rel="stylesheet" href="global.css">
 
 
     <style>
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     /* --- Page-specific override --- */
@@ -453,7 +453,7 @@ if (!$award) {
                 alt="<?= htmlspecialchars($award['title']) ?>">
 
             <div class="award-detail-title">
-                <h1><?= htmlspecialchars($award['title']) ?></h1>
+                <h2 class="award-title"><?= htmlspecialchars($award['title']) ?></h2>
                 <div class="directory-meta">
                     <div class="meta-tag"><i class="fas fa-calendar-alt"></i>
                         <?= date('F j, Y', strtotime($award['date_awarded'])) ?></div>

@@ -16,7 +16,7 @@ function isActive($page, $current) {
 // Group definitions
 $content_pages = ['editions.php', 'edit_edition.php', 'blog.php', 'edit_blog.php', 'add_blog.php', 'stories.php', 'category.php', 'sub_category.php', 'manage-spotlight.php', 'add-spotlight.php', 'edit-spotlight.php'];
 $commerce_pages = ['shop_manage.php', 'shop_product_add.php', 'shop_product_edit.php', 'shop_orders.php', 'shop_order_detail.php', 'shop_sales.php'];
-$engagement_pages = ['subscribers.php', 'feedback.php', 'attendees.php', 'attendance_dashboard.php', 'booking.php'];
+$engagement_pages = ['subscribers.php', 'feedback.php', 'attendees.php', 'attendance_dashboard.php', 'booking.php', 'events_ticketing.php'];
 $awards_pages = ['awards_to_apply.php', 'add_award_to_apply.php', 'edit_award_to_apply.php', 'award_applicants.php', 'view_applicant.php', 'personal_awards_won.php', 'add_personal_award.php', 'edit_personal_award.php'];
 $directory_pages = ['directories_list.php', 'directories_add.php', 'directories_edit.php'];
 ?>
@@ -70,6 +70,7 @@ $directory_pages = ['directories_list.php', 'directories_add.php', 'directories_
                 <li class="<?= isActive('attendees.php', $current_page) ?>"><a href="attendees.php">Event Attendees</a></li>
                 <li class="<?= isActive('attendance_dashboard.php', $current_page) ?>"><a href="attendance_dashboard.php">Attendance Roster</a></li>
                 <li class="<?= isActive('booking.php', $current_page) ?>"><a href="booking.php">Booth Bookings</a></li>
+                <li class="<?= isActive('events_ticketing.php', $current_page) ?>"><a href="events_ticketing.php"><i class="fas fa-ticket-alt me-2" style="color:#d4af37;"></i> Events & Ticketing</a></li>
             </ul>
         </li>
 

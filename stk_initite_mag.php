@@ -22,14 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $status = $result['status'];
 
                 if ($status === "complete") {
-                    echo json_encode(["status" => "complete", "message" => "✅ Payment successful! An email has been sent you with the details. Thank you"]);
+                    echo json_encode(["status" => "complete", "message" => "âœ… Payment successful! An email has been sent you with the details. Thank you"]);
                 } elseif ($status === "failed") {
-                    echo json_encode(["status" => "failed", "message" => "❌ Payment failed. Try again."]);
+                    echo json_encode(["status" => "failed", "message" => "âŒ Payment failed. Try again."]);
                 } else {
-                    echo json_encode(["status" => "pending", "message" => "⏳ Payment is still processing...do not refresh this page!"]);
+                    echo json_encode(["status" => "pending", "message" => "â³ Payment is still processing...do not refresh this page!"]);
                 }
             } else {
-                echo json_encode(["status" => "not_found", "message" => "⚠️ Payment record not found."]);
+                echo json_encode(["status" => "not_found", "message" => "âš ï¸ Payment record not found."]);
             }
 
             exit;
@@ -49,19 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $currency = $_POST['currency'];
             $payment_method = $_POST['payment_method'];
 
-            // ✅ **Fix: Ensure `amount` is a valid decimal value**
+            // âœ… **Fix: Ensure `amount` is a valid decimal value**
             if (empty($amount) || !is_numeric($amount)) {
                 echo json_encode(["status" => "error", "message" => "Invalid payment amount."]);
                 exit;
             }
             $amount = floatval($amount); // Convert to float
 
-            // ✅ **Check for duplicate invoice_id before inserting**
+            // âœ… **Check for duplicate invoice_id before inserting**
             $stmt = $pdo->prepare("SELECT invoice_id FROM payments WHERE invoice_id = ?");
             $stmt->execute([$invoice_id]);
             if ($stmt->fetch()) {
-                // Duplicate found — throw the refresh message
-                echo json_encode(["status" => "error", "message" => "🔄 Please refresh the page to try again."]);
+                // Duplicate found â€” throw the refresh message
+                echo json_encode(["status" => "error", "message" => "ðŸ”„ Please refresh the page to try again."]);
 
                 exit;
             }

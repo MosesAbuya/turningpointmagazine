@@ -46,6 +46,15 @@ try {
   die("Error fetching blogs: " . $e->getMessage());
 }
 
+// 3. Fetch Flagship Event (Leadership Dinner 2026)
+require_once('includes/event_db_helper.php');
+try {
+  $dinner_event = get_flagship_event($pdo, 'leadership-dinner-2026');
+  $dinner_tiers = get_event_tiers($pdo, $dinner_event ? $dinner_event['id'] : 1);
+} catch (Exception $e) {
+  $dinner_event = null;
+  $dinner_tiers = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,13 +72,10 @@ try {
     <link rel="canonical" href="https://www.turningpointmagazine.africa/">
 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>apple-touch-icon.png">
-
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>favicon-16x16.png">
-
-    <link rel="manifest" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/favicon/site.webmanifest">
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -114,7 +120,7 @@ try {
 
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     body {
@@ -1310,6 +1316,380 @@ try {
     }
 </style>
 
+<style>
+/* --- THE LEADERSHIP DINNER 2026 DECLUTTERED SPOTLIGHT --- */
+.dinner-spotlight-section {
+    position: relative;
+    width: 100%;
+    background: #0d0d0d;
+    color: #faf7f2;
+    padding: 85px 20px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #d4af37;
+    overflow: hidden;
+    text-align: center;
+}
+.dinner-spotlight-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 30%, rgba(200, 16, 46, 0.22) 0%, transparent 65%),
+                radial-gradient(circle at 85% 85%, rgba(212, 175, 55, 0.18) 0%, transparent 55%),
+                url('assets/IWD/IW1.jpg') center/cover no-repeat;
+    opacity: 0.20;
+    pointer-events: none;
+}
+.dinner-spotlight-container {
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+.dinner-spotlight-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 22px;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid #d4af37;
+    border-radius: 30px;
+    color: #d4af37;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+    margin-bottom: 22px;
+}
+.dinner-spotlight-badge i {
+    color: #c8102e;
+}
+.dinner-spotlight-title {
+    font-family: 'florania', serif;
+    font-size: clamp(34px, 5.5vw, 56px);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+.dinner-spotlight-title span {
+    background: linear-gradient(135deg, #d4af37 0%, #aa8421 50%, #f7eaae 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.dinner-spotlight-highlight {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(22px, 3.2vw, 32px);
+    color: #f7eaae;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+}
+.dinner-spotlight-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px 22px;
+    margin: 0 auto 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13.5px;
+    color: #d1d5db;
+}
+.dinner-spotlight-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.dinner-spotlight-meta-item i {
+    color: #d4af37;
+}
+.dinner-spotlight-meta-sep {
+    color: #d4af37;
+    opacity: 0.5;
+    font-size: 9px;
+}
+@media (max-width: 768px) {
+    .dinner-spotlight-meta-sep {
+        display: none;
+    }
+}
+.spotlight-dignitaries-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+.dignitary-pill-badge {
+    background: rgba(24, 24, 24, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 30px;
+    padding: 7px 20px;
+    font-size: 12.5px;
+    color: #e5e5e5;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+}
+.dignitary-pill-badge strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+.dignitary-pill-badge span.role {
+    color: #c8102e;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 1px;
+}
+.spotlight-timer-pods {
+    display: inline-flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 35px;
+    background: rgba(18, 18, 18, 0.9);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 18px;
+    padding: 16px 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+.spotlight-pod-unit {
+    min-width: 65px;
+    text-align: center;
+}
+.spotlight-pod-num {
+    font-family: 'florania', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #d4af37;
+    line-height: 1;
+}
+.spotlight-pod-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #9ca3af;
+    margin-top: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+.spotlight-cta-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.btn-spotlight-primary {
+    background: linear-gradient(135deg, #d4af37 0%, #aa8421 100%);
+    color: #0d0d0d !important;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 14px 30px;
+    border-radius: 40px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 22px rgba(212, 175, 55, 0.35);
+    transition: all 0.25s ease;
+    font-family: 'Poppins', sans-serif;
+}
+.btn-spotlight-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(212, 175, 55, 0.55);
+}
+.btn-spotlight-secondary {
+    background: linear-gradient(135deg, #c8102e 0%, #900c20 100%);
+    color: #ffffff !important;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 40px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(200, 16, 46, 0.35);
+    transition: all 0.25s ease;
+    font-family: 'Poppins', sans-serif;
+}
+.btn-spotlight-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(200, 16, 46, 0.55);
+}
+.btn-spotlight-link {
+    color: #e5e5e5;
+    font-size: 13.5px;
+    text-decoration: underline;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+    font-family: 'Poppins', sans-serif;
+    transition: color 0.2s;
+}
+.btn-spotlight-link:hover {
+    color: #d4af37;
+}
+</style>
+
+<!-- BRAND-NEW SPOTLIGHT: THE LEADERSHIP DINNER 2026 (DECLUTTERED EDITORIAL SHOWCASE) -->
+<section class="dinner-spotlight-section fade-in-up" id="leadership-dinner-spotlight">
+    <div class="dinner-spotlight-bg"></div>
+    <div class="dinner-spotlight-container">
+        
+        <!-- Eyebrow Badge -->
+        <div class="dinner-spotlight-badge">
+            <span><?= htmlspecialchars($dinner_event['hero_badge_text'] ?? 'UPCOMING FLAGSHIP GALA • FRIDAY, 6 NOVEMBER 2026') ?></span>
+        </div>
+
+        <!-- Main Title -->
+        <h2 class="dinner-spotlight-title">
+            <?= htmlspecialchars($dinner_event['title'] ?? 'THE LEADERSHIP DINNER 2026') ?>
+        </h2>
+
+        <!-- Special Highlight Subtitle -->
+        <div class="dinner-spotlight-highlight">
+            Special Highlight: <?= htmlspecialchars($dinner_event['special_highlight'] ?? 'Launch of the Third Edition of Turning Point Magazine') ?>
+        </div>
+
+        <!-- Horizontal Clean Metadata Bar -->
+        <div class="dinner-spotlight-meta-bar">
+            <div class="dinner-spotlight-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Friday, 6 November 2026</span>
+            </div>
+            <span class="dinner-spotlight-meta-sep">•</span>
+            <div class="dinner-spotlight-meta-item">
+                <i class="fas fa-clock"></i>
+                <span><?= htmlspecialchars($dinner_event['event_time'] ?? '4:00 PM – 9:00 PM EAT') ?></span>
+            </div>
+            <span class="dinner-spotlight-meta-sep">•</span>
+            <div class="dinner-spotlight-meta-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span><?= htmlspecialchars($dinner_event['venue'] ?? 'Tamarind Tree Hotel, Nairobi') ?></span>
+            </div>
+        </div>
+
+        <!-- Dignitary Honour Pills -->
+        <div class="spotlight-dignitaries-pills">
+            <div class="dignitary-pill-badge">
+                <span class="role">Guest of Honour:</span>
+                <strong><?= htmlspecialchars($dinner_event['principal_guest_name'] ?? 'Hon. Harriet Chiggai') ?></strong>
+                <span style="color:#aaa; font-size:11px;">(<?= htmlspecialchars($dinner_event['principal_guest_title'] ?? 'President’s Advisor on Women’s Rights') ?>)</span>
+            </div>
+            <div class="dignitary-pill-badge">
+                <span class="role">Gala Patron:</span>
+                <strong><?= htmlspecialchars($dinner_event['patron_name'] ?? 'Prof. Julia Ojiambo') ?></strong>
+            </div>
+        </div>
+
+        <!-- Minimal Inline Countdown Pods -->
+        <div>
+            <div class="spotlight-timer-pods">
+                <div class="spotlight-pod-unit">
+                    <div class="spotlight-pod-num" id="spDays">--</div>
+                    <div class="spotlight-pod-lbl">Days</div>
+                </div>
+                <div class="spotlight-pod-unit">
+                    <div class="spotlight-pod-num" id="spHours">--</div>
+                    <div class="spotlight-pod-lbl">Hours</div>
+                </div>
+                <div class="spotlight-pod-unit">
+                    <div class="spotlight-pod-num" id="spMins">--</div>
+                    <div class="spotlight-pod-lbl">Mins</div>
+                </div>
+                <div class="spotlight-pod-unit">
+                    <div class="spotlight-pod-num" id="spSecs">--</div>
+                    <div class="spotlight-pod-lbl">Secs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Focused CTAs -->
+        <div class="spotlight-cta-wrap">
+            <a href="event-checkout.php?tier=corporate_table" class="btn-spotlight-primary">
+                Book Corporate Table (KES 50,000)
+            </a>
+            <a href="event-checkout.php?tier=individual" class="btn-spotlight-secondary">
+                <i class="fas fa-user-tie"></i> Reserve Individual Seat (KES 10,000)
+            </a>
+            <a href="leadership-dinner-2026.php" class="btn-spotlight-link">
+                Explore full event details, programme & dignitaries <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<script>
+(function() {
+    const galaDate = new Date("2026-11-06T16:00:00+03:00").getTime();
+    function runGalaTimer() {
+        const now = new Date().getTime();
+        const diff = galaDate - now;
+        if (diff <= 0) return;
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+        const elD = document.getElementById('spDays');
+        if (elD) {
+            elD.innerText = String(d).padStart(2, '0');
+            document.getElementById('spHours').innerText = String(h).padStart(2, '0');
+            document.getElementById('spMins').innerText = String(m).padStart(2, '0');
+            document.getElementById('spSecs').innerText = String(s).padStart(2, '0');
+        }
+    }
+    setInterval(runGalaTimer, 1000);
+    runGalaTimer();
+})();
+</script>
+
+        <section class="page-section bg-light fade-in-up" id="tp-collection">
+            <div>
+                <h2 class="section-title">Our Magazine Library</h2>
+                <div class="tp-collection-grid">
+                    <?php foreach ($editions as $edition): ?>
+                    <div class="tp-book-card">
+                        <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>edition/<?= generate_slug($edition['edition_name']) ?>" target="_blank"
+                            class="tp-book-link">
+                            <div class="tp-book-cover">
+                                <img loading="lazy" src="admin/<?= htmlspecialchars($edition['front_page_image']) ?>"
+                                    alt="<?= htmlspecialchars($edition['edition_name']) ?>" class="tp-book-image">
+                            </div>
+                            <div class="tp-book-info">
+                                <h3 class="tp-edition-title">
+
+                                    <?= htmlspecialchars($edition['edition_name']) ?> <i class="fas fa-arrow-right"
+                                        style="font-size: 0.8em;"></i>
+                                </h3>
+                            </div>
+                        </a>
+                        <div class="tp-book-actions">
+                            <a href="shop/index.php?edition_id=<?= htmlspecialchars($edition['id']) ?>"
+                                class="tp-cart-button">
+                                <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i>
+                                Order A Physical Copy
+                            </a>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>        </section>
+
+<!-- MOVED IWD CELEBRATION 2025 SECTION (PRESERVED IN FULL FURTHER DOWN THE PAGE) -->
 <section class="iwd-mega-section fade-in-up" id="iwd-2025">
     
     <div class="iwd-split-container">
@@ -1361,9 +1741,8 @@ try {
 </section>
 
 <script>
-    // --- CONFIG ---
+    // --- IWD GALLERY SCRIPT ---
     const slideInterval = 5000;
-    // Auto-generate array for 20 images
     const images = [];
     for(let i=1; i<=20; i++) {
         images.push('assets/IWD/IW' + i + '.jpg');
@@ -1376,38 +1755,31 @@ try {
     const track = document.getElementById('thumbTrack');
 
     function updateSlide(index) {
-        // Fade Out
+        if (!mainImg) return;
         mainImg.classList.add('fade-out');
 
         setTimeout(() => {
-            // Swap
             mainImg.src = images[index];
-            
-            // Reset Animation
             mainImg.classList.remove('ken-burns-active');
             void mainImg.offsetWidth; 
             mainImg.classList.add('ken-burns-active');
-
-            // Fade In
             mainImg.onload = () => {
                 mainImg.classList.remove('fade-out');
             };
         }, 500);
 
-        // Update Thumbnails
         thumbs.forEach(t => t.classList.remove('active'));
         if(thumbs[index]) {
             thumbs[index].classList.add('active');
-            
-            // Soft Scroll Logic (Keeps active item visible)
             const thumbLeft = thumbs[index].offsetLeft;
             const thumbWidth = thumbs[index].offsetWidth;
-            const trackWidth = track.offsetWidth;
-            
-            track.scrollTo({
-                left: thumbLeft - (trackWidth / 2) + (thumbWidth / 2),
-                behavior: 'smooth'
-            });
+            const trackWidth = track ? track.offsetWidth : 300;
+            if (track) {
+                track.scrollTo({
+                    left: thumbLeft - (trackWidth / 2) + (thumbWidth / 2),
+                    behavior: 'smooth'
+                });
+            }
         }
     }
 
@@ -1429,41 +1801,9 @@ try {
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        startTimer();
+        if (mainImg) startTimer();
     });
 </script>
-
-        <section class="page-section bg-light fade-in-up" id="tp-collection">
-            <div>
-                <h2 class="section-title">Our Magazine Library</h2>
-                <div class="tp-collection-grid">
-                    <?php foreach ($editions as $edition): ?>
-                    <div class="tp-book-card">
-                        <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>edition/<?= generate_slug($edition['edition_name']) ?>" target="_blank"
-                            class="tp-book-link">
-                            <div class="tp-book-cover">
-                                <img loading="lazy" src="admin/<?= htmlspecialchars($edition['front_page_image']) ?>"
-                                    alt="<?= htmlspecialchars($edition['edition_name']) ?>" class="tp-book-image">
-                            </div>
-                            <div class="tp-book-info">
-                                <h3 class="tp-edition-title">
-
-                                    <?= htmlspecialchars($edition['edition_name']) ?> <i class="fas fa-arrow-right"
-                                        style="font-size: 0.8em;"></i>
-                                </h3>
-                            </div>
-                        </a>
-                        <div class="tp-book-actions">
-                            <a href="shop/index.php?edition_id=<?= htmlspecialchars($edition['id']) ?>"
-                                class="tp-cart-button">
-                                <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i>
-                                Order A Physical Copy
-                            </a>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>        </section>
 
         <!-- Mega Flash Sale CTA Banner -->
         <section class="page-section fade-in-up" style="position: relative; z-index: 100;">
@@ -1472,7 +1812,7 @@ try {
 
                     <!-- Left: Text -->
                     <div class="sale-info-col">
-                        <div class="sale-info-label">✦ Limited Time Only</div>
+                        <div class="sale-info-label">âœ¦ Limited Time Only</div>
                         <h2 class="sale-info-headline">Flash<br>Sale</h2>
                         <div class="sale-info-badge">UP TO 60% OFF</div>
                         <p class="sale-info-desc">Get the latest Turning Point Magazines & exclusive Merch at unbeatable prices. Don't miss out!</p>
@@ -1481,7 +1821,7 @@ try {
 
                     <!-- Right: Product spotlight slider -->
                     <div class="sale-spotlight-slider">
-                        <!-- Prev button — lives OUTSIDE so it's never clipped -->
+                        <!-- Prev button â€” lives OUTSIDE so it's never clipped -->
                         <button class="sale-nav-btn sale-nav-prev" id="salePrev" aria-label="Previous product">
                             <i class="fas fa-chevron-left"></i>
                         </button>
@@ -1520,7 +1860,7 @@ try {
                         </div>
                         </div> <!-- End viewport -->
 
-                        <!-- Next button — also outside the track -->
+                        <!-- Next button â€” also outside the track -->
                         <button class="sale-nav-btn sale-nav-next" id="saleNext" aria-label="Next product">
                             <i class="fas fa-chevron-right"></i>
                         </button>
@@ -1757,14 +2097,19 @@ document.addEventListener("DOMContentLoaded", function() {
                         <img loading="lazy" src="assets/about.png" alt="Subscribe">
                     </div>
                     <div class="form-container">
-                        <p
-                            style="text-align: center; color: var(--text-light-gray); font-size: 1.1rem; margin-bottom: 20px;">
-                            Subscribe now to get regular
-                            updates whenever we have a new publication.</p>
+                            <p style="text-align: center; color: var(--text-light-gray); font-size: 1.1rem; margin-bottom: 20px;">
+                                Subscribe now to get regular updates whenever we have a new publication.<br>
+                                <span style="font-size: 0.9rem;">Once you submit, you will receive an activation email.</span>
+                            </p>
                         <form id="subscribeForm" name="sub" method="POST">
-                            <input type="text" placeholder="First Name" class="input" name="f-name" required>
-                            <input type="text" placeholder="Last Name" class="input" name="l-name" required>
-                            <input type="email" placeholder="Email Address" class="input" name="email" required>
+                            <label class="sr-only" for="sub-f-name" style="display:none;">First Name</label>
+                            <input type="text" placeholder="First Name" id="sub-f-name" aria-label="First Name" class="input" name="f-name" required>
+                            
+                            <label class="sr-only" for="sub-l-name" style="display:none;">Last Name</label>
+                            <input type="text" placeholder="Last Name" id="sub-l-name" aria-label="Last Name" class="input" name="l-name" required>
+                            
+                            <label class="sr-only" for="sub-email" style="display:none;">Email Address</label>
+                            <input type="email" placeholder="Email Address" id="sub-email" aria-label="Email Address" class="input" name="email" required>
                             <select class="input" name="address" style="background-color: black; color: white;" required>
                                 <option value="Kenya" selected>Kenya
                                 </option>
@@ -1808,6 +2153,27 @@ document.addEventListener("DOMContentLoaded", function() {
         ?>
 
         <div class="i-blog-container">
+            <!-- Flagship Event Card: The Leadership Dinner 2026 -->
+            <a href="leadership-dinner-2026.php" class="i-blog-card" style="border: 2px solid #d4af37; background: #141414; box-shadow: 0 8px 25px rgba(212,175,55,0.25); text-decoration: none;">
+                <div style="position: relative; overflow: hidden; height: 210px;">
+                    <img loading="lazy" src="assets/IWD/IW1.jpg" alt="The Leadership Dinner 2026" class="i-blog-image" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);">
+                    <span style="position: absolute; top: 12px; left: 12px; background: linear-gradient(135deg, #d4af37 0%, #aa8421 100%); color: #0d0d0d; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                        Flagship Gala
+                    </span>
+                </div>
+                <div class="i-blog-content" style="padding: 20px; color: #faf7f2;">
+                    <div class="i-blog-date" style="color: #d4af37; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">
+                        Friday, Nov 6, 2026 • 4:00 PM EAT
+                    </div>
+                    <h3 class="i-blog-title" style="color: #ffffff; font-family: 'Cinzel', serif; font-size: 18px; margin: 8px 0;">The Leadership Dinner 2026</h3>
+                    <p style="font-size: 12.5px; color: #a3a3a3; margin: 0 0 12px; line-height: 1.4;">
+                        Tamarind Tree Hotel, Nairobi • Unveiling of the 3rd Edition of Turning Point Magazine with Hon. Harriet Chiggai & Prof. Julia Ojiambo.
+                    </p>
+                    <span style="display: inline-flex; align-items: center; gap: 6px; color: #d4af37; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+                        Reserve Table / Seat <i class="fas fa-arrow-right"></i>
+                    </span>
+                </div>
+            </a>
             <?php foreach($blogs as $blog): 
                 // Generate the slug exactly like in blog.php
                 $slug = strtolower(preg_replace('/\s+/', '-', $blog['title']));

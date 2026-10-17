@@ -1,1 +1,0 @@
-<?php require '../config.php'; $pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS); $stmt = $pdo->query('SELECT host, port, encryption FROM smtp_settings WHERE id = 1'); print_r($stmt->fetch(PDO::FETCH_ASSOC)); ?>

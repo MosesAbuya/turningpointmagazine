@@ -55,7 +55,7 @@ $order_id = $order['invoice_id'];
     <link rel="stylesheet" href="contact.css">
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="global.css">
-    <link rel="stylesheet" href="tp-design-system.css"> <!-- Assuming style.css is minified or optimized -->
+    <link rel="stylesheet" href="design-system.css"> <!-- Assuming style.css is minified or optimized -->
     <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="button.css">
     <link rel="stylesheet" href="nav-2.css">
@@ -381,7 +381,7 @@ $order_id = $order['invoice_id'];
     <?php require_once('shop/inc/header.php'); ?>
 
     <div class="order-success-container">
-        <h2>🎉 Order Placed Successfully!</h2>
+        <h2>ðŸŽ‰ Order Placed Successfully!</h2>
         <p>Thank you for your purchase.</p>
         <p><strong>Order ID:</strong> <?php echo htmlspecialchars($order_id); ?></p>
         <p>A confirmation email has been sent to you.</p>

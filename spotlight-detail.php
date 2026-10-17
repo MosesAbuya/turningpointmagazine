@@ -84,7 +84,7 @@ function get_file_details($filename) {
     <title><?= htmlspecialchars($post['post_title']) ?> - Turning Point Magazine</title>
 
     <link rel="stylesheet" href="includes/tp-navbar.css">
-    <link rel="stylesheet" href="tp-design-system.css">
+    <link rel="stylesheet" href="design-system.css">
     <link rel="stylesheet" href="global.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,7 +97,7 @@ function get_file_details($filename) {
     /* --- 1. FONTS & VARS --- */
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     :root {

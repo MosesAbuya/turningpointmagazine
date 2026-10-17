@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="nav-2.css">
     <link rel="stylesheet" href="global.css">
-    <link rel="stylesheet" href="tp-design-system.css"> <!-- Assuming style.css is minified or optimized -->
+    <link rel="stylesheet" href="design-system.css"> <!-- Assuming style.css is minified or optimized -->
     <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="button.css">
     <link rel="stylesheet" href="booking.css">
@@ -147,8 +147,8 @@
             <h2 class="form-title">Event Essentials</h2>
             <ul class="details-list">
                 <li class="detail-item"><span class="detail-label">Venue:</span>Kenyatta International Convention Centre (KICC), Nairobi, Kenya</li>
-                <li class="detail-item"><span class="detail-label">Date:</span>7th–8th March 2025</li>
-                <li class="detail-item"><span class="detail-label">Time:</span> 9:00 AM – 5:00 PM (EAT)</li>
+                <li class="detail-item"><span class="detail-label">Date:</span>7thâ€“8th March 2025</li>
+                <li class="detail-item"><span class="detail-label">Time:</span> 9:00 AM â€“ 5:00 PM (EAT)</li>
                 <li class="detail-item"><span class="detail-label">Registration Deadline:</span>6th March 2025</li>
                 <li class="detail-item"><span class="detail-label">Contact:</span> +254 729407723</li>
             </ul>
@@ -187,13 +187,13 @@
                 <button class="payment-btn" data-method="bank">Bank</button>
                 <button class="payment-btn" data-method="paypal">PayPal</button>
             </div>
-            <button class="back-btn" id="backToBooking">← Back</button>
+            <button class="back-btn" id="backToBooking">â† Back</button>
         </div>
         -->
 
         <!-- Step 3: Payment Details
         <div id="paymentDetails" class="hidden">
-            <button class="back-btn" id="backToPayment">← Change Payment Method</button>
+            <button class="back-btn" id="backToPayment">â† Change Payment Method</button>
             <div id="paymentContent"></div>
         </div>
          -->

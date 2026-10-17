@@ -106,7 +106,7 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>footer.css">
-    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>tp-design-system.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>design-system.css">
     <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>global.css">
 
     <!-- Open Graph & Twitter Cards -->
@@ -145,7 +145,7 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
     /* --- THEME FONTS --- */
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     :root {
@@ -615,7 +615,7 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
     <section class="tp-fun-intro fade-in-up" style="animation-delay: 0.2s;">
         <h1 class="tp-article-title"><?= htmlspecialchars($title); ?></h1>
         <div class="tp-article-meta">
-            <?= htmlspecialchars($category_name); ?> • <?= htmlspecialchars($edition_name); ?>
+            <?= htmlspecialchars($category_name); ?> Ã¢â‚¬Â¢ <?= htmlspecialchars($edition_name); ?>
         </div>
         <nav class="tp-intro-nav">
             <a href="index.php">Home</a> <span><i class="fas fa-chevron-right"></i> Articles</span> <span><i
@@ -667,7 +667,7 @@ $articlesList = $stmtList->fetchAll(PDO::FETCH_ASSOC);
 
             <?php if (!empty($adsList)): ?>
             <?php foreach ($adsList as $ad): ?>
-            <a href="partners.php?id=<?= $ad['id']; ?>&edition_id=<?= $current_edition_id; ?>" class="partner-card">
+            <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>partners.php?id=<?= $ad['id']; ?>&edition_id=<?= $current_edition_id; ?>" class="partner-card">
                 <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($ad['ad_banner_image']); ?>" class="partner-img" alt="Partner">
                 <div class="partner-info">
                     <h4><?= htmlspecialchars($ad['ad_company_name']); ?></h4>

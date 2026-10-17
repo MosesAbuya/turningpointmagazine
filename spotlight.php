@@ -38,7 +38,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <style>
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     body {

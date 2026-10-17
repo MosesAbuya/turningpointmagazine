@@ -240,7 +240,7 @@ $ai_summary = "In a rapidly evolving landscape, this piece explores the critical
             position: relative;
         }
         blockquote::before {
-            content: "“";
+            content: "â€œ";
             position: absolute;
             top: -20px;
             left: -10px;
@@ -268,9 +268,9 @@ $ai_summary = "In a rapidly evolving landscape, this piece explores the critical
                 <h1><?= htmlspecialchars($current_blog['title']) ?></h1>
                 <div class="article-hero-meta">
                     <span>By Turning Point Editorial</span>
-                    <span>•</span>
+                    <span>â€¢</span>
                     <span><?= date('F j, Y', strtotime($current_blog['date'])) ?></span>
-                    <span>•</span>
+                    <span>â€¢</span>
                     <span>5 Min Read</span>
                 </div>
             </div>

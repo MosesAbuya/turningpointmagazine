@@ -191,11 +191,13 @@ START: New Dark Footer Style Block
             <div class="footer-column footer-links">
                 <h3>Quick Links</h3>
                 <ul class="menu">
-                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>#latest">Home</a></li>
-                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>about">About</a></li>
-                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>contact">Contact</a></li>
-                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>#subscribe">Subscribe</a></li>
-                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>#tp-collection">Library</a></li>
+                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>index.php">Home</a></li>
+                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>about.php">About</a></li>
+                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>contact.php">Contact</a></li>
+                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>index.php#subscribe">Subscribe</a></li>
+                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>index.php#tp-collection">Library</a></li>
+                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>privacy.php">Privacy Policy</a></li>
+                    <li class="menu__item"><a class="menu__link" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>terms.php">Terms and Conditions</a></li>
                 </ul>
             </div>
 
@@ -203,10 +205,10 @@ START: New Dark Footer Style Block
                 <h3>Follow Us</h3>
                 <ul class="fsocial-icon">
                     <li class="social-icon__item"><a class="social-icon__link" href="https://www.facebook.com/turningpointmag" target="_blank">
-                            <ion-icon name="logo-facebook"></ion-icon>
+                            <i class="fab fa-facebook-f" aria-label="Facebook"></i>
                         </a></li>
                     <li class="social-icon__item"><a class="social-icon__link" href="https://twitter.com/turningpointmag" target="_blank">
-                            <ion-icon name="logo-twitter"></ion-icon>
+                            <i class="fab fa-twitter" aria-label="Twitter"></i>
                         </a></li>
                     <!--
                     <li class="social-icon__item"><a class="social-icon__link" href="#">
@@ -235,8 +237,8 @@ START: New Dark Footer Style Block
 
 </footer>
 
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
 <!-- Hidden Google Translate Element -->
 <div id="google_translate_element"></div>
 <script type="text/javascript">

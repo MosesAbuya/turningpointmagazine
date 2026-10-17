@@ -30,7 +30,7 @@ if (!$organization) {
     <link rel="manifest" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>site.webmanifest">
 
     <link rel="stylesheet" href="includes/tp-navbar.css">
-    <link rel="stylesheet" href="tp-design-system.css">
+    <link rel="stylesheet" href="design-system.css">
     <link rel="stylesheet" href="global.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
@@ -41,7 +41,7 @@ if (!$organization) {
     <style>
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     /* --- Page-specific override --- */
@@ -437,7 +437,7 @@ if (!$organization) {
                 <?php endif; ?>
             </div>
             <div class="directory-title">
-                <h1><?= htmlspecialchars($organization['name']) ?></h1>
+                <h2 class="org-name"><?= htmlspecialchars($organization['name']) ?></h2>
                 <div class="directory-meta">
                     <?php if(!empty($organization['type'])): ?>
                     <div class="meta-tag"><i class="fas fa-tag"></i> <?= htmlspecialchars($organization['type']) ?>

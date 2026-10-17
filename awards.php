@@ -35,14 +35,14 @@ $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="includes/tp-navbar.css">
-    <link rel="stylesheet" href="tp-design-system.css">
+    <link rel="stylesheet" href="design-system.css">
     <link rel="stylesheet" href="global.css">
 
 
     <style>
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     /* --- Page-specific override --- */

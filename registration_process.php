@@ -100,14 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->Subject = 'RE: Registration Successful';
            $mail->Body = "
                 <p>Dear <strong>$firstname</strong>,</p>
-                <p>Great news! Your registration for the <strong> International Women's Day and 2025 Africa Exhibition & Trade Expo</strong> is confirmed! 🎉</p>
-                <p>Get ready for an unforgettable experience filled with innovation, networking, and exciting opportunities. Mark your calendar and set your reminders. This is an event you won’t want to miss!</p>
-                <p>📍 <strong>Venue:</strong> Kenyatta International Conference Center, Nairobi<br>
-                📅 <strong>Date:</strong> 7th - 8th March 2025<br>
-                ⏰ <strong>Time:</strong> 8:00 AM - 4:00 PM</p>
-                <p>Here’s your registration Code:</p>
-                <p><strong>🎫 Registration Code: $invoice</strong></p>
-                <p>Thank you for being part of this exciting journey. We can’t wait to welcome you to an experience like no other! </p>
+                <p>Great news! Your registration for the <strong> International Women's Day and 2025 Africa Exhibition & Trade Expo</strong> is confirmed! ðŸŽ‰</p>
+                <p>Get ready for an unforgettable experience filled with innovation, networking, and exciting opportunities. Mark your calendar and set your reminders. This is an event you wonâ€™t want to miss!</p>
+                <p>ðŸ“ <strong>Venue:</strong> Kenyatta International Conference Center, Nairobi<br>
+                ðŸ“… <strong>Date:</strong> 7th - 8th March 2025<br>
+                â° <strong>Time:</strong> 8:00 AM - 4:00 PM</p>
+                <p>Hereâ€™s your registration Code:</p>
+                <p><strong>ðŸŽ« Registration Code: $invoice</strong></p>
+                <p>Thank you for being part of this exciting journey. We canâ€™t wait to welcome you to an experience like no other! </p>
                 <p>Regards,<br><br>
                 <strong>Turning Point Magazine Team</strong>
                 </p>

@@ -60,7 +60,7 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
         rel="stylesheet">
 
     <link rel="stylesheet" href="includes/tp-navbar.css">
-    <link rel="stylesheet" href="tp-design-system.css">
+    <link rel="stylesheet" href="design-system.css">
     <link rel="stylesheet" href="global.css">
 
     <style>
@@ -77,7 +77,7 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
 
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     body {
@@ -412,7 +412,7 @@ $articlesList = $stmtArticle->fetchAll(PDO::FETCH_ASSOC);
                     <img loading="lazy" src="<?= $adImage; ?>" alt="<?= $adCompanyName; ?>" class="partner-image">
                 </div>
                 <div class="partner-info">
-                    <h1><?= $adCompanyName; ?></h1>
+                    <h2 class="partner-name"><?= $adCompanyName; ?></h2>
                     <p><?= $adCatchPhrase; ?></p>
                 </div>
             </div>

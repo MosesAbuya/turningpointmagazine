@@ -64,7 +64,7 @@ if (isset($_POST['add'])){
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="latest.css">
     <link rel="stylesheet" href="global.css">
-    <link rel="stylesheet" href="tp-design-system.css">
+    <link rel="stylesheet" href="design-system.css">
     <link rel="stylesheet" href="collection.css">
     <link rel="stylesheet" href="patners.css">
     <link rel="stylesheet" href="form.css">
@@ -315,7 +315,7 @@ try {
             <div class="next-release">
                 <div class="next-left">
                     <h1>
-                        <span>Next Release</span> International Women’s Day Edition
+                        <span>Next Release</span> International Womenâ€™s Day Edition
                     </h1>
                 </div>
                 <div class="next-right">

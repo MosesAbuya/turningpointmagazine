@@ -93,13 +93,13 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>footer.css">
-    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>tp-design-system.css">
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>design-system.css">
     <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>global.css">
 
     <style>
     @font-face {
         font-family: florania;
-        src: url(assets/fonts/florania.otf) format("opentype");
+        src: url("<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>assets/fonts/florania.otf") format("opentype");
     }
 
     :root {
@@ -698,7 +698,7 @@ if (isset($_GET['edition_id']) || isset($_GET['slug'])) {
             <div class="partners-grid">
                 <?php foreach ($adsList as $ad): ?>
                 <div class="partner-ad-card">
-                    <a href="partners.php?id=<?= $ad['id'] ?>&edition_id=<?= $edition_id ?>">
+                    <a href="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>partners.php?id=<?= $ad['id'] ?>&edition_id=<?= $edition_id ?>">
                         <img loading="lazy" src="<?= defined('BASE_URL') ? BASE_URL : '/turningpoint/' ?>admin/<?= htmlspecialchars($ad['ad_banner_image']) ?>" alt="Ad">
                         <div class="partner-ad-info">
                             <h4><?= htmlspecialchars($ad['ad_company_name']) ?></h4>
