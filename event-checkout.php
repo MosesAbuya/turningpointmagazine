@@ -49,8 +49,8 @@ foreach ($tiers as $t) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
-    <!-- Paystack Inline JS -->
-    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- Paystack Inline JS (v2 for responsive popup modal on mobile & desktop) -->
+    <script src="https://js.paystack.co/v2/inline.js"></script>
 
     <!-- Global Styles & Navbar -->
     <link rel="stylesheet" href="includes/new-navbar.css">
@@ -1390,54 +1390,68 @@ foreach ($tiers as $t) {
                 const res = await response.json();
 
                 if (res.status === 'success') {
-                    // Initialize Paystack Inline Modal
-                    const handler = PaystackPop.setup({
-                        key: res.public_key,
-                        email: res.email,
-                        amount: res.amount_subunits,
-                        currency: res.currency || 'KES',
-                        ref: res.booking_reference,
-                        metadata: {
-                            custom_fields: [
-                                {
-                                    display_name: "Booking Reference",
-                                    variable_name: "booking_reference",
-                                    value: res.booking_reference
-                                },
-                                {
-                                    display_name: "Attendee Name",
-                                    variable_name: "attendee_name",
-                                    value: res.contact_name
-                                },
-                                {
-                                    display_name: "Tier",
-                                    variable_name: "tier_name",
-                                    value: res.tier_name
-                                },
-                                {
-                                    display_name: "Phone Number",
-                                    variable_name: "phone_number",
-                                    value: res.contact_phone
-                                }
-                            ]
-                        },
-                        callback: function(paymentResponse) {
-                            // Paystack payment authorized!
-                            document.getElementById('modalSpinner').style.display = 'block';
-                            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-spinner fa-spin text-warning"></i> Confirming Payment...';
-                            document.getElementById('modalBody').innerText = 'Paystack has confirmed your transaction. Generating your official VIP pass and dispatching your confirmation email...';
-                            document.getElementById('modalRefDisplay').innerText = `Ref: ${paymentResponse.reference || res.booking_reference}`;
-                            document.getElementById('statusModal').style.display = 'flex';
+                    const handleSuccess = function(ref) {
+                        document.getElementById('modalSpinner').style.display = 'block';
+                        document.getElementById('modalTitle').innerHTML = '<i class="fas fa-spinner fa-spin text-warning"></i> Confirming Payment...';
+                        document.getElementById('modalBody').innerText = 'Paystack has confirmed your transaction. Generating your official VIP pass and dispatching your confirmation email...';
+                        document.getElementById('modalRefDisplay').innerText = `Ref: ${ref || res.booking_reference}`;
+                        document.getElementById('statusModal').style.display = 'flex';
 
-                            verifyPaystackTransaction(paymentResponse.reference || res.booking_reference, res.booking_reference, res.qr_token);
-                        },
-                        onClose: function() {
-                            submitBtn.disabled = false;
-                            submitBtn.innerHTML = originalBtnHtml;
+                        verifyPaystackTransaction(ref || res.booking_reference, res.booking_reference, res.qr_token);
+                    };
+
+                    const handleCancel = function() {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnHtml;
+                    };
+
+                    const customFields = [
+                        { display_name: "Booking Reference", variable_name: "booking_reference", value: res.booking_reference },
+                        { display_name: "Attendee Name", variable_name: "attendee_name", value: res.contact_name },
+                        { display_name: "Tier", variable_name: "tier_name", value: res.tier_name },
+                        { display_name: "Phone Number", variable_name: "phone_number", value: res.contact_phone }
+                    ];
+
+                    let openedV2 = false;
+                    try {
+                        if (typeof PaystackPop !== 'undefined') {
+                            const paystack = new PaystackPop();
+                            if (typeof paystack.newTransaction === 'function') {
+                                paystack.newTransaction({
+                                    key: res.public_key,
+                                    email: res.email,
+                                    amount: res.amount_subunits,
+                                    currency: res.currency || 'KES',
+                                    ref: res.booking_reference,
+                                    metadata: { custom_fields: customFields },
+                                    onSuccess: function(transaction) {
+                                        handleSuccess(transaction.reference || res.booking_reference);
+                                    },
+                                    onCancel: handleCancel
+                                });
+                                openedV2 = true;
+                            }
                         }
-                    });
+                    } catch (e) {
+                        console.warn("Paystack v2 modal error:", e);
+                    }
 
-                    handler.openIframe();
+                    if (!openedV2) {
+                        // Fallback to Paystack v1 setup if available
+                        const handler = PaystackPop.setup({
+                            key: res.public_key,
+                            email: res.email,
+                            amount: res.amount_subunits,
+                            currency: res.currency || 'KES',
+                            ref: res.booking_reference,
+                            metadata: { custom_fields: customFields },
+                            callback: function(paymentResponse) {
+                                handleSuccess(paymentResponse.reference || res.booking_reference);
+                            },
+                            onClose: handleCancel
+                        });
+                        handler.openIframe();
+                    }
                 } else {
                     alert(res.message || 'Error initiating booking. Please try again.');
                     submitBtn.disabled = false;

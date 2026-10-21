@@ -51,8 +51,9 @@ function send_event_booking_confirmation_email($pdo, $bookingId, $notifyAdmin = 
                 body { margin: 0; padding: 0; background-color: #0d0d0d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #ffffff; }
                 .email-container { max-width: 650px; margin: 20px auto; background-color: #141414; border: 1px solid #d4af37; border-radius: 12px; overflow: hidden; }
                 .header-banner { background: linear-gradient(135deg, #181818 0%, #0d0d0d 100%); padding: 32px 25px; text-align: center; border-bottom: 2px solid #d4af37; }
-                .logo-img { max-height: 58px; max-width: 250px; width: auto; height: auto; display: block; margin: 0 auto 12px auto; border: 0; }
-                .gold-sub { color: #e6c875; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+                .logo-card-wrap { background-color: #ffffff; display: inline-block; padding: 10px 24px; border-radius: 10px; margin: 0 auto 14px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+                .logo-img { max-height: 48px; max-width: 220px; width: auto; height: auto; display: block; margin: 0 auto; border: 0; }
+                .gold-sub { color: #e6c875; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
                 .content-box { padding: 35px 30px; line-height: 1.6; }
                 .greeting { font-size: 18px; color: #ffffff !important; margin-bottom: 16px; }
                 .greeting strong { color: #ffffff !important; }
@@ -72,7 +73,9 @@ function send_event_booking_confirmation_email($pdo, $bookingId, $notifyAdmin = 
         <body>
             <div class='email-container'>
                 <div class='header-banner'>
-                    <img src='cid:tp_logo' alt='Turning Point Magazine' class='logo-img' style='max-height: 58px; max-width: 250px; width: auto; height: auto; display: block; margin: 0 auto 12px auto; border: 0;' />
+                    <div class='logo-card-wrap' style='background-color: #ffffff; display: inline-block; padding: 10px 24px; border-radius: 10px; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);'>
+                        <img src='cid:tp_logo' alt='Turning Point Magazine' class='logo-img' style='max-height: 48px; max-width: 220px; width: auto; height: auto; display: block; margin: 0 auto; border: 0;' />
+                    </div>
                     <div class='gold-sub'>The Leadership Dinner 2026 &bull; Official Pass</div>
                 </div>
                 <div class='content-box'>
@@ -211,8 +214,9 @@ function send_event_admin_payment_notification($pdo, $bookingId) {
                 body { margin: 0; padding: 0; background-color: #0d0d0d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #ffffff; }
                 .email-container { max-width: 650px; margin: 20px auto; background-color: #141414; border: 1px solid #d4af37; border-radius: 12px; overflow: hidden; }
                 .header-banner { background: linear-gradient(135deg, #181818 0%, #0d0d0d 100%); padding: 32px 25px; text-align: center; border-bottom: 2px solid #d4af37; }
-                .logo-img { max-height: 58px; max-width: 250px; width: auto; height: auto; display: block; margin: 0 auto 12px auto; border: 0; }
-                .admin-tag { color: #e6c875; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+                .logo-card-wrap { background-color: #ffffff; display: inline-block; padding: 10px 24px; border-radius: 10px; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+                .logo-img { max-height: 48px; max-width: 220px; width: auto; height: auto; display: block; margin: 0 auto; border: 0; }
+                .admin-tag { color: #e6c875; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
                 .content-box { padding: 35px 30px; line-height: 1.6; }
                 .status-badge { display: inline-block; background-color: #1b4332; color: #52b788; border: 1px solid #2d6a4f; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
                 .amount-card { background: #1c1c1c; border: 1px solid rgba(82, 183, 136, 0.5); padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center; }
@@ -231,7 +235,9 @@ function send_event_admin_payment_notification($pdo, $bookingId) {
         <body>
             <div class='email-container'>
                 <div class='header-banner'>
-                    <img src='cid:tp_logo' alt='Turning Point Magazine' class='logo-img' style='max-height: 58px; max-width: 250px; width: auto; height: auto; display: block; margin: 0 auto 12px auto; border: 0;' />
+                    <div class='logo-card-wrap' style='background-color: #ffffff; display: inline-block; padding: 10px 24px; border-radius: 10px; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);'>
+                        <img src='cid:tp_logo' alt='Turning Point Magazine' class='logo-img' style='max-height: 48px; max-width: 220px; width: auto; height: auto; display: block; margin: 0 auto; border: 0;' />
+                    </div>
                     <div class='admin-tag'>Admin Notification &bull; The Leadership Dinner 2026</div>
                 </div>
                 <div class='content-box'>
@@ -351,8 +357,9 @@ function send_event_invoice_email($pdo, $bookingId) {
                 body { margin: 0; padding: 0; background-color: #0d0d0d; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #ffffff; }
                 .email-container { max-width: 650px; margin: 20px auto; background-color: #141414; border: 1px solid #d4af37; border-radius: 12px; overflow: hidden; }
                 .header-banner { background: linear-gradient(135deg, #181818 0%, #0d0d0d 100%); padding: 32px 25px; text-align: center; border-bottom: 2px solid #d4af37; }
-                .logo-img { max-height: 58px; max-width: 250px; width: auto; height: auto; display: block; margin: 0 auto 12px auto; border: 0; }
-                .gold-sub { color: #e6c875; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+                .logo-card-wrap { background-color: #ffffff; display: inline-block; padding: 10px 24px; border-radius: 10px; margin: 0 auto 14px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+                .logo-img { max-height: 48px; max-width: 220px; width: auto; height: auto; display: block; margin: 0 auto; border: 0; }
+                .gold-sub { color: #e6c875; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
                 .content-box { padding: 35px 30px; line-height: 1.6; }
                 .status-badge { display: inline-block; background-color: #3d2f0a; color: #e6c875; border: 1px solid #8c6d1f; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
                 .details-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
@@ -368,7 +375,9 @@ function send_event_invoice_email($pdo, $bookingId) {
         <body>
             <div class='email-container'>
                 <div class='header-banner'>
-                    <img src='cid:tp_logo' alt='Turning Point Magazine' class='logo-img' style='max-height: 58px; max-width: 250px; width: auto; height: auto; display: block; margin: 0 auto 12px auto; border: 0;' />
+                    <div class='logo-card-wrap' style='background-color: #ffffff; display: inline-block; padding: 10px 24px; border-radius: 10px; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);'>
+                        <img src='cid:tp_logo' alt='Turning Point Magazine' class='logo-img' style='max-height: 48px; max-width: 220px; width: auto; height: auto; display: block; margin: 0 auto; border: 0;' />
+                    </div>
                     <div class='gold-sub'>The Leadership Dinner 2026 &bull; Proforma Invoice</div>
                 </div>
                 <div class='content-box'>

@@ -51,6 +51,24 @@ $host = $_SERVER['HTTP_HOST'] ?? 'www.turningpointmagazine.africa';
 $base = defined('BASE_URL') ? BASE_URL : '/';
 $verifyUrl = rtrim($protocol . $host . $base, '/') . "/admin/events_ticketing.php?tab=checkin&ref=" . urlencode($b['booking_reference']) . "&token=" . urlencode($b['qr_token']);
 $qrCodeSrc = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=" . urlencode($verifyUrl);
+
+// Cache base64 data for instant, CORS-free client-side PDF export
+$qrImageSrc = $qrCodeSrc;
+try {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $qrCodeSrc);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $qrData = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if ($httpCode === 200 && !empty($qrData)) {
+        $qrImageSrc = 'data:image/png;base64,' . base64_encode($qrData);
+    }
+} catch (Exception $e) {
+    // fallback to url
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,6 +81,9 @@ $qrCodeSrc = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Direct Client-Side PDF Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         @font-face {
@@ -426,18 +447,37 @@ $qrCodeSrc = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&
         .pass-footer {
             background: #0a0a0a;
             border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 18px 40px;
+            padding: 22px 30px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            font-size: 11px;
-            color: #666;
+            text-align: center;
+            gap: 8px;
+            font-size: 11.5px;
+            color: #888;
         }
 
         .compliance-note {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+            color: #b0b0b0;
+        }
+
+        .footer-secretariat {
+            text-align: center;
+            color: #888;
+        }
+        .footer-secretariat a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .footer-secretariat a:hover {
+            text-decoration: underline;
         }
 
         /* Print Optimization */
@@ -496,6 +536,22 @@ $qrCodeSrc = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 25px 15px;
+            }
+            .pass-actions-top {
+                flex-direction: column-reverse;
+                align-items: stretch;
+                width: 100%;
+                gap: 12px;
+            }
+            .pass-actions-top .btn-action {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+                padding: 14px 18px;
+                font-size: 13px;
+            }
             .pass-body {
                 grid-template-columns: 1fr;
             }
@@ -519,8 +575,8 @@ $qrCodeSrc = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&
         <a href="leadership-dinner-2026.php" class="btn-action btn-back">
             <i class="fas fa-arrow-left"></i> Return to Event Page
         </a>
-        <button onclick="window.print()" class="btn-action btn-print">
-            <i class="fas fa-print"></i> Download / Print Official Pass (PDF)
+        <button type="button" id="downloadPdfBtn" onclick="downloadPassPdf()" class="btn-action btn-print">
+            <i class="fas fa-download"></i> Download Official Pass (PDF)
         </button>
     </div>
 
@@ -610,7 +666,7 @@ $qrCodeSrc = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&
             <!-- QR Verification Column -->
             <div class="qr-column">
                 <div class="qr-image-wrap">
-                    <img src="<?= $qrCodeSrc ?>" alt="QR Pass Verification">
+                    <img src="<?= $qrImageSrc ?>" alt="QR Pass Verification">
                 </div>
                 <div class="qr-ref-code"><?= htmlspecialchars($b['booking_reference']) ?></div>
                 <div class="qr-status-pill">
@@ -636,12 +692,54 @@ $qrCodeSrc = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&
                 <i class="fas fa-shield-alt" style="color: var(--gold);"></i>
                 <span>Malshe Media Data Controller Reg: <strong>Serial No. 03323</strong> (ID: 454-5788-A9FE)</span>
             </div>
-            <div>
-                <span>Official Secretariat: info@turningpointmagazine.africa</span>
+            <div class="footer-secretariat">
+                <span>Official Secretariat: <a href="mailto:info@turningpointmagazine.africa">info@turningpointmagazine.africa</a></span>
             </div>
         </div>
 
     </div>
 
+    <script>
+        function downloadPassPdf() {
+            const btn = document.getElementById('downloadPdfBtn');
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Generating PDF...';
+
+            const element = document.getElementById('printablePass');
+
+            const opt = {
+                margin:       [6, 6, 6, 6],
+                filename:     'TurningPoint-Pass-<?= htmlspecialchars($b['booking_reference']) ?>.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true,
+                    logging: false,
+                    windowWidth: 1024
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            };
+
+            if (typeof html2pdf !== 'undefined') {
+                html2pdf().set(opt).from(element).save().then(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-check me-2"></i> Downloaded!';
+                    setTimeout(() => {
+                        btn.innerHTML = originalHtml;
+                    }, 3500);
+                }).catch(err => {
+                    console.error('PDF generation error:', err);
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                    window.print();
+                });
+            } else {
+                window.print();
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
+        }
+    </script>
 </body>
 </html>
