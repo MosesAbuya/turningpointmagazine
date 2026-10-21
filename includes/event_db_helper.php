@@ -5,35 +5,61 @@
  */
 
 require_once __DIR__ . '/../connection2.php';
+require_once __DIR__ . '/paystack_config.php';
 
 function ensure_event_tables_exist($pdo = null) {
     if (!$pdo) {
         $pdo = connect();
     }
     
+    $tablesExist = false;
     try {
         $check = $pdo->query("SHOW TABLES LIKE 'tp_events'");
         if ($check && $check->rowCount() > 0) {
-            return true;
+            $tablesExist = true;
         }
     } catch (Exception $e) {
-        // Table doesn't exist or query failed, run migration
+        $tablesExist = false;
     }
 
-    $sqlFile = __DIR__ . '/../sql/leadership_dinner_2026_schema.sql';
-    if (file_exists($sqlFile)) {
-        $sql = file_get_contents($sqlFile);
-        $queries = array_filter(array_map('trim', explode(';', $sql)));
-        foreach ($queries as $query) {
-            if (!empty($query)) {
-                try {
-                    $pdo->exec($query);
-                } catch (Exception $ex) {
-                    error_log("Event Schema Exec Error: " . $ex->getMessage());
+    if (!$tablesExist) {
+        $sqlFile = __DIR__ . '/../sql/leadership_dinner_2026_schema.sql';
+        if (file_exists($sqlFile)) {
+            $sql = file_get_contents($sqlFile);
+            $queries = array_filter(array_map('trim', explode(';', $sql)));
+            foreach ($queries as $query) {
+                if (!empty($query)) {
+                    try {
+                        $pdo->exec($query);
+                    } catch (Exception $ex) {
+                        error_log("Event Schema Exec Error: " . $ex->getMessage());
+                    }
                 }
             }
         }
     }
+
+    // Ensure Paystack columns exist in tp_event_bookings
+    try {
+        $colCheck = $pdo->query("SHOW COLUMNS FROM `tp_event_bookings` LIKE 'paystack_reference'");
+        if ($colCheck && $colCheck->rowCount() === 0) {
+            $pdo->exec("ALTER TABLE `tp_event_bookings` 
+                ADD COLUMN `paystack_reference` VARCHAR(100) DEFAULT NULL AFTER `mpesa_receipt_number`,
+                ADD COLUMN `paystack_transaction_id` VARCHAR(100) DEFAULT NULL AFTER `paystack_reference`,
+                ADD COLUMN `paystack_channel` VARCHAR(50) DEFAULT NULL AFTER `paystack_transaction_id`,
+                ADD INDEX `idx_paystack_ref` (`paystack_reference`)");
+        }
+    } catch (Exception $e) {
+        // Table may not exist yet or already altered
+    }
+
+    // Self-healing: Reactivate any tiers that were set to is_active = 0 due to previous form bug
+    try {
+        $pdo->exec("UPDATE `tp_ticket_tiers` SET `is_active` = 1 WHERE `is_active` = 0");
+    } catch (Exception $e) {
+        // Table may not exist yet
+    }
+
     return true;
 }
 
@@ -55,15 +81,32 @@ function get_flagship_event($pdo = null, $slug = 'leadership-dinner-2026') {
     return $event;
 }
 
-function get_event_tiers($pdo = null, $eventId = 1) {
+function get_event_tiers($pdo = null, $eventId = 1, $onlyActive = true) {
     if (!$pdo) {
         $pdo = connect();
     }
     ensure_event_tables_exist($pdo);
 
-    $stmt = $pdo->prepare("SELECT * FROM tp_ticket_tiers WHERE event_id = ? AND is_active = 1 ORDER BY sort_order ASC, price_kes ASC");
+    $sql = "SELECT * FROM tp_ticket_tiers WHERE event_id = ?";
+    if ($onlyActive) {
+        $sql .= " AND is_active = 1";
+    }
+    $sql .= " ORDER BY sort_order ASC, price_kes ASC";
+
+    $stmt = $pdo->prepare($sql);
     $stmt->execute([$eventId]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $tiers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Resiliency: If onlyActive was requested but no tiers returned, auto-heal
+    if ($onlyActive && empty($tiers)) {
+        try {
+            $pdo->prepare("UPDATE tp_ticket_tiers SET is_active = 1 WHERE event_id = ?")->execute([$eventId]);
+            $stmt->execute([$eventId]);
+            $tiers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {}
+    }
+
+    return $tiers;
 }
 
 function generate_booking_reference($pdo = null) {

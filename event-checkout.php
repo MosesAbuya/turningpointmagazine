@@ -49,6 +49,9 @@ foreach ($tiers as $t) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
+    <!-- Paystack Inline JS -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
     <!-- Global Styles & Navbar -->
     <link rel="stylesheet" href="includes/new-navbar.css">
     <link rel="stylesheet" href="global.css">
@@ -407,169 +410,138 @@ foreach ($tiers as $t) {
             color: #94a3b8;
         }
 
-        /* --- PAYMENT METHOD SELECTOR --- */
-        .payment-method-tabs {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 22px;
-        }
-
-        .pay-tab-btn {
-            background: #ffffff;
-            border: 2px solid var(--tp-border-light);
-            border-radius: 12px;
-            padding: 18px 20px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-
-        .pay-tab-btn:hover {
-            border-color: #cbd5e1;
-        }
-
-        .pay-tab-btn.active-mpesa {
-            border-color: #00a859;
-            background: #f0fdf4;
-            box-shadow: 0 4px 18px rgba(0, 168, 89, 0.15);
-        }
-
-        .pay-tab-btn.active-invoice {
-            border-color: #d4af37;
-            background: #fffdf5;
-            box-shadow: 0 4px 18px rgba(212, 175, 55, 0.15);
-        }
-
-        .pay-tab-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 4px;
-        }
-
-        .pay-tab-desc {
-            font-size: 12px;
-            color: #64748b;
-            margin: 0;
-        }
-
-        /* --- MPESA SPECIFICATION BOX --- */
-        .mpesa-spec-box {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 12px;
-            padding: 22px;
-            margin-bottom: 22px;
-        }
-
-        .mpesa-phone-option {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.2s ease;
-        }
-
-        .mpesa-phone-option:hover {
-            border-color: #00a859;
-        }
-
-        .mpesa-phone-option.selected {
-            border-color: #00a859;
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 168, 89, 0.15);
-        }
-
-        .mpesa-phone-option input[type="radio"] {
-            accent-color: #00a859;
-            width: 18px;
-            height: 18px;
-        }
-
-        /* --- OFFICIAL INVOICE PAYMENT DETAILS BOX --- */
-        .invoice-spec-box {
-            background: #fffdf5;
-            border: 1px solid #fde68a;
-            border-radius: 12px;
-            padding: 22px;
-            margin-bottom: 22px;
-        }
-
-        .remittance-table-clean {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 14px;
+        /* --- 3. PAYMENT METHOD (PAYSTACK BOX) --- */
+        .paystack-option-box {
+            background: #f8fafc;
+            border: 1px solid var(--tp-border-light);
+            border-radius: 14px;
+            padding: 24px 22px;
             margin-bottom: 18px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            overflow: hidden;
-            font-size: 13.5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
         }
 
-        .remittance-table-clean th {
-            background: #f1f5f9;
-            padding: 10px 14px;
-            text-align: left;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #334155;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .remittance-table-clean td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #f1f5f9;
-            color: #334155;
-        }
-
-        .remittance-table-clean tr:last-child td {
-            border-bottom: none;
-        }
-
-        .remittance-table-clean td.label-col {
-            width: 45%;
-            font-weight: 600;
-            color: #0f172a;
-        }
-
-        .remittance-table-clean td.value-col {
-            font-family: monospace;
-            font-size: 14px;
-            color: #b45309;
-            font-weight: 700;
-        }
-
-        .till-badge-box {
-            background: #ffffff;
-            border: 1px solid #bbf7d0;
-            border-radius: 8px;
-            padding: 14px 18px;
+        .paystack-option-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        /* --- GUEST ACCORDION --- */
-        .guest-accordion-wrap {
+        .paystack-badge {
+            background: rgba(200, 16, 46, 0.08);
+            border: 1px solid rgba(200, 16, 46, 0.25);
+            color: var(--tp-crimson);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .paystack-brand-title {
+            font-size: 14.5px;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .paystack-trust-badge {
+            font-size: 12px;
+            color: #00a859;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .paystack-desc {
+            font-size: 13.5px;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .paystack-channels-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .paystack-channel-pill {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 9px 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+        }
+
+        .paystack-channel-pill:hover {
+            border-color: #94a3b8;
+            background: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .paystack-channel-pill i {
+            font-size: 16px;
+        }
+
+        .paystack-footnote {
+            font-size: 12px;
+            color: #475569;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: flex-start;
+            line-height: 1.5;
+        }
+
+        .data-consent-box {
             background: #f8fafc;
             border: 1px solid var(--tp-border-light);
-            border-radius: 12px;
-            overflow: hidden;
+            border-radius: 10px;
+            padding: 12px 16px;
             margin-top: 15px;
-            margin-bottom: 20px;
+        }
+
+        .data-consent-box .form-check-input {
+            accent-color: #00a859;
+            margin-top: 3px;
+        }
+
+        .data-consent-box .form-check-label {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* --- ASSIGN DELEGATION GUEST NAMES ACCORDION --- */
+        .guest-accordion-wrap {
+            background: #ffffff;
+            border: 1px solid var(--tp-border-light);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-top: 22px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            transition: all 0.25s ease;
         }
 
         .guest-accordion-header {
@@ -578,48 +550,128 @@ foreach ($tiers as $t) {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f1f5f9;
+            background: #f8fafc;
+            border-bottom: 1px solid transparent;
+            transition: background 0.2s ease;
         }
 
         .guest-accordion-header:hover {
-            background: #e2e8f0;
+            background: #f1f5f9;
+        }
+
+        .guest-icon-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fde68a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .guest-header-title {
+            font-size: 14px;
+            color: #0f172a;
+            display: block;
+            font-weight: 700;
+        }
+
+        .guest-header-subtitle {
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .guest-chevron-pill {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 11px;
+            transition: transform 0.25s ease;
         }
 
         .guest-accordion-body {
-            padding: 20px;
+            padding: 22px 20px;
             display: none;
             background: #ffffff;
+            border-top: 1px solid var(--tp-border-light);
+        }
+
+        .guest-hint-bar {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 12.5px;
+            color: #475569;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
         }
 
         .guest-row {
             display: grid;
-            grid-template-columns: 35px 1.5fr 1.5fr 1.5fr;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 12px;
+            grid-template-columns: 36px 1.5fr 1.5fr 1.5fr;
+            gap: 12px;
+            align-items: flex-end;
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .guest-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
 
         .guest-num-badge {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: #f1f5f9;
+            background: #f8fafc;
             color: #b45309;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 13px;
             border: 1px solid #cbd5e1;
+            margin-bottom: 4px;
         }
 
-        /* --- ORDER SUMMARY SIDEBAR (STICKY ON PC UNTIL CONTAINER EXITS) --- */
+        .guest-input-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        /* --- RESERVATION SUMMARY SIDEBAR --- */
         .order-summary-sidebar {
-            background: #ffffff;
+            background: var(--tp-card-bg);
             border: 1px solid var(--tp-border-light);
             border-radius: 16px;
-            padding: 30px 24px;
+            padding: 30px 26px;
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.25s ease;
+        }
+
+        .order-summary-sidebar:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
         }
 
         @media (min-width: 992px) {
@@ -639,27 +691,58 @@ foreach ($tiers as $t) {
             }
         }
 
-        .summary-header-title {
-            font-family: 'florania', serif;
-            font-size: 21px;
-            font-weight: 700;
-            color: var(--tp-dark);
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--tp-border-light);
+        .summary-details-box {
+            background: #f8fafc;
+            border: 1px solid var(--tp-border-light);
+            border-radius: 12px;
+            padding: 16px 18px;
             margin-bottom: 18px;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            font-size: 13.5px;
+            align-items: center;
+            font-size: 13px;
             color: #475569;
-            margin-bottom: 11px;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
         .summary-row.bold-row {
             color: #0f172a;
+            font-weight: 700;
+            font-size: 14.5px;
+            padding-top: 0;
+        }
+
+        .summary-price-badge {
+            color: #b45309;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .summary-label {
+            display: flex;
+            align-items: center;
+        }
+
+        .summary-val {
             font-weight: 600;
+            color: #1e293b;
+        }
+
+        .text-gold-highlight {
+            color: #b45309 !important;
+        }
+
+        .text-success-highlight {
+            color: #00a859 !important;
         }
 
         .summary-total-divider {
@@ -687,13 +770,13 @@ foreach ($tiers as $t) {
             color: #b45309;
         }
 
-        .btn-submit-action {
+        .btn-submit-action.paystack {
             width: 100%;
             padding: 16px 20px;
             border-radius: 50px;
             font-weight: 800;
-            font-size: 14px;
-            letter-spacing: 1px;
+            font-size: 13.5px;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
             border: none;
             cursor: pointer;
@@ -702,23 +785,22 @@ foreach ($tiers as $t) {
             align-items: center;
             justify-content: center;
             gap: 10px;
-        }
-
-        .btn-submit-action.mpesa {
-            background: linear-gradient(135deg, #00a859 0%, #00753d 100%);
+            background: linear-gradient(135deg, #09a5db 0%, #0077b6 100%);
             color: #ffffff;
-            box-shadow: 0 4px 18px rgba(0, 168, 89, 0.35);
+            box-shadow: 0 4px 20px rgba(9, 165, 219, 0.35);
         }
 
-        .btn-submit-action.invoice {
-            background: linear-gradient(135deg, #d4af37 0%, #aa8421 100%);
-            color: #0d0d0d;
-            box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
-        }
-
-        .btn-submit-action:hover {
+        .btn-submit-action.paystack:hover {
+            background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%);
+            box-shadow: 0 6px 25px rgba(0, 119, 182, 0.45);
             transform: translateY(-2px);
-            opacity: 0.95;
+        }
+
+        .summary-trust-footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 11.5px;
+            color: #64748b;
         }
 
         /* --- WAITING MODAL --- */
@@ -760,22 +842,118 @@ foreach ($tiers as $t) {
             to { transform: rotate(360deg); }
         }
 
+        /* --- RESPONSIVE & MOBILE LAYOUT (90% WIDTH CARDS) --- */
         @media (max-width: 991px) {
             body {
                 padding-top: 0 !important;
             }
-            .tier-choice-grid {
-                grid-template-columns: 1fr;
-            }
-            .payment-method-tabs {
-                grid-template-columns: 1fr;
-            }
             .order-summary-sidebar {
-                position: static;
+                position: static !important;
                 margin-top: 25px;
             }
+        }
+
+        @media (max-width: 768px) {
+            /* Outer container resets on mobile */
+            main.checkout-main-wrap,
+            .checkout-main-wrap,
+            #eventBookingForm {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            .checkout-main-wrap .row {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                --bs-gutter-x: 0 !important;
+            }
+
+            .checkout-main-wrap .col-lg-8,
+            .checkout-main-wrap .col-lg-4 {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            /* ALL CARDS 90% WIDTH ON MOBILE */
+            .checkout-card,
+            .order-summary-sidebar {
+                width: 90% !important;
+                max-width: 90% !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                padding: 24px 18px !important;
+                border-radius: 14px !important;
+            }
+
+            /* Page header 90% width centered */
+            .checkout-page-header {
+                width: 90% !important;
+                max-width: 90% !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            .checkout-title {
+                font-size: 26px !important;
+            }
+
+            .checkout-subtitle {
+                font-size: 13.5px !important;
+            }
+
+            .meta-pill {
+                font-size: 11.5px !important;
+                padding: 4px 10px !important;
+            }
+
+            .tier-choice-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+
+            .stepper-box {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .stepper-box .qty-control-group {
+                align-self: flex-start;
+            }
+
             .guest-row {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 10px;
+                padding: 14px;
+                margin-bottom: 12px;
+                align-items: stretch;
+            }
+
+            .guest-row:last-child {
+                margin-bottom: 0;
+            }
+
+            .guest-num-badge {
+                margin-bottom: 4px;
+            }
+
+            .paystack-channels-row {
+                gap: 8px;
+            }
+
+            .paystack-channel-pill {
+                width: 100%;
+                justify-content: flex-start;
             }
         }
     </style>
@@ -820,7 +998,7 @@ foreach ($tiers as $t) {
     <main class="checkout-main-wrap">
         <form id="eventBookingForm">
             <input type="hidden" name="tier_id" id="selectedTierIdInput" value="<?= $defaultTierId ?>">
-            <input type="hidden" name="payment_method" id="selectedPaymentMethodInput" value="mpesa_stk">
+            <input type="hidden" name="payment_method" id="selectedPaymentMethodInput" value="paystack">
 
             <div class="row">
                 <!-- Left Column: Form Fields & Selections -->
@@ -905,7 +1083,7 @@ foreach ($tiers as $t) {
 
                             <div class="col-md-12">
                                 <label class="form-label-clean">Primary Contact Phone Number <span class="text-danger">*</span></label>
-                                <input type="tel" name="contact_phone" id="contactPhoneInput" class="form-control form-control-clean" placeholder="e.g. 0712345678 or 254712345678" required oninput="handleContactPhoneChange(this.value)">
+                                <input type="tel" name="contact_phone" id="contactPhoneInput" class="form-control form-control-clean" placeholder="e.g. 0712345678 or 254712345678" required>
                                 <small style="font-size:12px; color:#64748b;">Used for reservation confirmation notices and event coordination.</small>
                             </div>
 
@@ -918,28 +1096,38 @@ foreach ($tiers as $t) {
                         <!-- Optional Corporate Table Guest Assignment Accordion -->
                         <div class="guest-accordion-wrap" id="guestAccordionWrap">
                             <div class="guest-accordion-header" onclick="toggleGuestAccordion()">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="fas fa-users-cog text-warning"></i>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="guest-icon-badge">
+                                        <i class="fas fa-users-cog"></i>
+                                    </div>
                                     <div>
-                                        <strong style="font-size: 13.5px; color:#0f172a;">Assign Delegation Guest Names</strong>
-                                        <small style="display:block; font-size:11.5px; color:#64748b;">Optional — guest names and dietary needs can also be submitted later</small>
+                                        <strong class="guest-header-title">Assign Delegation Guest Names</strong>
+                                        <small class="guest-header-subtitle">Optional — submit names now or update attendee details later</small>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down text-muted" id="guestChevron"></i>
+                                <div class="guest-chevron-pill">
+                                    <i class="fas fa-chevron-down" id="guestChevron"></i>
+                                </div>
                             </div>
                             <div class="guest-accordion-body" id="guestAccordionBody">
-                                <p style="font-size:12px; color:#64748b; margin-bottom:12px;">Enter up to 5 guest details for your delegation's custom table seating cards:</p>
+                                <div class="guest-hint-bar">
+                                    <i class="fas fa-info-circle text-primary me-2"></i>
+                                    <span>Enter up to 5 attendee names for custom printed table seating cards (or leave blank to submit later):</span>
+                                </div>
                                 <?php for ($i = 1; $i <= 5; $i++): ?>
                                 <div class="guest-row">
                                     <div class="guest-num-badge"><?= $i ?></div>
                                     <div>
-                                        <input type="text" name="guest_names[]" class="form-control form-control-clean form-control-sm" placeholder="Guest <?= $i ?> Full Name">
+                                        <label class="guest-input-label">Guest <?= $i ?> Full Name</label>
+                                        <input type="text" name="guest_names[]" class="form-control form-control-clean form-control-sm" placeholder="e.g. Dr. Jane Doe">
                                     </div>
                                     <div>
-                                        <input type="email" name="guest_emails[]" class="form-control form-control-clean form-control-sm" placeholder="Email Address">
+                                        <label class="guest-input-label">Email Address</label>
+                                        <input type="email" name="guest_emails[]" class="form-control form-control-clean form-control-sm" placeholder="jane@company.com">
                                     </div>
                                     <div>
-                                        <input type="text" name="guest_dietary[]" class="form-control form-control-clean form-control-sm" placeholder="Dietary Needs">
+                                        <label class="guest-input-label">Dietary / Seating Needs</label>
+                                        <input type="text" name="guest_dietary[]" class="form-control form-control-clean form-control-sm" placeholder="e.g. Vegetarian, Halal">
                                     </div>
                                 </div>
                                 <?php endfor; ?>
@@ -948,144 +1136,74 @@ foreach ($tiers as $t) {
 
                     </div>
 
-                    <!-- 3. PAYMENT METHOD & SPECIFIC MPESA LINE -->
+                    <!-- 3. PAYMENT METHOD (PAYSTACK ONLY) -->
                     <div class="checkout-card">
                         <div class="card-heading-wrap">
                             <div class="card-heading-icon"><i class="fas fa-credit-card"></i></div>
                             <div>
-                                <h3 class="card-heading-title">3. Payment & Settlement Options</h3>
-                                <p class="card-heading-sub">Instant M-Pesa STK push or Corporate Proforma Invoice</p>
+                                <h3 class="card-heading-title">3. Payment Method</h3>
+                                <p class="card-heading-sub">Secure online payment via Paystack Payment Gateway</p>
                             </div>
                         </div>
 
-                        <!-- Payment Tabs -->
-                        <div class="payment-method-tabs">
-                            <div class="pay-tab-btn active-mpesa" id="tabBtnMpesa" onclick="switchPaymentMethod('mpesa_stk')">
-                                <div class="pay-tab-title">
+                        <!-- Single Paystack Payment Option Card -->
+                        <div class="paystack-option-box">
+                            <div class="paystack-option-header">
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    <span class="paystack-badge"><i class="fas fa-bolt me-1"></i> Instant Gateway</span>
+                                    <strong class="paystack-brand-title">Multiple Secure Payment Options</strong>
+                                </div>
+                                <div class="paystack-trust-badge">
+                                    <i class="fas fa-lock text-success me-1"></i> 256-bit SSL Encrypted
+                                </div>
+                            </div>
+
+                            <p class="paystack-desc">
+                                Clicking <strong>"Proceed to Pay"</strong> will launch the secure Paystack checkout modal, where you can complete your payment with any of the supported payment methods:
+                            </p>
+
+                            <!-- Supported Channels Showcase -->
+                            <div class="paystack-channels-row">
+                                <div class="paystack-channel-pill">
                                     <i class="fas fa-mobile-alt text-success"></i>
                                     <span>M-Pesa Express</span>
                                 </div>
-                                <p class="pay-tab-desc">Instant STK Push prompt to your phone</p>
-                            </div>
-
-                            <div class="pay-tab-btn" id="tabBtnInvoice" onclick="switchPaymentMethod('corporate_invoice')">
-                                <div class="pay-tab-title">
-                                    <i class="fas fa-file-invoice-dollar text-warning"></i>
-                                    <span>Corporate Invoice</span>
+                                <div class="paystack-channel-pill">
+                                    <i class="fab fa-cc-visa text-primary"></i>
+                                    <span>Visa Card</span>
                                 </div>
-                                <p class="pay-tab-desc">Official proforma invoice for bank wire</p>
-                            </div>
-                        </div>
-
-                        <!-- TAB CONTENT 1: M-PESA STK WITH EXPLICIT PHONE NUMBER PROMPT -->
-                        <div id="mpesaContentBox" class="mpesa-spec-box">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                                <i class="fas fa-shield-alt text-success" style="font-size: 18px;"></i>
-                                <strong style="color: #0f172a; font-size: 14.5px;">Specify M-Pesa Payment Number</strong>
-                            </div>
-                            <p style="font-size: 12.5px; color: #475569; margin-bottom: 14px; line-height: 1.5;">
-                                Which Safaricom line should receive the M-Pesa STK Push prompt to enter the PIN? You can use your contact phone or specify a different number (e.g. an accountant or company director).
-                            </p>
-
-                            <!-- Option A: Use Contact Phone -->
-                            <div class="mpesa-phone-option selected" id="optUseContact" onclick="selectMpesaOption('contact')">
-                                <input type="radio" name="mpesa_choice" id="radioUseContact" value="contact" checked>
-                                <div>
-                                    <strong style="color: #0f172a; font-size: 13.5px;">Use My Primary Contact Phone</strong>
-                                    <div style="font-size: 12px; color: #b45309;" id="displayContactPhonePreview">(Enter contact phone above)</div>
+                                <div class="paystack-channel-pill">
+                                    <i class="fab fa-cc-mastercard text-danger"></i>
+                                    <span>Mastercard</span>
+                                </div>
+                                <div class="paystack-channel-pill">
+                                    <i class="fab fa-cc-amex text-info"></i>
+                                    <span>American Express</span>
+                                </div>
+                                <div class="paystack-channel-pill">
+                                    <i class="fas fa-university text-warning"></i>
+                                    <span>Bank Transfer</span>
+                                </div>
+                                <div class="paystack-channel-pill">
+                                    <i class="fab fa-apple text-dark"></i>
+                                    <span>Apple Pay</span>
                                 </div>
                             </div>
 
-                            <!-- Option B: Specify Different Phone -->
-                            <div class="mpesa-phone-option" id="optUseCustom" onclick="selectMpesaOption('custom')">
-                                <input type="radio" name="mpesa_choice" id="radioUseCustom" value="custom">
-                                <div>
-                                    <strong style="color: #0f172a; font-size: 13.5px;">Pay Using a Different M-Pesa Line</strong>
-                                    <div style="font-size: 12px; color: #64748b;">Send the PIN prompt to a different Safaricom number</div>
-                                </div>
+                            <div class="paystack-footnote">
+                                <i class="fas fa-shield-alt text-success mt-1 me-2 flex-shrink-0"></i>
+                                <span>Official Malshe Media Paystack merchant. Your transaction is settled in Kenyan Shillings (KES) and your authenticated digital VIP ticket pass is issued immediately.</span>
                             </div>
-
-                            <!-- Explicit M-Pesa Input Field -->
-                            <div class="mt-3" id="customMpesaInputWrap" style="display: none;">
-                                <label class="form-label-clean">
-                                    <i class="fas fa-phone-alt me-1 text-success"></i> M-Pesa Authorization Phone Number <span class="text-danger">*</span>
-                                </label>
-                                <input type="tel" name="mpesa_payment_phone" id="mpesaPaymentPhoneInput" class="form-control form-control-clean" placeholder="e.g. 0712 345 678 or 254712345678">
-                                <small style="font-size: 12px; color: #64748b; margin-top: 4px; display: block;">
-                                    This designated number will receive the prompt: <em>"Do you want to pay KES [Amount] to Malshe Media?"</em>
-                                </small>
-                            </div>
-                        </div>
-
-                        <!-- TAB CONTENT 2: CORPORATE PROFORMA INVOICE DETAILS -->
-                        <div id="invoiceContentBox" class="invoice-spec-box" style="display: none;">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                                <i class="fas fa-university text-warning" style="font-size: 18px;"></i>
-                                <strong style="color: #0f172a; font-size: 14.5px;">PAYMENT DETAILS</strong>
-                            </div>
-                            <p style="font-size: 12.5px; color: #475569; margin-bottom: 12px;">
-                                Please remit your entry or additional guest payments using the details below:
-                            </p>
-
-                            <!-- NCBA Bank Transfer Table -->
-                            <table class="remittance-table-clean">
-                                <thead>
-                                    <tr>
-                                        <th>Bank Transfer Details</th>
-                                        <th>Information</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="label-col">Bank Name</td>
-                                        <td class="value-col">NCBA Bank Kenya Plc</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-col">Account Name</td>
-                                        <td class="value-col">Malshe Media</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-col">Account No.</td>
-                                        <td class="value-col">1000145594</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-col">Branch Code</td>
-                                        <td class="value-col">125</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-col">Bank Code</td>
-                                        <td class="value-col">07000</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-col">SWIFT Code</td>
-                                        <td class="value-col">CBAFKENX</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <!-- Buy Goods Till Highlight -->
-                            <div class="till-badge-box">
-                                <div>
-                                    <strong style="color: #0f172a; font-size: 13px;"><i class="fas fa-mobile-alt text-success me-1"></i> Mobile Money (M-Pesa) & Contact:</strong>
-                                    <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Use M-Pesa Buy Goods & Services Till</div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <span style="font-size: 11px; text-transform: uppercase; color: #64748b; display: block;">Till Number</span>
-                                    <span style="font-family: monospace; font-size: 18px; font-weight: 800; color: #00a859;">575555</span>
-                                </div>
-                            </div>
-
-                            <p style="font-size: 12px; color: #64748b; margin-top: 12px; margin-bottom: 0;">
-                                <i class="fas fa-info-circle me-1"></i> An official proforma invoice with your reference number will be generated immediately and emailed to your organization.
-                            </p>
                         </div>
 
                         <!-- Data Protection Notice Checkbox -->
-                        <div class="form-check mt-3 mb-1">
-                            <input class="form-check-input" type="checkbox" name="data_consent" id="dataConsentCheck" value="1" required checked style="accent-color: #00a859;">
-                            <label class="form-check-label" for="dataConsentCheck" style="font-size: 12px; color: #475569;">
-                                I consent to data processing for event accreditation by Malshe Media (Data Controller Serial No. 03323, ID: 454-5788-A9FE under the Kenya Data Protection Act).
-                            </label>
+                        <div class="data-consent-box">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="data_consent" id="dataConsentCheck" value="1" required checked>
+                                <label class="form-check-label" for="dataConsentCheck">
+                                    I consent to data processing for event accreditation by Malshe Media (Licensed Data Controller Serial No. 03323, Registration ID: 454-5788-A9FE under Kenya's Data Protection Act).
+                                </label>
+                            </div>
                         </div>
 
                     </div>
@@ -1095,31 +1213,39 @@ foreach ($tiers as $t) {
                 <!-- Right Column: Live Order Summary & Submit -->
                 <div class="col-lg-4">
                     <div class="order-summary-sidebar">
-                        <h4 class="summary-header-title">Reservation Summary</h4>
-
-                        <div class="summary-row bold-row">
-                            <span id="sumTierName">Corporate VIP Table</span>
-                            <span id="sumUnitPrice" style="color:#b45309;">KES 50,000</span>
+                        <div class="card-heading-wrap">
+                            <div class="card-heading-icon"><i class="fas fa-receipt"></i></div>
+                            <div>
+                                <h3 class="card-heading-title">Reservation Summary</h3>
+                                <p class="card-heading-sub">Live attendance & pricing breakdown</p>
+                            </div>
                         </div>
 
-                        <div class="summary-row">
-                            <span>Quantity:</span>
-                            <span id="sumQtyText">1 Table</span>
-                        </div>
+                        <div class="summary-details-box">
+                            <div class="summary-row bold-row">
+                                <span id="sumTierName">Corporate VIP Table</span>
+                                <span id="sumUnitPrice" class="summary-price-badge">KES 50,000</span>
+                            </div>
 
-                        <div class="summary-row">
-                            <span>Total Reserved Seats:</span>
-                            <span id="sumSeatsText" style="color: #b45309; font-weight: 600;">5 Seats</span>
-                        </div>
+                            <div class="summary-row">
+                                <span class="summary-label"><i class="fas fa-layer-group text-muted me-2"></i>Quantity:</span>
+                                <span id="sumQtyText" class="summary-val">1 Table</span>
+                            </div>
 
-                        <div class="summary-row">
-                            <span>3rd Edition Copies:</span>
-                            <span id="sumCopiesText">5 Collector Copies</span>
-                        </div>
+                            <div class="summary-row">
+                                <span class="summary-label"><i class="fas fa-chair text-muted me-2"></i>Total Reserved Seats:</span>
+                                <span id="sumSeatsText" class="summary-val text-gold-highlight">5 Seats</span>
+                            </div>
 
-                        <div class="summary-row">
-                            <span>3-Course Gourmet Dinner:</span>
-                            <span style="color: #00a859; font-weight: 600;"><i class="fas fa-check"></i> Included</span>
+                            <div class="summary-row">
+                                <span class="summary-label"><i class="fas fa-book-open text-muted me-2"></i>3rd Edition Copies:</span>
+                                <span id="sumCopiesText" class="summary-val">5 Collector Copies</span>
+                            </div>
+
+                            <div class="summary-row">
+                                <span class="summary-label"><i class="fas fa-utensils text-muted me-2"></i>3-Course Gourmet Dinner:</span>
+                                <span class="summary-val text-success-highlight"><i class="fas fa-check-circle me-1"></i> Included</span>
+                            </div>
                         </div>
 
                         <div class="summary-total-divider">
@@ -1128,12 +1254,12 @@ foreach ($tiers as $t) {
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn-submit-action mpesa" id="submitOrderBtn">
+                        <button type="submit" class="btn-submit-action paystack" id="submitOrderBtn">
                             <i class="fas fa-lock"></i>
-                            <span id="submitBtnText">Pay KES 50,000 via M-Pesa</span>
+                            <span id="submitBtnText">Proceed to Pay KES 50,000 via Paystack</span>
                         </button>
 
-                        <div style="text-align: center; margin-top: 15px; font-size: 11.5px; color: #64748b;">
+                        <div class="summary-trust-footer">
                             <i class="fas fa-shield-alt text-success me-1"></i> Official Turning Point Magazine Africa Portal
                         </div>
                     </div>
@@ -1148,15 +1274,15 @@ foreach ($tiers as $t) {
         <div class="tp-modal-box">
             <div class="spinner-gold" id="modalSpinner"></div>
             <h3 style="font-family:'florania',serif; font-size: 22px; color: #0f172a; margin-bottom: 8px;" id="modalTitle">
-                Awaiting M-Pesa Authorization
+                Confirming Payment...
             </h3>
             <p style="font-size: 13.5px; color: #475569; line-height: 1.5; margin-bottom: 18px;" id="modalBody">
-                We have sent an M-Pesa prompt to your phone. Please enter your PIN to authorize the payment. Do not refresh this page.
+                Paystack has authorized your transaction. Finalizing ticket confirmation and dispatching your VIP pass...
             </p>
             <div style="font-family: monospace; font-size: 15px; color: #b45309; font-weight: 700; margin-bottom: 18px;" id="modalRefDisplay"></div>
             
-            <button type="button" class="btn btn-sm btn-outline-secondary" id="manualCheckBtn" onclick="pollPaymentStatus()" style="border-radius:20px; padding: 6px 18px; font-size:12px;">
-                <i class="fas fa-sync-alt me-1"></i> Check Payment Status
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="modalActionBtn" style="display:none; border-radius:20px; padding: 6px 18px; font-size:12px;">
+                <i class="fas fa-ticket-alt me-1"></i> View Ticket Pass
             </button>
         </div>
     </div>
@@ -1168,73 +1294,6 @@ foreach ($tiers as $t) {
     <script>
         const tiersData = <?= json_encode($tiers) ?>;
         let currentTierId = <?= $defaultTierId ?>;
-        let currentPaymentMethod = 'mpesa_stk';
-        let currentBookingRef = null;
-        let currentToken = null;
-        let pollInterval = null;
-        let mpesaOption = 'contact';
-
-        function handleContactPhoneChange(val) {
-            const preview = document.getElementById('displayContactPhonePreview');
-            if (val && val.trim().length > 0) {
-                preview.innerText = `(${val.trim()})`;
-            } else {
-                preview.innerText = '(Enter contact phone above)';
-            }
-        }
-
-        function selectMpesaOption(opt) {
-            mpesaOption = opt;
-            const optContact = document.getElementById('optUseContact');
-            const optCustom = document.getElementById('optUseCustom');
-            const radioContact = document.getElementById('radioUseContact');
-            const radioCustom = document.getElementById('radioUseCustom');
-            const customWrap = document.getElementById('customMpesaInputWrap');
-            const customInput = document.getElementById('mpesaPaymentPhoneInput');
-
-            if (opt === 'contact') {
-                optContact.classList.add('selected');
-                optCustom.classList.remove('selected');
-                radioContact.checked = true;
-                customWrap.style.display = 'none';
-                customInput.required = false;
-            } else {
-                optCustom.classList.add('selected');
-                optContact.classList.remove('selected');
-                radioCustom.checked = true;
-                customWrap.style.display = 'block';
-                customInput.required = true;
-                customInput.focus();
-            }
-        }
-
-        function switchPaymentMethod(method) {
-            currentPaymentMethod = method;
-            document.getElementById('selectedPaymentMethodInput').value = method;
-
-            const tabMpesa = document.getElementById('tabBtnMpesa');
-            const tabInvoice = document.getElementById('tabBtnInvoice');
-            const boxMpesa = document.getElementById('mpesaContentBox');
-            const boxInvoice = document.getElementById('invoiceContentBox');
-            const submitBtn = document.getElementById('submitOrderBtn');
-            const submitText = document.getElementById('submitBtnText');
-
-            if (method === 'mpesa_stk') {
-                tabMpesa.className = 'pay-tab-btn active-mpesa';
-                tabInvoice.className = 'pay-tab-btn';
-                boxMpesa.style.display = 'block';
-                boxInvoice.style.display = 'none';
-                submitBtn.className = 'btn-submit-action mpesa';
-                updateCalculations();
-            } else {
-                tabInvoice.className = 'pay-tab-btn active-invoice';
-                tabMpesa.className = 'pay-tab-btn';
-                boxInvoice.style.display = 'block';
-                boxMpesa.style.display = 'none';
-                submitBtn.className = 'btn-submit-action invoice';
-                submitText.innerText = 'Generate Official Corporate Proforma Invoice';
-            }
-        }
 
         function selectTierById(tierId, isCorp) {
             currentTierId = tierId;
@@ -1290,10 +1349,9 @@ foreach ($tiers as $t) {
                 guestWrap.style.display = 'none';
             }
 
-            if (currentPaymentMethod === 'mpesa_stk') {
-                document.getElementById('submitBtnText').innerText = `Pay KES ${total.toLocaleString()} via M-Pesa`;
-            } else {
-                document.getElementById('submitBtnText').innerText = 'Generate Official Corporate Proforma Invoice';
+            const btnText = document.getElementById('submitBtnText');
+            if (btnText) {
+                btnText.innerText = `Proceed to Pay KES ${total.toLocaleString()} via Paystack`;
             }
         }
 
@@ -1302,10 +1360,10 @@ foreach ($tiers as $t) {
             const chevron = document.getElementById('guestChevron');
             if (body.style.display === 'block') {
                 body.style.display = 'none';
-                chevron.className = 'fas fa-chevron-down text-muted';
+                chevron.className = 'fas fa-chevron-down';
             } else {
                 body.style.display = 'block';
-                chevron.className = 'fas fa-chevron-up text-muted';
+                chevron.className = 'fas fa-chevron-up';
             }
         }
 
@@ -1318,23 +1376,10 @@ foreach ($tiers as $t) {
             const submitBtn = document.getElementById('submitOrderBtn');
             const originalBtnHtml = submitBtn.innerHTML;
 
-            if (currentPaymentMethod === 'mpesa_stk' && mpesaOption === 'custom') {
-                const customPhone = document.getElementById('mpesaPaymentPhoneInput').value.trim();
-                if (!customPhone) {
-                    alert('Please enter the M-Pesa phone number that will authorize this payment.');
-                    document.getElementById('mpesaPaymentPhoneInput').focus();
-                    return;
-                }
-            }
-
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Reservation...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing Payment Portal...';
 
             const formData = new FormData(form);
-
-            if (mpesaOption === 'contact') {
-                formData.set('mpesa_payment_phone', formData.get('contact_phone'));
-            }
 
             try {
                 const response = await fetch('api/event_initiate_booking.php', {
@@ -1345,16 +1390,54 @@ foreach ($tiers as $t) {
                 const res = await response.json();
 
                 if (res.status === 'success') {
-                    currentBookingRef = res.booking_reference;
-                    currentToken = res.qr_token;
+                    // Initialize Paystack Inline Modal
+                    const handler = PaystackPop.setup({
+                        key: res.public_key,
+                        email: res.email,
+                        amount: res.amount_subunits,
+                        currency: res.currency || 'KES',
+                        ref: res.booking_reference,
+                        metadata: {
+                            custom_fields: [
+                                {
+                                    display_name: "Booking Reference",
+                                    variable_name: "booking_reference",
+                                    value: res.booking_reference
+                                },
+                                {
+                                    display_name: "Attendee Name",
+                                    variable_name: "attendee_name",
+                                    value: res.contact_name
+                                },
+                                {
+                                    display_name: "Tier",
+                                    variable_name: "tier_name",
+                                    value: res.tier_name
+                                },
+                                {
+                                    display_name: "Phone Number",
+                                    variable_name: "phone_number",
+                                    value: res.contact_phone
+                                }
+                            ]
+                        },
+                        callback: function(paymentResponse) {
+                            // Paystack payment authorized!
+                            document.getElementById('modalSpinner').style.display = 'block';
+                            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-spinner fa-spin text-warning"></i> Confirming Payment...';
+                            document.getElementById('modalBody').innerText = 'Paystack has confirmed your transaction. Generating your official VIP pass and dispatching your confirmation email...';
+                            document.getElementById('modalRefDisplay').innerText = `Ref: ${paymentResponse.reference || res.booking_reference}`;
+                            document.getElementById('statusModal').style.display = 'flex';
 
-                    if (res.payment_method === 'corporate_invoice') {
-                        window.location.href = res.redirect_url;
-                    } else {
-                        document.getElementById('modalRefDisplay').innerText = `Booking Reference: ${currentBookingRef}`;
-                        document.getElementById('statusModal').style.display = 'flex';
-                        startPolling();
-                    }
+                            verifyPaystackTransaction(paymentResponse.reference || res.booking_reference, res.booking_reference, res.qr_token);
+                        },
+                        onClose: function() {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalBtnHtml;
+                        }
+                    });
+
+                    handler.openIframe();
                 } else {
                     alert(res.message || 'Error initiating booking. Please try again.');
                     submitBtn.disabled = false;
@@ -1368,39 +1451,49 @@ foreach ($tiers as $t) {
             }
         });
 
-        function startPolling() {
-            if (pollInterval) clearInterval(pollInterval);
-            pollInterval = setInterval(pollPaymentStatus, 3000);
-        }
-
-        async function pollPaymentStatus() {
-            if (!currentBookingRef) return;
-
+        async function verifyPaystackTransaction(reference, bookingRef, token) {
             try {
-                const res = await fetch(`api/event_payment_status.php?ref=${encodeURIComponent(currentBookingRef)}&token=${encodeURIComponent(currentToken)}`);
-                const data = await res.json();
+                const response = await fetch('api/verify_paystack_payment.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        reference: reference,
+                        booking_reference: bookingRef,
+                        token: token
+                    })
+                });
 
-                if (data.status === 'paid') {
-                    clearInterval(pollInterval);
+                const data = await response.json();
+
+                if (data.status === 'success') {
                     document.getElementById('modalSpinner').style.display = 'none';
                     document.getElementById('modalTitle').innerHTML = '<i class="fas fa-check-circle text-success"></i> Payment Confirmed!';
-                    document.getElementById('modalBody').innerText = `Thank you! M-Pesa Receipt: ${data.mpesa_receipt || 'Confirmed'}. Redirecting to your official event pass...`;
+                    document.getElementById('modalBody').innerText = 'Thank you! Your payment was successful. Redirecting to your official event pass...';
                     setTimeout(() => {
                         window.location.href = data.redirect_url;
-                    }, 1500);
-                } else if (data.status === 'failed') {
-                    clearInterval(pollInterval);
+                    }, 1200);
+                } else {
                     document.getElementById('modalSpinner').style.display = 'none';
-                    document.getElementById('modalTitle').innerHTML = '<i class="fas fa-times-circle text-danger"></i> Payment Unsuccessful';
-                    document.getElementById('modalBody').innerText = data.message || 'Payment prompt was cancelled or timed out. Please try again.';
-                    document.getElementById('manualCheckBtn').innerText = 'Close & Try Again';
-                    document.getElementById('manualCheckBtn').onclick = function() {
-                        document.getElementById('statusModal').style.display = 'none';
-                        location.reload();
+                    document.getElementById('modalTitle').innerHTML = '<i class="fas fa-exclamation-triangle text-warning"></i> Verification Processing';
+                    document.getElementById('modalBody').innerText = data.message || 'Payment received! Finalizing ticket confirmation...';
+                    const actionBtn = document.getElementById('modalActionBtn');
+                    actionBtn.style.display = 'inline-block';
+                    actionBtn.innerText = 'View Ticket Pass';
+                    actionBtn.onclick = function() {
+                        window.location.href = `ticket-pass.php?ref=${encodeURIComponent(bookingRef)}&token=${encodeURIComponent(token)}`;
                     };
                 }
             } catch (err) {
-                console.error("Polling error:", err);
+                console.error(err);
+                document.getElementById('modalSpinner').style.display = 'none';
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-info-circle text-primary"></i> Processing Complete';
+                document.getElementById('modalBody').innerText = 'Your payment was processed by Paystack. Click below to view your digital ticket pass.';
+                const actionBtn = document.getElementById('modalActionBtn');
+                actionBtn.style.display = 'inline-block';
+                actionBtn.innerText = 'Open My Ticket Pass';
+                actionBtn.onclick = function() {
+                    window.location.href = `ticket-pass.php?ref=${encodeURIComponent(bookingRef)}&token=${encodeURIComponent(token)}`;
+                };
             }
         }
     </script>

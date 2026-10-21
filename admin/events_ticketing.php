@@ -38,7 +38,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'export_csv') {
     $stmt = $pdo->query("
         SELECT b.booking_reference, b.booking_type, t.tier_name, b.organization_name,
                b.contact_name, b.contact_email, b.contact_phone, b.quantity, b.total_seats,
-               b.total_amount_kes, b.payment_method, b.payment_status, b.mpesa_receipt_number,
+               b.total_amount_kes, b.payment_method, b.payment_status, b.paystack_reference, b.mpesa_receipt_number,
                b.paid_at, b.dietary_notes, b.checked_in_count, b.created_at
         FROM tp_event_bookings b
         JOIN tp_ticket_tiers t ON b.tier_id = t.id
@@ -100,7 +100,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'export_csv') {
             $row['total_amount_kes'],
             $row['payment_method'],
             strtoupper($row['payment_status']),
-            $row['mpesa_receipt_number'] ?: 'N/A',
+            $row['paystack_reference'] ?: ($row['mpesa_receipt_number'] ?: 'N/A'),
             $row['paid_at'] ?: 'N/A',
             $row['dietary_notes'] ?: 'None',
             $guestString ?: 'None specified',
@@ -159,8 +159,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $price = floatval($_POST['price_kes'] ?? 0);
         $seats = intval($_POST['seats_per_unit'] ?? 1);
         $capacity = intval($_POST['max_capacity'] ?? 100);
-        $featured = isset($_POST['is_featured']) ? 1 : 0;
-        $active = isset($_POST['is_active']) ? 1 : 0;
+        $featured = !empty($_POST['is_featured']) ? 1 : 0;
+        $active = !empty($_POST['is_active']) ? 1 : 0;
 
         // Process Perks array from textarea (one perk per line)
         $perksRaw = trim($_POST['perks_raw'] ?? '');
@@ -175,7 +175,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         $stmt->execute([$tierName, $badgeLabel, $price, $seats, $perksJson, $capacity, $featured, $active, $tierId]);
 
-        $feedbackMsg = "Ticket tier and perks successfully updated.";
+        $feedbackMsg = "Ticket tier '{$tierName}' and perks successfully updated.";
+    }
+
+    // 2b. Restore Default Tiers (Tab 1 Fallback)
+    if ($action === 'restore_default_tiers') {
+        $sqlFile = __DIR__ . '/../sql/leadership_dinner_2026_schema.sql';
+        if (file_exists($sqlFile)) {
+            $sql = file_get_contents($sqlFile);
+            $queries = array_filter(array_map('trim', explode(';', $sql)));
+            foreach ($queries as $query) {
+                if (!empty($query)) {
+                    try {
+                        $pdo->exec($query);
+                    } catch (Exception $ex) {}
+                }
+            }
+        }
+        $pdo->exec("UPDATE `tp_ticket_tiers` SET `is_active` = 1");
+        $feedbackMsg = "Default ticket tiers and perks successfully restored and activated.";
     }
 
     // 3. Mark Invoice as Paid (Tab 2)
@@ -250,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Fetch Flagship Event and Tiers for CMS
 $event = get_flagship_event($pdo, 'leadership-dinner-2026');
-$tiers = get_event_tiers($pdo, $event['id']);
+$tiers = get_event_tiers($pdo, $event['id'], false); // Retrieve all tiers (active & inactive) for admin management
 
 // KPI Metrics
 $kpi_revenue = $pdo->query("SELECT COALESCE(SUM(total_amount_kes), 0) FROM tp_event_bookings WHERE payment_status = 'paid'")->fetchColumn();
@@ -281,9 +299,9 @@ if ($filterType !== 'all') {
     $bParams[] = $filterType;
 }
 if (!empty($searchQuery)) {
-    $sqlBookings .= " AND (b.booking_reference LIKE ? OR b.organization_name LIKE ? OR b.contact_name LIKE ? OR b.contact_email LIKE ? OR b.contact_phone LIKE ? OR b.mpesa_receipt_number LIKE ?)";
+    $sqlBookings .= " AND (b.booking_reference LIKE ? OR b.organization_name LIKE ? OR b.contact_name LIKE ? OR b.contact_email LIKE ? OR b.contact_phone LIKE ? OR b.paystack_reference LIKE ? OR b.mpesa_receipt_number LIKE ?)";
     $likeQ = '%' . $searchQuery . '%';
-    $bParams = array_merge($bParams, [$likeQ, $likeQ, $likeQ, $likeQ, $likeQ, $likeQ]);
+    $bParams = array_merge($bParams, [$likeQ, $likeQ, $likeQ, $likeQ, $likeQ, $likeQ, $likeQ]);
 }
 $sqlBookings .= " ORDER BY b.created_at DESC";
 
@@ -314,7 +332,7 @@ if (!empty($lookupRef)) {
     }
 }
 
-$activeTab = $_GET['tab'] ?? 'bookings';
+$activeTab = $_REQUEST['tab'] ?? 'bookings';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -527,7 +545,7 @@ $activeTab = $_GET['tab'] ?? 'bookings';
                             <th>Units / Seats</th>
                             <th>Amount (KES)</th>
                             <th>Payment Status</th>
-                            <th>Receipt</th>
+                            <th>Receipt / Ref</th>
                             <th>Date</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -578,7 +596,10 @@ $activeTab = $_GET['tab'] ?? 'bookings';
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <small class="font-monospace text-muted"><?= htmlspecialchars($b['mpesa_receipt_number'] ?: '—') ?></small>
+                                    <small class="font-monospace text-muted"><?= htmlspecialchars($b['paystack_reference'] ?: ($b['mpesa_receipt_number'] ?: '—')) ?></small>
+                                    <?php if (!empty($b['paystack_channel'])): ?>
+                                        <br><span class="badge bg-light text-secondary border" style="font-size:10px;"><?= strtoupper(htmlspecialchars($b['paystack_channel'])) ?></span>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
                                     <small class="text-muted"><?= date('M j, Y H:i', strtotime($b['created_at'])) ?></small>
@@ -663,6 +684,7 @@ $activeTab = $_GET['tab'] ?? 'bookings';
                     </h5>
 
                     <form method="POST">
+                        <input type="hidden" name="tab" value="cms">
                         <input type="hidden" name="admin_action" value="save_event_settings">
                         <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
 
@@ -756,72 +778,99 @@ $activeTab = $_GET['tab'] ?? 'bookings';
                         <i class="fas fa-tags text-warning me-2"></i>Ticket Tiers & Perks Editor (tp_ticket_tiers)
                     </h5>
 
-                    <?php foreach ($tiers as $tr): 
-                        $perksList = !empty($tr['perks_json']) ? json_decode($tr['perks_json'], true) : [];
-                        $perksText = implode("\n", (array)$perksList);
-                    ?>
-                    <div class="card mb-4 border <?= ($tr['is_featured'] ? 'border-warning shadow-sm' : '') ?>">
-                        <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
-                            <strong class="text-dark">
-                                <?= htmlspecialchars($tr['tier_name']) ?>
-                                <?php if ($tr['is_featured']): ?>
-                                    <span class="badge bg-warning text-dark ms-1">Featured</span>
-                                <?php endif; ?>
-                            </strong>
-                            <span class="badge bg-dark"><?= strtoupper($tr['tier_code']) ?></span>
-                        </div>
-                        <div class="card-body">
-                            <form method="POST">
-                                <input type="hidden" name="admin_action" value="save_tier_settings">
-                                <input type="hidden" name="tier_id" value="<?= $tr['id'] ?>">
-
-                                <div class="row g-2 mb-2">
-                                    <div class="col-8">
-                                        <label class="form-label small fw-semibold">Tier Name</label>
-                                        <input type="text" name="tier_name" class="form-control form-control-sm" value="<?= htmlspecialchars($tr['tier_name']) ?>" required>
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="form-label small fw-semibold">Price (KES)</label>
-                                        <input type="number" step="0.01" name="price_kes" class="form-control form-control-sm" value="<?= htmlspecialchars($tr['price_kes']) ?>" required>
-                                    </div>
-                                </div>
-
-                                <div class="row g-2 mb-2">
-                                    <div class="col-6">
-                                        <label class="form-label small fw-semibold">Seats Per Unit</label>
-                                        <input type="number" name="seats_per_unit" class="form-control form-control-sm" value="<?= intval($tr['seats_per_unit']) ?>" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label small fw-semibold">Max Capacity</label>
-                                        <input type="number" name="max_capacity" class="form-control form-control-sm" value="<?= intval($tr['max_capacity']) ?>" required>
-                                    </div>
-                                </div>
-
-                                <div class="mb-2">
-                                    <label class="form-label small fw-semibold">Badge Label</label>
-                                    <input type="text" name="badge_label" class="form-control form-control-sm" value="<?= htmlspecialchars($tr['badge_label']) ?>">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label small fw-semibold">
-                                        Included Perks & Amenities (One perk per line)
-                                    </label>
-                                    <textarea name="perks_raw" class="form-control form-control-sm font-monospace" rows="4"><?= htmlspecialchars($perksText) ?></textarea>
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" name="is_featured" id="feat_<?= $tr['id'] ?>" <?= ($tr['is_featured'] ? 'checked' : '') ?>>
-                                        <label class="form-check-label small" for="feat_<?= $tr['id'] ?>">Gold Ribbon</label>
-                                    </div>
-                                    <button type="submit" class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-save me-1"></i> Update Tier & Perks
-                                    </button>
-                                </div>
+                    <?php if (empty($tiers)): ?>
+                        <div class="alert alert-warning py-3 text-center">
+                            <i class="fas fa-exclamation-triangle me-2"></i> No ticket tiers found in database.
+                            <form method="POST" class="mt-2">
+                                <input type="hidden" name="tab" value="cms">
+                                <input type="hidden" name="admin_action" value="restore_default_tiers">
+                                <button type="submit" class="btn btn-sm btn-warning fw-bold">
+                                    <i class="fas fa-sync-alt me-1"></i> Restore Default Flagship Tiers
+                                </button>
                             </form>
                         </div>
-                    </div>
-                    <?php endforeach; ?>
+                    <?php else: ?>
+                        <?php foreach ($tiers as $tr): 
+                            $perksList = !empty($tr['perks_json']) ? json_decode($tr['perks_json'], true) : [];
+                            $perksText = implode("\n", (array)$perksList);
+                        ?>
+                        <div class="card mb-4 border <?= ($tr['is_featured'] ? 'border-warning shadow-sm' : '') ?> <?= (!$tr['is_active'] ? 'border-secondary opacity-75' : '') ?>">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+                                <div>
+                                    <strong class="text-dark">
+                                        <?= htmlspecialchars($tr['tier_name']) ?>
+                                    </strong>
+                                    <?php if ($tr['is_featured']): ?>
+                                        <span class="badge bg-warning text-dark ms-1">Featured</span>
+                                    <?php endif; ?>
+                                    <?php if ($tr['is_active']): ?>
+                                        <span class="badge bg-success ms-1"><i class="fas fa-check-circle me-1"></i> Active</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-secondary ms-1"><i class="fas fa-eye-slash me-1"></i> Inactive</span>
+                                    <?php endif; ?>
+                                </div>
+                                <span class="badge bg-dark"><?= strtoupper($tr['tier_code']) ?></span>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST">
+                                    <input type="hidden" name="tab" value="cms">
+                                    <input type="hidden" name="admin_action" value="save_tier_settings">
+                                    <input type="hidden" name="tier_id" value="<?= $tr['id'] ?>">
+
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-8">
+                                            <label class="form-label small fw-semibold">Tier Name</label>
+                                            <input type="text" name="tier_name" class="form-control form-control-sm" value="<?= htmlspecialchars($tr['tier_name']) ?>" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label small fw-semibold">Price (KES)</label>
+                                            <input type="number" step="0.01" name="price_kes" class="form-control form-control-sm" value="<?= htmlspecialchars($tr['price_kes']) ?>" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label small fw-semibold">Seats Per Unit</label>
+                                            <input type="number" name="seats_per_unit" class="form-control form-control-sm" value="<?= intval($tr['seats_per_unit']) ?>" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-semibold">Max Capacity</label>
+                                            <input type="number" name="max_capacity" class="form-control form-control-sm" value="<?= intval($tr['max_capacity']) ?>" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label class="form-label small fw-semibold">Badge Label</label>
+                                        <input type="text" name="badge_label" class="form-control form-control-sm" value="<?= htmlspecialchars($tr['badge_label']) ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-semibold">
+                                            Included Perks & Amenities (One perk per line)
+                                        </label>
+                                        <textarea name="perks_raw" class="form-control form-control-sm font-monospace" rows="4"><?= htmlspecialchars($perksText) ?></textarea>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="form-check form-switch mb-0">
+                                                <input class="form-check-input" type="checkbox" name="is_active" id="active_<?= $tr['id'] ?>" value="1" <?= ($tr['is_active'] ? 'checked' : '') ?>>
+                                                <label class="form-check-label small fw-semibold text-success" for="active_<?= $tr['id'] ?>">Active on Site</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-0">
+                                                <input class="form-check-input" type="checkbox" name="is_featured" id="feat_<?= $tr['id'] ?>" value="1" <?= ($tr['is_featured'] ? 'checked' : '') ?>>
+                                                <label class="form-check-label small" for="feat_<?= $tr['id'] ?>">Gold Ribbon</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-sm btn-primary px-3">
+                                            <i class="fas fa-save me-1"></i> Update Tier & Perks
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
                 </div>
             </div>
@@ -884,7 +933,7 @@ $activeTab = $_GET['tab'] ?? 'bookings';
                                     <div class="col-md-6">
                                         <strong>Amount:</strong> KES <?= number_format($lookupBooking['total_amount_kes'], 2) ?><br>
                                         <strong>Payment Status:</strong> <span class="badge <?= ($isPaid ? 'bg-success' : 'bg-warning text-dark') ?>"><?= strtoupper($lookupBooking['payment_status']) ?></span><br>
-                                        <strong>M-Pesa Receipt:</strong> <code><?= htmlspecialchars($lookupBooking['mpesa_receipt_number'] ?: 'N/A') ?></code>
+                                        <strong>Receipt / Ref:</strong> <code><?= htmlspecialchars($lookupBooking['paystack_reference'] ?: ($lookupBooking['mpesa_receipt_number'] ?: 'N/A')) ?></code>
                                     </div>
                                 </div>
 
@@ -957,8 +1006,8 @@ $activeTab = $_GET['tab'] ?? 'bookings';
                             <input type="text" id="paidAmountText" class="form-control" readonly>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-bold">M-Pesa Receipt / Bank Wire Reference <span class="text-danger">*</span></label>
-                            <input type="text" name="mpesa_receipt_number" class="form-control" placeholder="e.g. QK89H76TR or SCBL-WIRE-12345" required>
+                            <label class="form-label small fw-bold">Paystack / Bank Wire / M-Pesa Reference <span class="text-danger">*</span></label>
+                            <input type="text" name="mpesa_receipt_number" class="form-control" placeholder="e.g. QK89H76TR, SCBL-WIRE-12345 or Paystack Ref" required>
                         </div>
                     </div>
                     <div class="modal-footer py-2">

@@ -59,10 +59,13 @@ CREATE TABLE IF NOT EXISTS `tp_event_bookings` (
   `contact_email` VARCHAR(255) NOT NULL,
   `contact_phone` VARCHAR(50) NOT NULL,
   `dietary_notes` TEXT DEFAULT NULL,
-  `payment_method` VARCHAR(50) NOT NULL DEFAULT 'mpesa_stk',
+  `payment_method` VARCHAR(50) NOT NULL DEFAULT 'paystack',
   `payment_status` VARCHAR(50) NOT NULL DEFAULT 'pending',
   `mpesa_checkout_request_id` VARCHAR(100) DEFAULT NULL,
   `mpesa_receipt_number` VARCHAR(100) DEFAULT NULL,
+  `paystack_reference` VARCHAR(100) DEFAULT NULL,
+  `paystack_transaction_id` VARCHAR(100) DEFAULT NULL,
+  `paystack_channel` VARCHAR(50) DEFAULT NULL,
   `paid_at` DATETIME DEFAULT NULL,
   `qr_token` VARCHAR(64) NOT NULL UNIQUE,
   `checked_in_count` INT NOT NULL DEFAULT 0,
@@ -72,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `tp_event_bookings` (
   KEY `idx_booking_tier` (`tier_id`),
   KEY `idx_booking_status` (`payment_status`),
   KEY `idx_checkout_request` (`mpesa_checkout_request_id`),
+  KEY `idx_paystack_ref` (`paystack_reference`),
   CONSTRAINT `fk_tp_booking_event` FOREIGN KEY (`event_id`) REFERENCES `tp_events` (`id`),
   CONSTRAINT `fk_tp_booking_tier` FOREIGN KEY (`tier_id`) REFERENCES `tp_ticket_tiers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

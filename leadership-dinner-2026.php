@@ -979,9 +979,9 @@ $tiers = get_event_tiers($pdo, $event['id']);
             <!-- VIP Reservation Guarantee Strip -->
             <div class="checkout-banner-strip">
                 <div class="checkout-banner-text">
-                    <h4>Flexible Corporate & Individual Payment Options</h4>
+                    <h4>Seamless Secure Payments via Paystack</h4>
                     <p>
-                        Instant M-Pesa STK push authorization (to any phone line) • Corporate Proforma Invoices with NCBA Bank Kenya details • Licensed Data Controller (Serial No. 03323)
+                        Instant M-Pesa, Visa, Mastercard, American Express, Apple Pay & Bank Transfer • Encrypted PCI-DSS Level 1 Gateway • Licensed Data Controller (Serial No. 03323)
                     </p>
                 </div>
                 <div>
@@ -1072,21 +1072,21 @@ $tiers = get_event_tiers($pdo, $event['id']);
             <div class="faq-wrap">
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>How do Corporate Proforma Invoices work for institutional procurement?</span>
+                        <span>Which payment methods are accepted for reservations?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        When booking a Corporate VIP Table on the checkout page, select the "Corporate Invoice" payment tab. The portal will immediately generate an official PDF-ready proforma invoice addressed to your organization with full NCBA Bank Kenya transfer details (and Buy Goods Till 575555). A digital copy is sent to your official email instantly. Once remittance is completed, your table passes and verified QR credentials are authenticated.
+                        Reservations are processed securely via Paystack, accepting M-Pesa, Visa, Mastercard, American Express, Bank Transfer, and Apple Pay. Your transaction is verified in real-time and your official digital VIP pass with personalized QR entry credentials is generated and emailed to you immediately.
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>Can an accountant or colleague pay via M-Pesa on my behalf?</span>
+                        <span>How are Corporate Table bookings and VAT/receipts handled?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        Yes! On the reservation checkout page, you are explicitly asked to specify which M-Pesa number should receive the STK push prompt. You can enter a finance manager's or director's line, and they will receive the prompt to enter their PIN directly on their phone while your registration is confirmed.
+                        When reserving a Corporate VIP Table, enter your Organization Name and primary contact details. Upon checkout via Paystack, an official payment receipt and ticket pass specifying your company delegation is issued instantly. For dedicated corporate bank wire remittances or physical invoices, our concierge team can also assist via info@turningpointmagazine.africa.
                     </div>
                 </div>
 
