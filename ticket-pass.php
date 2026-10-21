@@ -82,7 +82,9 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Direct Client-Side PDF Generation Library -->
+    <!-- Client-Side Canvas & PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
@@ -612,7 +614,7 @@ try {
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Date & Time</span>
-                        <span class="info-value"><?= date('l, 6 November 2026', strtotime($b['event_date'])) ?></span>
+                        <span class="info-value"><?= date('l, j F Y', strtotime($b['event_date'])) ?></span>
                         <span style="font-size: 12px; color: var(--gold-light);"><?= htmlspecialchars($b['event_time']) ?></span>
                     </div>
                     <div class="info-item">
@@ -700,7 +702,7 @@ try {
     </div>
 
     <script>
-        function downloadPassPdf() {
+        async function downloadPassPdf() {
             const btn = document.getElementById('downloadPdfBtn');
             const originalHtml = btn.innerHTML;
             btn.disabled = true;
@@ -708,36 +710,130 @@ try {
 
             const element = document.getElementById('printablePass');
 
-            const opt = {
-                margin:       [6, 6, 6, 6],
-                filename:     'TurningPoint-Pass-<?= htmlspecialchars($b['booking_reference']) ?>.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { 
-                    scale: 2, 
-                    useCORS: true,
-                    logging: false,
-                    windowWidth: 1024
-                },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
-            };
+            try {
+                // 1. Create a clean, off-screen desktop clone
+                // This guarantees the card has uncompressed desktop dimensions (920px),
+                // full 2-column layout, and avoids any left-shift or mobile viewport cropping!
+                const clone = element.cloneNode(true);
+                clone.id = 'passPdfClone';
+                clone.style.width = '920px';
+                clone.style.minWidth = '920px';
+                clone.style.maxWidth = '920px';
+                clone.style.position = 'fixed';
+                clone.style.left = '-9999px';
+                clone.style.top = '0';
+                clone.style.margin = '0';
+                clone.style.transform = 'none';
+                clone.style.boxSizing = 'border-box';
+                clone.style.boxShadow = 'none';
+                clone.style.zIndex = '-9999';
 
-            if (typeof html2pdf !== 'undefined') {
-                html2pdf().set(opt).from(element).save().then(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-check me-2"></i> Downloaded!';
-                    setTimeout(() => {
+                // Force desktop grid & flexbox arrangements on the clone
+                const cloneBody = clone.querySelector('.pass-body');
+                if (cloneBody) {
+                    cloneBody.style.display = 'grid';
+                    cloneBody.style.gridTemplateColumns = '1.8fr 1fr';
+                    cloneBody.style.gap = '25px';
+                }
+                const cloneHeader = clone.querySelector('.pass-header');
+                if (cloneHeader) {
+                    cloneHeader.style.display = 'flex';
+                    cloneHeader.style.flexDirection = 'row';
+                    cloneHeader.style.justifyContent = 'space-between';
+                    cloneHeader.style.alignItems = 'center';
+                    cloneHeader.style.textAlign = 'left';
+                }
+                const cloneInfoGrid = clone.querySelector('.info-grid');
+                if (cloneInfoGrid) {
+                    cloneInfoGrid.style.display = 'grid';
+                    cloneInfoGrid.style.gridTemplateColumns = '1fr 1fr';
+                    cloneInfoGrid.style.gap = '15px';
+                }
+
+                document.body.appendChild(clone);
+
+                // Allow layout to calculate
+                await new Promise(r => setTimeout(r, 120));
+
+                // 2. Render clone to high-resolution canvas with html2canvas
+                const canvas = await html2canvas(clone, {
+                    scale: 2, // Retina sharpness
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#0d0d0d',
+                    logging: false,
+                    scrollX: 0,
+                    scrollY: 0,
+                    x: 0,
+                    y: 0
+                });
+
+                // Remove temporary clone from DOM
+                document.body.removeChild(clone);
+
+                // 3. Create strictly 1-page A4 Landscape jsPDF document
+                const { jsPDF } = window.jspdf || window;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                const pageWidth = pdf.internal.pageSize.getWidth();   // 297 mm
+                const pageHeight = pdf.internal.pageSize.getHeight(); // 210 mm
+
+                // Fill background with luxury obsidian so margins match ticket pass perfectly
+                pdf.setFillColor(13, 13, 13);
+                pdf.rect(0, 0, pageWidth, pageHeight, 'F');
+
+                // Available printable bounds with 6 mm margins
+                const marginX = 6;
+                const maxWidth = pageWidth - (marginX * 2); // 285 mm
+                const maxHeight = pageHeight - 12; // 198 mm (with 6mm top/bottom)
+
+                const canvasRatio = canvas.width / canvas.height;
+                let renderWidth = maxWidth;
+                let renderHeight = renderWidth / canvasRatio;
+
+                // Scale down proportionally if height exceeds printable height, strictly keeping to 1 page
+                if (renderHeight > maxHeight) {
+                    renderHeight = maxHeight;
+                    renderWidth = renderHeight * canvasRatio;
+                }
+
+                // Calculate exact horizontal & vertical center coordinates
+                const xPos = (pageWidth - renderWidth) / 2;
+                const yPos = (pageHeight - renderHeight) / 2;
+
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addImage(imgData, 'PNG', xPos, yPos, renderWidth, renderHeight, undefined, 'FAST');
+
+                // Trigger direct file download
+                pdf.save('TurningPoint-Pass-<?= htmlspecialchars($b['booking_reference']) ?>.pdf');
+
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check me-2"></i> PDF Downloaded!';
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                }, 3500);
+
+            } catch (err) {
+                console.error('Direct PDF export error:', err);
+                // Fallback to html2pdf or browser print
+                if (typeof html2pdf !== 'undefined') {
+                    html2pdf().from(element).save('TurningPoint-Pass-<?= htmlspecialchars($b['booking_reference']) ?>.pdf').then(() => {
+                        btn.disabled = false;
                         btn.innerHTML = originalHtml;
-                    }, 3500);
-                }).catch(err => {
-                    console.error('PDF generation error:', err);
+                    }).catch(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = originalHtml;
+                        window.print();
+                    });
+                } else {
                     btn.disabled = false;
                     btn.innerHTML = originalHtml;
                     window.print();
-                });
-            } else {
-                window.print();
-                btn.disabled = false;
-                btn.innerHTML = originalHtml;
+                }
             }
         }
     </script>
