@@ -1,8 +1,7 @@
 <?php
 
-
 // Set the inactivity timeout (in seconds)
-$inactiveTimeout = 6000; // 10 minutes = 600 seconds
+$inactiveTimeout = 6000; // 100 minutes
 
 // Check if the user is logged in
 if (isset($_SESSION['user_id'])) {
@@ -29,12 +28,22 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Check if the user is authorized (admin role or designated administrator)
+$isAuthorized = false;
+if (isset($_SESSION['username'])) {
+    if ($_SESSION['username'] === 'mosesabuya812@gmail.com' || (isset($_SESSION['role']) && $_SESSION['role'] === 'admin')) {
+        $isAuthorized = true;
+    }
+}
 
+if (!$isAuthorized) {
+    // If request is AJAX or POST, send clean HTTP 403
+    if ((!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') || $_SERVER['REQUEST_METHOD'] === 'POST') {
+        http_response_code(403);
+        echo "Unauthorized";
+        exit();
+    }
 
-// Check if the user is logged in and has the correct username
-if (isset($_SESSION['username']) && $_SESSION['username'] === 'mosesabuya812@gmail.com') {
-    // User is authorized, continue displaying the content
-} else {
     // User is not authorized
     // Display a Toastr error message and exit
     echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>'; // Ensure jQuery is loaded
@@ -47,5 +56,4 @@ if (isset($_SESSION['username']) && $_SESSION['username'] === 'mosesabuya812@gma
     </script>";
     exit();
 }
-
 ?>

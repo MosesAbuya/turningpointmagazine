@@ -87,7 +87,39 @@ try {
                     error_log("Paystack Webhook: Booking {$booking['booking_reference']} successfully marked as paid.");
                 }
             } else {
-                error_log("Paystack Webhook: Booking not found for reference: " . $reference);
+                // Check if reference matches a shop order
+                require_once __DIR__ . '/../includes/shop_email_helper.php';
+                $stmtOrder = $pdo->prepare("SELECT * FROM orders WHERE invoice_id = ? OR paystack_reference = ? LIMIT 1");
+                $stmtOrder->execute([$reference, $reference]);
+                $order = $stmtOrder->fetch(PDO::FETCH_ASSOC);
+
+                if ($order) {
+                    if ($order['status'] !== 'paid') {
+                        $stmtUpOrder = $pdo->prepare("
+                            UPDATE orders 
+                            SET status = 'paid',
+                                payment_method = 'PAYSTACK',
+                                paystack_reference = ?,
+                                paystack_transaction_id = ?,
+                                paystack_channel = ?,
+                                paid_at = ?
+                            WHERE id = ?
+                        ");
+                        $stmtUpOrder->execute([
+                            $reference,
+                            $transId,
+                            $channel,
+                            $paidAt,
+                            $order['id']
+                        ]);
+
+                        // Send shop order confirmation emails
+                        send_shop_order_confirmation_emails($pdo, $order['id']);
+                        error_log("Paystack Webhook: Shop Order {$order['invoice_id']} successfully marked as paid.");
+                    }
+                } else {
+                    error_log("Paystack Webhook: Record not found for reference: " . $reference);
+                }
             }
         }
     }

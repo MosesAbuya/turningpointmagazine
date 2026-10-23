@@ -2,23 +2,45 @@
 session_start();
 include('../connection2.php');
 
+header('Content-Type: application/json; charset=utf-8');
+
 $pdo = connect();
 
-// Default to MPESA if not set
-$paymentMethod = isset($_POST['payment_method']) ? strtoupper($_POST['payment_method']) : 'MPESA';
+// Get active payment gateway setting
+$active_gateway = 'PAYSTACK';
+try {
+    $stmt_set = $pdo->query("SELECT payment_gateway FROM shop_settings LIMIT 1");
+    if ($row_set = $stmt_set->fetch(PDO::FETCH_ASSOC)) {
+        if (!empty($row_set['payment_gateway']) && strtolower($row_set['payment_gateway']) === 'daraja') {
+            $active_gateway = 'MPESA';
+        }
+    }
+} catch (Exception $e) {}
 
-// Get User Details (Guest)
-$firstName = $_POST['first_name'];
-$lastName = $_POST['last_name'];
-$email = $_POST['email'];
-$contact = $_POST['contact'];
+$paymentMethod = isset($_POST['payment_method']) && !empty($_POST['payment_method']) ? strtoupper($_POST['payment_method']) : $active_gateway;
 
-$deliveryOption = $_POST['delivery_option'];
-$deliveryAddress = isset($_POST['delivery_address']) ? $_POST['delivery_address'] : '';
+// Get User Details
+$firstName = trim($_POST['first_name'] ?? '');
+$lastName = trim($_POST['last_name'] ?? '');
+$email = trim($_POST['email'] ?? '');
+$contact = trim($_POST['contact'] ?? '');
+
+$deliveryOption = trim($_POST['delivery_option'] ?? 'Pick up');
+$deliveryAddress = trim($_POST['delivery_address'] ?? '');
+
+if (empty($firstName) || empty($lastName) || empty($email) || empty($contact)) {
+    echo json_encode(['status' => 'error', 'message' => 'Please fill in all required customer details.']);
+    exit;
+}
 
 // Calculate Total to ensure consistency backend-side
 $totalAmount = 0;
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+
+if (empty($cart)) {
+    echo json_encode(['status' => 'error', 'message' => 'Your cart is empty.']);
+    exit;
+}
 
 $pids = [];
 foreach (array_keys($cart) as $k) {
@@ -60,11 +82,12 @@ if ($deliveryOption === 'Delivery') {
 }
 
 // Generate Unique Invoice
-$invoiceNumber = "INV-" . time();
+$invoiceNumber = "INV-" . time() . "-" . rand(100, 999);
 
-// Insert Order (user_id is NULL for guest)
-$stmt = $pdo->prepare("INSERT INTO orders (user_id, invoice_id, first_name, last_name, email, contact, payment_method, total_amount, status, date_created, delivery_option, delivery_address) 
-VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW(), ?, ?)");
+// Insert Order
+$stmt = $pdo->prepare("INSERT INTO orders 
+    (user_id, invoice_id, first_name, last_name, email, contact, payment_method, total_amount, status, date_created, delivery_option, delivery_address) 
+    VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW(), ?, ?)");
 
 $success = $stmt->execute([$invoiceNumber, $firstName, $lastName, $email, $contact, $paymentMethod, $totalAmount, $deliveryOption, $deliveryAddress]);
 
@@ -87,7 +110,7 @@ if ($success) {
     // Clear cart after successful order creation
     unset($_SESSION['cart']);
 
-    echo json_encode(['status' => 'success', 'order_id' => $orderId]);
+    echo json_encode(['status' => 'success', 'order_id' => $orderId, 'invoice_id' => $invoiceNumber]);
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Order could not be placed.']);
 }

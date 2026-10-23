@@ -7,15 +7,14 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_GET['id'])) {
+$pdo = connect();
+
+$order_id = $_GET['id'] ?? null;
+if (!$order_id) {
     header("Location: shop_orders.php");
     exit();
 }
 
-$pdo = connect();
-$order_id = intval($_GET['id']);
-
-// Fetch Order
 $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ?");
 $stmt->execute([$order_id]);
 $order = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -26,9 +25,9 @@ if (!$order) {
 
 // Fetch Items
 $stmt = $pdo->prepare("
-    SELECT oi.*, p.name, p.img_path 
+    SELECT oi.*, p.name, p.top_image as img_path 
     FROM order_items oi 
-    JOIN products p ON oi.product_id = p.id 
+    LEFT JOIN products p ON oi.product_id = p.id 
     WHERE oi.order_id = ?
 ");
 $stmt->execute([$order_id]);
@@ -84,6 +83,39 @@ function getBadgeClass($status) {
                     </div>
                 </div>
 
+                <!-- Payment Details Card -->
+                <div class="content-card">
+                    <div class="card-header fw-bold">Payment Information</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <strong>Method:</strong> 
+                                <?php if (strtoupper($order['payment_method']) === 'PAYSTACK'): ?>
+                                    <span class="badge bg-info text-white"><i class="fas fa-lock me-1"></i> Paystack</span>
+                                <?php else: ?>
+                                    <span class="badge bg-success"><i class="fas fa-mobile-alt me-1"></i> <?= htmlspecialchars($order['payment_method']) ?></span>
+                                <?php endif; ?><br>
+                                <strong>Payment Status:</strong> <span class="badge-soft <?= getBadgeClass($order['status']) ?>"><?= ucfirst($order['status']) ?></span><br>
+                                <?php if (!empty($order['paid_at'])): ?>
+                                    <strong>Paid At:</strong> <?= date('d M Y, h:i A', strtotime($order['paid_at'])) ?><br>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <?php if (!empty($order['paystack_reference'])): ?>
+                                    <strong>Paystack Ref:</strong> <code><?= htmlspecialchars($order['paystack_reference']) ?></code><br>
+                                <?php endif; ?>
+                                <?php if (!empty($order['paystack_transaction_id'])): ?>
+                                    <strong>Paystack Trans ID:</strong> <code><?= htmlspecialchars($order['paystack_transaction_id']) ?></code><br>
+                                <?php endif; ?>
+                                <?php if (!empty($order['paystack_channel'])): ?>
+                                    <strong>Channel Used:</strong> <span class="text-uppercase"><?= htmlspecialchars($order['paystack_channel']) ?></span><br>
+                                <?php endif; ?>
+                                <strong>Order Total:</strong> <span class="text-brand-red fw-bold">KES <?= number_format($order['total_amount'], 2) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="content-card">
                     <div class="card-header">Order Items</div>
                     <div class="card-body p-0">
@@ -99,7 +131,7 @@ function getBadgeClass($status) {
                             <tbody>
                                 <?php foreach($items as $item): ?>
                                 <tr>
-                                                                        <td>
+                                    <td>
                                         <img src="../<?= htmlspecialchars($item['img_path']) ?>" alt="Img" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
                                         <?= htmlspecialchars($item['name']) ?>
                                         <?php if (!empty($item['size'])): ?>

@@ -1062,6 +1062,7 @@ CREATE TABLE `spotlight_posts` (
   `thumbnail_image` varchar(255) NOT NULL,
   `file_upload` text DEFAULT NULL,
   `external_link` varchar(255) DEFAULT NULL,
+  `document` varchar(255) DEFAULT NULL,
   `post_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

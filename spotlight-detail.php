@@ -27,6 +27,15 @@ $files = json_decode($post['file_upload'], true);
 $post_date_formatted = !empty($post['post_date']) ? date("F j, Y", strtotime($post['post_date'])) : null;
 
 // --- Helper Function for File Types ---
+function get_asset_url($path) {
+  if (empty($path)) return '';
+  if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0) return $path;
+  if (strpos($path, 'admin/') === 0) return $path;
+  if (file_exists(__DIR__ . '/admin/' . $path)) return 'admin/' . $path;
+  if (file_exists(__DIR__ . '/' . $path)) return $path;
+  return 'admin/' . $path;
+}
+
 function get_file_details($filename) {
   $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
   $image_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
@@ -862,7 +871,7 @@ function get_file_details($filename) {
 
 <?php if (!empty($post['document'])): ?>
 <div class="document-cta-container">
-    <a href="<?= htmlspecialchars($post['document']) ?>" class="btn-download" target="_blank" download>
+    <a href="<?= htmlspecialchars(get_asset_url($post['document'])) ?>" class="btn-download" target="_blank" download>
         <i class="fas fa-file-download"></i> Read The Full Report
     </a>
 </div>
@@ -885,7 +894,7 @@ function get_file_details($filename) {
                     </div>
                 </a>
                 <?php else: ?>
-                <a href="<?= htmlspecialchars($file) ?>"
+                <a href="<?= htmlspecialchars(get_asset_url($file)) ?>"
                     class="gallery-card-base document-card <?= $details['color_class'] ?>" download>
                     <div class="document-card-inner">
                         <i class="fas <?= $details['icon'] ?>"></i>

@@ -5,6 +5,18 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     header('Location: index.php');
     exit;
 }
+
+require_once '../connection2.php';
+$pdo_set = connect();
+$delivery_fee = 150;
+$active_gateway = 'paystack';
+try {
+    $stmt_set = $pdo_set->query("SELECT delivery_fee, payment_gateway FROM shop_settings LIMIT 1");
+    if ($row_set = $stmt_set->fetch(PDO::FETCH_ASSOC)) {
+        if (!empty($row_set['delivery_fee'])) $delivery_fee = floatval($row_set['delivery_fee']);
+        if (!empty($row_set['payment_gateway'])) $active_gateway = strtolower($row_set['payment_gateway']);
+    }
+} catch (Exception $e) {}
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +40,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 <style>
     .checkout-header { background: #f4f6f9; padding: 40px 0; border-radius: 0 0 30px 30px; margin-bottom: 40px; }
     .checkout-title { font-weight: 800; font-size: 2.5rem; }
+    .gateway-pill { display: inline-flex; align-items: center; padding: 6px 14px; background: #eef4fc; border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: #0c1a30; margin-top: 10px; }
 </style>
 </head>
 <body>
@@ -47,56 +60,57 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
                 <form id="checkout-form">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="font-weight-bold">First Name</label>
+                            <label class="font-weight-bold">First Name <span class="text-danger">*</span></label>
                             <input type="text" name="first_name" class="form-control form-control-modern" required placeholder="John">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="font-weight-bold">Last Name</label>
+                            <label class="font-weight-bold">Last Name <span class="text-danger">*</span></label>
                             <input type="text" name="last_name" class="form-control form-control-modern" required placeholder="Doe">
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="font-weight-bold">Email Address</label>
+                        <label class="font-weight-bold">Email Address <span class="text-danger">*</span></label>
                         <input type="email" name="email" class="form-control form-control-modern" required placeholder="johndoe@example.com">
                     </div>
 
                     <div class="mb-3">
-                        <label class="font-weight-bold">Contact Phone Number</label>
-                        <input type="tel" name="contact" class="form-control form-control-modern" required placeholder="2547XXXXXXXX">
+                        <label class="font-weight-bold">Contact Phone Number <span class="text-danger">*</span></label>
+                        <input type="tel" name="contact" class="form-control form-control-modern" required placeholder="07XXXXXXXX or 2547XXXXXXXX">
                     </div>
 
                     <div class="mb-4">
-                        <label class="font-weight-bold">Delivery Option</label>
+                        <label class="font-weight-bold">Delivery Option <span class="text-danger">*</span></label>
                         <select name="delivery_option" id="delivery_option" class="form-control form-control-modern" required>
                             <option value="Pick up">Pick Up (Free)</option>
-                                                        <?php 
-                                require_once '../connection2.php';
-                                $pdo_fee = connect();
-                                $delivery_fee = 150;
-                                try {
-                                    $stmt_fee = $pdo_fee->query("SELECT delivery_fee FROM shop_settings LIMIT 1");
-                                    if ($row_fee = $stmt_fee->fetch(PDO::FETCH_ASSOC)) {
-                                        $delivery_fee = floatval($row_fee['delivery_fee']);
-                                    }
-                                } catch (Exception $e) {}
-                            ?>
                             <option value="Delivery">Delivery (+ Ksh <?= number_format($delivery_fee, 2) ?>)</option>
                         </select>
                     </div>
 
                     <div id="delivery_address_group" class="mb-4" style="display: none;">
-                        <label class="font-weight-bold">Delivery Address</label>
-                        <textarea name="delivery_address" class="form-control form-control-modern" rows="3" placeholder="Enter your full physical address..."></textarea>
+                        <label class="font-weight-bold">Delivery Address <span class="text-danger">*</span></label>
+                        <textarea name="delivery_address" class="form-control form-control-modern" rows="3" placeholder="Enter your full physical address, city, and landmarks..."></textarea>
                     </div>
                     
-                    <!-- Payment method is hidden because M-Pesa is standard -->
-                    <input type="hidden" name="payment_method" value="MPESA">
+                    <!-- Dynamic payment method based on active gateway trigger -->
+                    <input type="hidden" name="payment_method" value="<?= $active_gateway === 'paystack' ? 'PAYSTACK' : 'MPESA' ?>">
                     
                     <hr class="my-4">
                     
                     <div class="text-center">
-                        <button type="button" id="proceed-btn" class="btn-brand-red w-100 py-3 text-uppercase shadow-sm">Proceed to Payment <i class="fas fa-lock ml-2"></i></button>
+                        <button type="button" id="proceed-btn" class="btn-brand-red w-100 py-3 text-uppercase shadow-sm font-weight-bold" style="font-size: 1.1rem;">
+                            Proceed to Payment <i class="fas fa-lock ml-2"></i>
+                        </button>
+
+                        <?php if ($active_gateway === 'paystack'): ?>
+                            <div class="gateway-pill">
+                                <i class="fas fa-shield-alt text-success mr-2"></i> Secured by Paystack (Accepts M-Pesa, Visa, Mastercard, Apple Pay & Bank)
+                            </div>
+                        <?php else: ?>
+                            <div class="gateway-pill">
+                                <i class="fas fa-shield-alt text-success mr-2"></i> Secured by Safaricom M-Pesa
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </form>
             </div>
@@ -127,18 +141,18 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 
             var btn = $(this);
             var originalText = btn.html();
-            btn.html('<i class="fa fa-spinner fa-spin"></i> Processing...').prop('disabled', true);
+            btn.html('<i class="fa fa-spinner fa-spin"></i> Processing Order...').prop('disabled', true);
 
             $.ajax({
-                url: "process_checkout",
+                url: "process_checkout.php",
                 type: "POST",
                 data: $("#checkout-form").serialize(),
                 dataType: "json",
                 success: function(response) {
                     if (response.status === "success") {
-                        window.location.href = "payment?order_id=" + response.order_id;
+                        window.location.href = "payment.php?order_id=" + response.order_id;
                     } else {
-                        Swal.fire('Error', response.message, 'error');
+                        Swal.fire('Error', response.message || 'Could not place order.', 'error');
                         btn.html(originalText).prop("disabled", false);
                     }
                 },

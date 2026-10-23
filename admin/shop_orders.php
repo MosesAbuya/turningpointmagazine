@@ -9,8 +9,17 @@ if (!isset($_SESSION['user_id'])) {
 
 $pdo = connect();
 
+// Fetch active gateway
+$active_gateway = 'paystack';
+try {
+    $stmt_set = $pdo->query("SELECT payment_gateway FROM shop_settings LIMIT 1");
+    if ($r = $stmt_set->fetch(PDO::FETCH_ASSOC)) {
+        if (!empty($r['payment_gateway'])) $active_gateway = strtolower($r['payment_gateway']);
+    }
+} catch (Exception $e) {}
+
 $filter = $_GET['filter'] ?? 'all';
-$query = "SELECT id, invoice_id, first_name, last_name, contact, total_amount, status, date_created FROM orders";
+$query = "SELECT id, invoice_id, first_name, last_name, contact, total_amount, status, payment_method, date_created FROM orders";
 $params = [];
 
 if ($filter !== 'all') {
@@ -48,13 +57,25 @@ function getBadgeClass($status) {
     <?php include 'sidebar.php'; ?>
 
     <div id="page-content-wrapper">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold m-0">Order Management</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <h2 class="fw-bold m-0">Order Management</h2>
+                <div class="mt-1">
+                    <span class="text-muted small">Live Checkout Gateway: </span>
+                    <?php if ($active_gateway === 'paystack'): ?>
+                        <span class="badge bg-primary"><i class="fas fa-shield-alt me-1"></i> Paystack</span>
+                    <?php else: ?>
+                        <span class="badge bg-success"><i class="fas fa-mobile-alt me-1"></i> Daraja M-Pesa</span>
+                    <?php endif; ?>
+                    <a href="shop_settings.php" class="small text-decoration-none ms-2"><i class="fas fa-sliders-h"></i> Change / Trigger</a>
+                </div>
+            </div>
             <div class="d-flex gap-2">
                 <button class="btn btn-sm btn-danger d-none" id="bulkDeleteBtn"><i class="fas fa-trash"></i> Delete Selected</button>
                 <div class="btn-group">
                     <a href="?filter=all" class="btn btn-sm <?= $filter == 'all' ? 'btn-danger' : 'btn-outline-secondary' ?>">All</a>
                     <a href="?filter=pending" class="btn btn-sm <?= $filter == 'pending' ? 'btn-danger' : 'btn-outline-secondary' ?>">Pending</a>
+                    <a href="?filter=paid" class="btn btn-sm <?= $filter == 'paid' ? 'btn-danger' : 'btn-outline-secondary' ?>">Paid</a>
                     <a href="?filter=processing" class="btn btn-sm <?= $filter == 'processing' ? 'btn-danger' : 'btn-outline-secondary' ?>">Processing</a>
                     <a href="?filter=dispatched" class="btn btn-sm <?= $filter == 'dispatched' ? 'btn-danger' : 'btn-outline-secondary' ?>">Dispatched</a>
                     <a href="?filter=delivered" class="btn btn-sm <?= $filter == 'delivered' ? 'btn-danger' : 'btn-outline-secondary' ?>">Delivered</a>
@@ -72,6 +93,7 @@ function getBadgeClass($status) {
                                 <th>Invoice</th>
                                 <th>Customer</th>
                                 <th>Phone</th>
+                                <th>Method</th>
                                 <th>Total</th>
                                 <th>Status</th>
                                 <th>Date</th>
@@ -80,7 +102,7 @@ function getBadgeClass($status) {
                         </thead>
                         <tbody>
                             <?php if (empty($orders)): ?>
-                                <tr><td colspan="8" class="text-center p-4">No orders found.</td></tr>
+                                <tr><td colspan="9" class="text-center p-4">No orders found.</td></tr>
                             <?php else: ?>
                                 <?php foreach($orders as $o): ?>
                                     <tr>
@@ -88,6 +110,16 @@ function getBadgeClass($status) {
                                         <td><strong><?= htmlspecialchars($o['invoice_id']) ?></strong></td>
                                         <td><?= htmlspecialchars($o['first_name'] . ' ' . $o['last_name']) ?></td>
                                         <td><?= htmlspecialchars($o['contact']) ?></td>
+                                        <td>
+                                            <?php
+                                            $method = strtoupper($o['payment_method'] ?? 'PAYSTACK');
+                                            if ($method === 'PAYSTACK'):
+                                            ?>
+                                                <span class="badge bg-info text-white" style="font-size: 11px;"><i class="fas fa-lock me-1"></i> Paystack</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-success" style="font-size: 11px;"><i class="fas fa-mobile-alt me-1"></i> M-Pesa</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td>KES <?= number_format($o['total_amount'], 2) ?></td>
                                         <td><span class="badge-soft <?= getBadgeClass($o['status']) ?>"><?= ucfirst($o['status']) ?></span></td>
                                         <td><?= date('d M Y, h:i A', strtotime($o['date_created'])) ?></td>
